@@ -14,7 +14,7 @@
 if (!window.TEMPLATES) window.TEMPLATES = {};
 
 window.TEMPLATES.home = function(stats, todo, progress, known, learning, newCount, totalWords, totalLearned, monthlyData, weakData, accuracy, streakRecord, streakColor, fsrs, weeklySummary) {
-  // Lấy tiến trình Finance & Banking
+  // Lấy tiến trình Tài chính & Ngân hàng
   const financeProg = db.getTopicProgress('topic_finance') || { known: 0, learning: 0, total: 20 };
   const financePct = Math.round((financeProg.known + financeProg.learning) / financeProg.total * 100);
 
@@ -170,7 +170,7 @@ window.TEMPLATES.home = function(stats, todo, progress, known, learning, newCoun
         <div class="achievement-item ${financePct === 100 ? 'unlocked' : 'locked'}">
           <span class="achievement-icon">${financePct === 100 ? '🏅' : '🔒'}</span>
           <div class="achievement-info">
-            <span class="achievement-name">Hoàn thành chủ đề Finance</span>
+            <span class="achievement-name">Hoàn thành chủ đề Tài chính & Ngân hàng</span>
             <span class="achievement-sub">${financePct === 100 ? 'Đã đạt được!' : `Đã hoàn thành: ${financePct}%`}</span>
           </div>
         </div>

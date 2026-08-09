@@ -1,10 +1,10 @@
 (function() {
   const topic = {
     id: "topic_finance",
-    name: "Finance & Banking",
+    name: "Tài chính & Ngân hàng",
     icon: "🏦",
     color: "#059669",
-    description: "Core vocabulary for finance, banking, and economics",
+    description: "Từ vựng cốt lõi về tài chính, ngân hàng và kinh tế",
     words: [
       { id: "fin_1",  word: "asset",          phonetic: "/ˈæset/",         pos: "noun", meaning: "Tài sản",                 example: "The company’s assets include buildings and machinery." },
       { id: "fin_2",  word: "liability",      phonetic: "/ˌlaɪəˈbɪlɪti/",  pos: "noun", meaning: "Nợ phải trả",             example: "The bank calculates its total liabilities before lending." },

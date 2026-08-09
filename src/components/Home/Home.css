@@ -162,14 +162,6 @@
   box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
-.stat-card-v2::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-  background: var(--accent, var(--accent-purple));
-  opacity: 0.8;
-}
 
 .stat-card-v2.clickable-card {
   cursor: pointer;
@@ -461,4 +453,325 @@
   background: rgba(139, 92, 246, 0.12);
   transform: translateX(3px);
 }
+
+/* ============================================================
+   LIGHT THEME OVERRIDES FOR HOME TAB
+   ============================================================ */
+body.light-theme .greeting-text {
+  background: linear-gradient(135deg, #0f172a 30%, #7c3aed 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+body.light-theme .today-block {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.08) 0%, rgba(37, 99, 235, 0.04) 100%);
+  border-color: rgba(124, 58, 237, 0.2);
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.06),
+              inset 0 1px 1px rgba(255, 255, 255, 0.6);
+}
+
+/* ============================================================
+   STREAK, PROGRESS, FSRS & WEAK WORDS STYLING
+   ============================================================ */
+.streak-line-primary {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.streak-line-secondary {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.total-progress-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
+.progress-detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.progress-detail-row.line-learning {
+  padding-left: 10px;
+  border-left: 2px solid #f59e0b;
+  margin-left: 4px;
+}
+
+.progress-detail-row.line-mastered {
+  padding-left: 10px;
+  border-left: 2px solid #10b981;
+  margin-left: 4px;
+}
+
+.progress-detail-row.line-time {
+  padding-left: 10px;
+  border-left: 2px solid #a78bfa;
+  margin-left: 4px;
+}
+
+.val-primary {
+  color: var(--text-primary);
+  font-weight: 800;
+}
+
+.val-learning {
+  color: #f59e0b;
+  font-weight: 800;
+}
+
+.val-mastered {
+  color: #10b981;
+  font-weight: 800;
+}
+
+.val-time {
+  color: #a78bfa;
+  font-weight: 800;
+}
+
+.badge-fsrs {
+  background: rgba(99, 102, 241, 0.15);
+  color: #818cf8;
+  border: 1px solid rgba(99, 102, 241, 0.25);
+}
+
+.fsrs-desc {
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.4;
+  margin-bottom: 14px;
+}
+
+.fsrs-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fsrs-card-lbl {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.fsrs-card-val {
+  font-size: 18px;
+  font-weight: 800;
+  color: #10b981;
+}
+
+.fsrs-forecast-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.forecast-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.forecast-val.day7 {
+  color: #f59e0b;
+  font-weight: 800;
+}
+
+.forecast-val.day30 {
+  color: #ef4444;
+  font-weight: 800;
+}
+
+.forecast-val.day90 {
+  color: #b91c1c;
+  font-weight: 800;
+}
+
+.badge-weak {
+  background: rgba(244, 63, 94, 0.15);
+  color: #fb7185;
+  border: 1px solid rgba(244, 63, 94, 0.25);
+}
+
+.weak-words-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.weak-word-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.weak-word-text {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.weak-word-lapses {
+  font-size: 11px;
+  color: #f43f5e;
+  font-weight: 700;
+  background: rgba(244, 63, 94, 0.1);
+  padding: 2px 8px;
+  border-radius: 20px;
+}
+
+.weak-empty {
+  color: var(--text-muted);
+  font-weight: 500;
+  font-style: italic;
+  text-align: center;
+  padding: 10px 0;
+}
+
+/* Light Theme Overrides */
+body.light-theme .fsrs-desc {
+  color: var(--text-secondary);
+}
+
+body.light-theme .fsrs-card,
+body.light-theme .weak-word-item {
+  background: rgba(15, 23, 42, 0.02);
+}
+
+body.light-theme .weak-word-lapses {
+  background: rgba(244, 63, 94, 0.08);
+}
+
+/* ============================================================
+   ACHIEVEMENTS & WEEKLY STATS STYLING
+   ============================================================ */
+.achievements-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.achievement-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  transition: var(--transition);
+}
+
+.achievement-item.unlocked {
+  border-color: rgba(234, 179, 8, 0.25);
+  background: rgba(234, 179, 8, 0.02);
+}
+
+.achievement-icon {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.achievement-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.achievement-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.achievement-item.locked .achievement-name {
+  color: var(--text-muted);
+}
+
+.achievement-sub {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.badge-weekly {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+.weekly-desc {
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.4;
+  margin-bottom: 14px;
+}
+
+.weekly-stats-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.weekly-stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.weekly-val {
+  color: var(--text-primary);
+  font-weight: 800;
+}
+
+/* Additional Light Theme Overrides */
+body.light-theme .achievement-item {
+  background: rgba(15, 23, 42, 0.02);
+}
+
+body.light-theme .achievement-item.unlocked {
+  background: rgba(234, 179, 8, 0.04);
+}
+
+body.light-theme .weekly-desc {
+  color: var(--text-secondary);
+}
+
+body.light-theme .heatmap-cell.level-0 {
+  background: rgba(15, 23, 42, 0.04);
+  border: 1px solid rgba(15, 23, 42, 0.02);
+}
+
 

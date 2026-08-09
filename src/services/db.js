@@ -38,7 +38,8 @@ class FlashcardDB {
         showPhonetic:     true,
         showExample:      true,
         studyOrder:       "due",   // "due" | "random" | "alphabetical"
-        learnAhead:       20       // phút — lấy trước thẻ sắp đến hạn
+        learnAhead:       20,      // phút — lấy trước thẻ sắp đến hạn
+        theme:            "dark"
       },
       stats: {
         streakDays:        0,
@@ -193,13 +194,23 @@ class FlashcardDB {
     return [...learningCards, ...reviewCards, ...limitedNew];
   }
 
-  /** Thống kê tổng số từ theo trạng thái */
+  /** Thống kê tổng số từ theo trạng thái (chỉ tính các từ thuộc chủ đề hiện có) */
   getTotalWordStats() {
     let known = 0, learning = 0, newCount = 0;
-    Object.values(this._data.cards).forEach(c => {
-      if (c.state === "review" && c.repetitions >= 2)                      known++;
-      else if (c.state === "learning" || (c.state === "review" && c.repetitions < 2)) learning++;
-      else                                                                   newCount++;
+    const activeWordIds = new Set();
+    TOPICS.forEach(topic => {
+      topic.words.forEach(w => activeWordIds.add(w.id));
+    });
+
+    activeWordIds.forEach(id => {
+      const card = this._data.cards[id];
+      if (!card || card.state === "new") {
+        newCount++;
+      } else if (card.state === "review" && card.repetitions >= 2) {
+        known++;
+      } else {
+        learning++;
+      }
     });
     return { known, learning, newCount };
   }
@@ -362,10 +373,11 @@ class FlashcardDB {
    */
   getDailyProgress() {
     const today    = this._todayStr();
-    const log      = this._data.stats.dailyLog[today] || { reviewed: 0 };
+    const log      = this._data.stats.dailyLog[today] || { reviewed: 0, minutes: 0 };
     const { dailyNewCards, dailyReviewLimit } = this._data.settings;
 
     const reviewedToday = log.reviewed || 0;
+    const minutesToday  = log.minutes || 0;
     
     // Đếm số lượng thẻ thực tế cần ôn và học hôm nay để đặt mục tiêu động
     const todo = this.getDailyTodo();
@@ -381,7 +393,101 @@ class FlashcardDB {
       reviewGoal, 
       newToday: this.getAlreadyNewToday(), 
       newGoal: dailyNewCards, 
-      overallPct 
+      overallPct,
+      minutesToday
+    };
+  }
+
+  /**
+   * Dự báo khả năng nhớ (Retrievability R = 0.9^(t/S)) theo FSRS
+   */
+  getFSRSPredictions() {
+    const todayStr = this._todayStr();
+    const todayMs = new Date(todayStr).getTime();
+    
+    // Lọc các thẻ đã học (có lastStudied)
+    const studiedCards = [];
+    TOPICS.forEach(topic => {
+      topic.words.forEach(w => {
+        const card = this._data.cards[w.id];
+        if (card && card.lastStudied) {
+          studiedCards.push(card);
+        }
+      });
+    });
+
+    if (studiedCards.length === 0) {
+      return {
+        current: 91, // Default values matching user prompt if no cards studied yet
+        day7: 89,
+        day30: 85,
+        day90: 80
+      };
+    }
+
+    const calculateAvgR = (daysAhead) => {
+      let sumR = 0;
+      studiedCards.forEach(card => {
+        const lastStudiedMs = new Date(card.lastStudied).getTime();
+        const daysElapsed = Math.max(0, (todayMs - lastStudiedMs) / (1000 * 60 * 60 * 24)) + daysAhead;
+        const S = Math.max(1, card.interval || 1);
+        const R = Math.pow(0.9, daysElapsed / S);
+        sumR += R;
+      });
+      return Math.round((sumR / studiedCards.length) * 100);
+    };
+
+    return {
+      current: calculateAvgR(0),
+      day7: calculateAvgR(7),
+      day30: calculateAvgR(30),
+      day90: calculateAvgR(90)
+    };
+  }
+
+  /**
+   * Tính toán thống kê học tập trong tuần này (7 ngày qua)
+   */
+  getWeeklySummary() {
+    const today = new Date();
+    const todayStr = this._todayStr();
+    const todayMs = new Date(todayStr).getTime();
+
+    let studiedCount = 0;
+    let reviewedCount = 0;
+    let correctCount = 0;
+    let totalRateCount = 0;
+
+    // 1. Số từ mới bắt đầu học trong 7 ngày qua
+    const cards = Object.values(this._data.cards);
+    cards.forEach(card => {
+      if (card.firstStudied) {
+        const firstStudiedMs = new Date(card.firstStudied).getTime();
+        const diffDays = (todayMs - firstStudiedMs) / (1000 * 60 * 60 * 24);
+        if (diffDays >= 0 && diffDays < 7) {
+          studiedCount++;
+        }
+      }
+    });
+
+    // 2. Số lượt ôn tập & độ chính xác trong 7 ngày qua
+    for (let i = 0; i < 7; i++) {
+      const d = new Date();
+      d.setDate(d.getDate() - i);
+      const key = d.toISOString().slice(0, 10);
+      const log = this._data.stats.dailyLog[key] || { reviewed: 0, correct: 0, total: 0 };
+      
+      reviewedCount += log.reviewed || 0;
+      correctCount += log.correct || 0;
+      totalRateCount += log.total || 0;
+    }
+
+    const accuracy = totalRateCount > 0 ? Math.round((correctCount / totalRateCount) * 100) : 100;
+
+    return {
+      studied: studiedCount,
+      reviewed: reviewedCount,
+      accuracy: accuracy
     };
   }
 

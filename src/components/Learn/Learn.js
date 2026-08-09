@@ -2,7 +2,7 @@
 // LEARN.JS (VIEW LAYER)
 // Vai trò: Định nghĩa template HTML cho danh sách chủ đề học tập
 // Chức năng:
-//  - Vẽ lưới danh sách các chủ đề từ vựng (Topic Grid)
+//  - Vẽ danh sách các chủ đề từ vựng dạng hàng ngang (List-based layout)
 //  - Hiển thị tiến trình học tập cụ thể của từng chủ đề dưới dạng phần trăm (%)
 //  - Hiển thị badge chỉ số các từ cần ôn tập (due cards)
 // ============================================================
@@ -21,19 +21,25 @@ window.TEMPLATES.learnList = function() {
         const due = db.getDueCards(topic.id, topic).length;
         return `
         <div class="topic-card" onclick="openTopicStudy('${topic.id}')" style="--topic-color: ${topic.color}">
-          <div class="topic-card-header">
-            <div class="topic-emoji">${topic.icon}</div>
-            ${due > 0 ? `<span class="due-badge">${due} cần ôn</span>` : (pct === 100 ? '<span class="done-badge">✓ Hoàn thành</span>' : '')}
+          <div class="topic-icon-area">
+            <span class="topic-emoji">${topic.icon}</span>
           </div>
-          <h3 class="topic-card-name">${topic.name}</h3>
-          <p class="topic-card-desc">${topic.description}</p>
-          <div class="topic-card-footer">
-            <div class="topic-progress-bar">
-              <div class="topic-progress-fill" style="width:${pct}%; background:${topic.color}"></div>
+          <div class="topic-info-area">
+            <div class="topic-title-row">
+              <h3 class="topic-card-name">${topic.name}</h3>
+              ${due > 0 ? `<span class="due-badge">${due} cần ôn</span>` : (pct === 100 ? '<span class="done-badge">✓ Xong</span>' : '')}
             </div>
+            <p class="topic-card-desc">${topic.description}</p>
+            
+            <div class="topic-progress-row">
+              <div class="topic-progress-bar">
+                <div class="topic-progress-fill" style="width:${pct}%; background:${topic.color}"></div>
+              </div>
+              <span class="topic-progress-pct" style="color:${topic.color}">${pct}%</span>
+            </div>
+            
             <div class="topic-card-meta">
-              <span>${prog.total} từ</span>
-              <span style="color:${topic.color}">${pct}%</span>
+              <span>${prog.total} từ vựng</span>
             </div>
           </div>
         </div>`;

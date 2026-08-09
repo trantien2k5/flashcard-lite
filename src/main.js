@@ -1,11 +1,11 @@
 // ============================================================
-// APP.JS (CONTROLLER LAYER)
+// MAIN.JS (CONTROLLER LAYER)
 // Vai trò: Bộ điều khiển trung tâm (Main Controller) của ứng dụng
 // Chức năng:
 //  - Lắng nghe các sự kiện bấm nút của người dùng (chuyển tab, lật thẻ, chọn chủ đề, lưu cài đặt...)
 //  - Tải động (Dynamic loading) dữ liệu từ vựng chủ đề khi khởi chạy
 //  - Điều phối dữ liệu từ Service (`db.js`) và thuật toán (`algorithm.js`) để cập nhật trạng thái
-//  - Chọn và kích hoạt các cấu trúc HTML động từ thư mục `js/views/` để cập nhật hiển thị (DOM)
+//  - Chọn và kích hoạt các cấu trúc HTML động từ thư mục `src/components/` để cập nhật hiển thị (DOM)
 // ============================================================
 
 // ---- State ----
@@ -42,8 +42,11 @@ function renderHome() {
   const accuracy    = db.getAccuracyRate(7);
   const streakRecord = stats.streakRecord || stats.streakDays || 0;
   const streakColor = stats.streakDays >= 7 ? "#f97316" : stats.streakDays >= 3 ? "#fbbf24" : "#6366f1";
+  const fsrs        = db.getFSRSPredictions();
+  const weeklySummary = db.getWeeklySummary();
+
   document.getElementById("home-content").innerHTML = TEMPLATES.home(
-    stats, todo, progress, known, learning, newCount, totalWords, totalLearned, monthlyData, weakData, accuracy, streakRecord, streakColor
+    stats, todo, progress, known, learning, newCount, totalWords, totalLearned, monthlyData, weakData, accuracy, streakRecord, streakColor, fsrs, weeklySummary
   );
 }
 
@@ -99,7 +102,8 @@ function openTopicStudy(topicId) {
     current: 0,
     reviewed: 0,
     startTime: Date.now(),
-    flipped: false
+    flipped: false,
+    history: []
   };
   sessionStartTime = Date.now();
 
@@ -137,7 +141,13 @@ function rateCard(rating) {
   const { word, card } = queue[current];
 
   // Update card via SM-2
-  db.updateCard(word.id, rating);
+  const updated = db.updateCard(word.id, rating);
+  studySession.history.push({
+    word: word.word,
+    rating: rating,
+    state: updated.state,
+    interval: updated.interval
+  });
 
   // If Again/Hard (learning), optionally re-queue
   if (rating === RATING.AGAIN) {
@@ -164,12 +174,20 @@ function speakWord(event, text) {
 }
 
 function endStudyEarly() {
-  if (studySession) {
-    const mins = (Date.now() - studySession.startTime) / 60000;
-    db.recordStudySession(studySession.reviewed, Math.round(mins * 10) / 10);
+  if (!studySession || studySession.reviewed === 0) {
+    studySession = null;
+    renderLearnList();
+    return;
   }
+
+  const mins = (Date.now() - studySession.startTime) / 60000;
+  const reviewed = studySession.reviewed;
+  db.recordStudySession(reviewed, Math.round(mins * 10) / 10);
+
+  document.getElementById("learn-content").innerHTML = TEMPLATES.finishScreen(
+    reviewed, mins, db.stats.streakDays, studySession.history, true
+  );
   studySession = null;
-  renderLearnList();
 }
 
 function finishStudySession() {
@@ -178,7 +196,7 @@ function finishStudySession() {
   db.recordStudySession(reviewed, mins);
 
   document.getElementById("learn-content").innerHTML = TEMPLATES.finishScreen(
-    reviewed, mins, db.stats.streakDays
+    reviewed, mins, db.stats.streakDays, studySession.history, false
   );
   studySession = null;
 }
@@ -199,8 +217,17 @@ function renderSettings() {
   document.getElementById("settings-content").innerHTML = TEMPLATES.settings(s);
 }
 
+function applyTheme(theme) {
+  const isLight = (theme === "light");
+  document.documentElement.classList.toggle("light-theme", isLight);
+  document.body.classList.toggle("light-theme", isLight);
+}
+
 function saveSetting(key, value) {
   db.updateSettings({ [key]: value });
+  if (key === "theme") {
+    applyTheme(value);
+  }
   showToast("Đã lưu cài đặt");
 }
 
@@ -288,7 +315,7 @@ document.addEventListener("keydown", (e) => {
 async function loadTopicsDynamic() {
   window.TOPICS = [];
   const topicFiles = [
-    "js/data/finance.js"
+    "src/data/finance.js"
   ];
   
   await Promise.all(topicFiles.map(src => {
@@ -309,6 +336,9 @@ async function loadTopicsDynamic() {
 // INIT
 // ============================================================
 document.addEventListener("DOMContentLoaded", async () => {
+  // Nạp giao diện đã lưu
+  applyTheme(db.settings.theme || "dark");
+
   // Tab buttons
   document.querySelectorAll(".tab-btn").forEach(btn => {
     btn.addEventListener("click", () => switchTab(btn.dataset.tab));

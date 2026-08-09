@@ -253,3 +253,34 @@ input:checked + .toggle-slider::before {
   line-height: 1.6;
 }
 
+/* ============================================================
+   LIGHT THEME OVERRIDES FOR SETTINGS TAB
+   ============================================================ */
+body.light-theme .settings-title {
+  background: linear-gradient(135deg, #0f172a 30%, #475569 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+body.light-theme .settings-group {
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04),
+              inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+body.light-theme .setting-input,
+body.light-theme .setting-select {
+  background: rgba(15, 23, 42, 0.04);
+  color: var(--text-primary);
+  border-color: rgba(15, 23, 42, 0.12);
+}
+body.light-theme .setting-input:focus,
+body.light-theme .setting-select:focus {
+  border-color: var(--accent-purple);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
+}
+body.light-theme .toggle-slider {
+  background: rgba(15, 23, 42, 0.1);
+}
+body.light-theme .toggle-switch input:checked + .toggle-slider {
+  background: var(--accent-purple);
+}
+

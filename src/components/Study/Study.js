@@ -95,19 +95,35 @@ window.TEMPLATES.studySession = function(studySession, settings, progress, card)
   `;
 };
 
-window.TEMPLATES.finishScreen = function(reviewed, mins, streakDays) {
+window.TEMPLATES.finishScreen = function(reviewed, mins, streakDays, history = [], isEarly = false) {
+  // Lọc lấy trạng thái cuối cùng của mỗi từ trong phiên học
+  const uniqueHistory = [];
+  const seenWords = new Set();
+  for (let i = history.length - 1; i >= 0; i--) {
+    const item = history[i];
+    if (!seenWords.has(item.word)) {
+      seenWords.add(item.word);
+      uniqueHistory.unshift(item);
+    }
+  }
+
+  const title = isEarly ? "Tạm dừng buổi học" : "Hoàn thành buổi học!";
+  const subtitle = isEarly ? "Tiến độ học tập của bạn đã được lưu lại thành công." : "Tuyệt vời! Bạn đã hoàn thành toàn bộ mục tiêu hôm nay.";
+  const animation = isEarly ? "⏱️" : "🎉";
+
   return `
     <div class="finish-screen">
-      <div class="finish-animation">🎉</div>
-      <h2 class="finish-title">Hoàn thành buổi học!</h2>
-      <p class="finish-sub">Tuyệt vời! Bạn đã hoàn thành buổi học hôm nay.</p>
+      <div class="finish-animation">${animation}</div>
+      <h2 class="finish-title">${title}</h2>
+      <p class="finish-sub">${subtitle}</p>
+      
       <div class="finish-stats">
         <div class="finish-stat">
           <div class="finish-stat-val">${reviewed}</div>
           <div class="finish-stat-lbl">Thẻ đã ôn</div>
         </div>
         <div class="finish-stat">
-          <div class="finish-stat-val">${mins < 1 ? '<1' : Math.round(mins)}</div>
+          <div class="finish-stat-val">${mins < 0.1 ? '1m' : Math.round(mins) + 'm'}</div>
           <div class="finish-stat-lbl">Phút học</div>
         </div>
         <div class="finish-stat">
@@ -115,7 +131,33 @@ window.TEMPLATES.finishScreen = function(reviewed, mins, streakDays) {
           <div class="finish-stat-lbl">Chuỗi ngày 🔥</div>
         </div>
       </div>
-      <button class="btn-primary" onclick="renderLearnList()">Quay lại danh sách</button>
+
+      ${uniqueHistory.length > 0 ? `
+        <div class="session-history-section">
+          <div class="session-history-title">📊 Chi tiết trạng thái thẻ từ:</div>
+          <div class="session-history-list">
+            ${uniqueHistory.map(item => {
+              let statusText = "";
+              let statusClass = "";
+              if (item.state === "learning") {
+                statusText = item.rating === 0 ? "Chưa thuộc (ôn lại sau 1 phút)" : "Hơi nhớ (ôn lại sau 10 phút)";
+                statusClass = "history-learning";
+              } else if (item.state === "review") {
+                statusText = `Đã thuộc (ôn lại sau ${item.interval} ngày)`;
+                statusClass = "history-review";
+              }
+              return `
+                <div class="history-item">
+                  <span class="history-word">${item.word}</span>
+                  <span class="history-status ${statusClass}">${statusText}</span>
+                </div>
+              `;
+            }).join("")}
+          </div>
+        </div>
+      ` : ''}
+
+      <button class="btn-primary" onclick="renderLearnList()" style="margin-top: 24px;">Quay lại danh sách</button>
     </div>
   `;
 };

@@ -86,6 +86,19 @@ window.TEMPLATES.settings = function(s) {
           <span class="toggle-slider"></span>
         </label>
       </div>
+
+      <div class="setting-item">
+        <div class="setting-info">
+          <span class="setting-name">Giao diện sáng</span>
+          <span class="setting-desc">Bật tông nền sáng, chữ tối dễ học ban ngày</span>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="set-theme"
+            ${s.theme === "light" ? "checked" : ""}
+            onchange="saveSetting('theme', this.checked ? 'light' : 'dark')">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
     </div>
 
     <div class="settings-group">

@@ -1,7 +1,10 @@
 /* ============================================================
-   COMPONENTS.CSS — Shared UI Components (Glassmorphic Edition)
-   Chứa: Modal overlay/box, Toast notification,
-         Button variants (secondary, danger).
+   APP.CSS (GLOBAL COMPONENT STYLE LAYER)
+   Vai trò: Định nghĩa kiểu dáng chung cho các thành phần giao diện
+   Chức năng:
+    - Popup thông báo xác nhận đặt lại dữ liệu (Reset Modal)
+    - Thanh thông báo nhanh nổi bên trên (Toast Notification)
+    - Định kiểu cho các nút bấm chung
    ============================================================ */
 
 /* ============================================================
@@ -147,5 +150,39 @@
 }
 .toast-danger {
   border-left: 3px solid var(--accent-red);
+}
+
+/* ============================================================
+   LIGHT THEME OVERRIDES FOR GLOBAL COMPONENTS
+   ============================================================ */
+body.light-theme .modal-box {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.98) 100%);
+  border-color: rgba(15, 23, 42, 0.08);
+  box-shadow: 0 30px 60px rgba(15, 23, 42, 0.1), 
+              inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+body.light-theme .modal-title {
+  background: linear-gradient(135deg, #0f172a, #475569);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+body.light-theme .btn-secondary {
+  background: rgba(15, 23, 42, 0.04);
+  border-color: rgba(15, 23, 42, 0.08);
+  color: var(--text-primary);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+}
+body.light-theme .btn-secondary:hover {
+  background: rgba(15, 23, 42, 0.08);
+  border-color: rgba(15, 23, 42, 0.16);
+}
+
+body.light-theme .toast {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(15, 23, 42, 0.08);
+  color: var(--text-primary);
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.08);
 }
 

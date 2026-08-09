@@ -86,3 +86,13 @@
   transform: translateX(-50%) scale(1);
 }
 
+/* ============================================================
+   LIGHT THEME OVERRIDES FOR BOTTOM NAV
+   ============================================================ */
+body.light-theme .bottom-nav {
+  background: rgba(255, 255, 255, 0.75);
+  border-color: rgba(15, 23, 42, 0.08);
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08),
+              inset 0 1px 1px rgba(255, 255, 255, 0.6);
+}
+

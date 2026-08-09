@@ -136,8 +136,8 @@ window.TEMPLATES.settings = function(s) {
         <div class="about-logo">⚡</div>
         <div class="about-info">
           <div class="about-name">FlashCard Lite</div>
-          <div class="about-ver">v1.0.0 • Powered by SM-2 Algorithm</div>
-          <div class="about-desc">Học từ vựng nhanh hơn với phương pháp lặp lại ngắt quãng có cơ sở khoa học — thuật toán tương tự Anki.</div>
+          <div class="about-ver">v1.1.0 • Powered by FSRS-6 Algorithm</div>
+          <div class="about-desc">Học từ vựng nhanh hơn với phương pháp lặp lại ngắt quãng có cơ sở khoa học — mô hình hóa trí nhớ bằng thuật toán FSRS-6 hiện đại, chính xác hơn Anki truyền thống (SM-2).</div>
         </div>
       </div>
     </div>

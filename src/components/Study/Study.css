@@ -4,7 +4,7 @@
    Chức năng:
     - Bố cục màn hình học từ vựng và thanh tiến độ học tập
     - Hoạt ảnh lật thẻ 3D (front & back card) cùng đổ bóng
-    - 4 nút đánh giá ghi nhớ SM-2 (Again, Hard, Good, Easy) với hiệu ứng glow
+    - 4 nút đánh giá ghi nhớ FSRS-6 (Again, Hard, Good, Easy) với hiệu ứng glow
     - Màn hình chúc mừng kết thúc buổi học và màn hình hết thẻ trong ngày
    ============================================================ */
 
@@ -100,9 +100,10 @@
   text-transform: uppercase;
 }
 
-.state-new      { background: rgba(139, 92, 246, 0.15); color: #c084fc; border: 1px solid rgba(139, 92, 246, 0.25); }
-.state-learning { background: rgba(245, 158, 11, 0.15);  color: #fde047; border: 1px solid rgba(245, 158, 11, 0.25); }
-.state-review   { background: rgba(16, 185, 129, 0.15);  color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.25); }
+.state-new        { background: rgba(139, 92, 246, 0.15); color: #c084fc; border: 1px solid rgba(139, 92, 246, 0.25); }
+.state-learning   { background: rgba(245, 158, 11, 0.15);  color: #fde047; border: 1px solid rgba(245, 158, 11, 0.25); }
+.state-review     { background: rgba(16, 185, 129, 0.15);  color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.25); }
+.state-relearning { background: rgba(239, 68, 68, 0.15);   color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.25); }
 
 .interval-pill {
   font-size: 10px;
@@ -537,6 +538,11 @@ body.light-theme .state-review {
   background: rgba(4, 120, 87, 0.08);
   color: #047857;
   border-color: rgba(4, 120, 87, 0.16);
+}
+body.light-theme .state-relearning {
+  background: rgba(185, 28, 28, 0.08);
+  color: #b91c1c;
+  border-color: rgba(185, 28, 28, 0.16);
 }
 
 body.light-theme .study-progress-bar {

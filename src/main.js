@@ -77,6 +77,18 @@ function renderLearnList() {
 // ============================================================
 // STUDY SESSION — Flashcard mode
 // ============================================================
+/** Sắp xếp hàng đợi học theo cài đặt studyOrder ("due" giữ nguyên thứ tự learning→review→new). */
+function applyStudyOrder(queue, studyOrder) {
+  if (studyOrder === "random") {
+    for (let i = queue.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [queue[i], queue[j]] = [queue[j], queue[i]];
+    }
+  } else if (studyOrder === "alphabetical") {
+    queue.sort((a, b) => a.word.word.localeCompare(b.word.word));
+  }
+}
+
 function openTopicStudy(topicId) {
   const topic = TOPICS.find(t => t.id === topicId);
   if (!topic) return;
@@ -93,6 +105,8 @@ function openTopicStudy(topicId) {
     card,
     word: topic.words.find(w => w.id === card.wordId)
   })).filter(item => item.word);
+
+  applyStudyOrder(queue, db.settings.studyOrder);
 
   studySession = {
     topicId,
@@ -140,7 +154,7 @@ function rateCard(rating) {
   const { queue, current } = studySession;
   const { word, card } = queue[current];
 
-  // Update card via SM-2
+  // Update card via FSRS-6
   const updated = db.updateCard(word.id, rating);
   studySession.history.push({
     word: word.word,
@@ -153,6 +167,7 @@ function rateCard(rating) {
   if (rating === RATING.AGAIN) {
     // Re-add to end of queue for this session
     studySession.queue.push({ card: db.getCard(word.id), word });
+    studySession.totalDue++; // đếm thêm lượt ôn lại để thanh tiến độ không vượt quá 100%
   }
 
   studySession.current++;

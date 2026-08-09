@@ -3,6 +3,7 @@
 // Vai trò: Cơ sở dữ liệu cục bộ và quản lý lưu trữ (Local Spaced Repetition DB)
 // Chức năng:
 //  - Quản lý đọc/ghi tiến trình học vào LocalStorage để tránh mất dữ liệu khi tắt trang
+//  - Gọi thuật toán FSRS-6 (algorithm.js) mỗi khi có lượt đánh giá thẻ mới
 //  - Thực hiện các truy vấn thống kê dữ liệu: lấy số từ cần học hôm nay, đếm từ yếu, heatmap hoạt động
 //  - Thực hiện nạp dữ liệu mặc định của chủ đề khi người dùng truy cập lần đầu
 //  - Quản lý chức năng sao lưu: Xuất (Export) và Nhập (Import) file JSON tiến độ học tập
@@ -72,11 +73,11 @@ class FlashcardDB {
     return this._data.cards[wordId];
   }
 
-  /** Cập nhật thẻ qua thuật toán SM-2, lưu storage, ghi lại rating để tính accuracy */
+  /** Cập nhật thẻ qua thuật toán FSRS-6, lưu storage, ghi lại rating để tính accuracy */
   updateCard(wordId, rating) {
     const card    = this.getCard(wordId);
     const isNew   = card.state === "new";
-    const updated = sm2(card, rating);          // ← gọi algorithm.js
+    const updated = fsrs(card, rating);          // ← gọi algorithm.js
     
     if (isNew) {
       updated.firstStudied = this._todayStr();
@@ -164,7 +165,7 @@ class FlashcardDB {
    */
   getDueCards(topicId, topic) {
     const now      = Date.now();
-    const { dailyNewCards, learnAhead } = this._data.settings;
+    const { dailyNewCards, learnAhead, dailyReviewLimit } = this._data.settings;
 
     const newCards      = [];
     const reviewCards   = [];
@@ -174,7 +175,7 @@ class FlashcardDB {
       const card = this.getCard(w.id);
       if (card.state === "new") {
         newCards.push(card);
-      } else if (card.state === "learning") {
+      } else if (card.state === "learning" || card.state === "relearning") {
         if (card.nextReview <= now + learnAhead * 60 * 1000) {
           learningCards.push(card);
         }
@@ -190,8 +191,13 @@ class FlashcardDB {
     const remainingNewLimit = Math.max(0, dailyNewCards - alreadyNewToday);
     const limitedNew = newCards.slice(0, remainingNewLimit);
 
+    // Giới hạn thẻ đang học/cần ôn theo cài đặt dailyReviewLimit (đã trừ đi số đã ôn hôm nay)
+    const alreadyReviewedToday = this.getAlreadyReviewedToday();
+    const remainingReviewLimit = Math.max(0, dailyReviewLimit - alreadyReviewedToday);
+    const limitedReview = [...learningCards, ...reviewCards].slice(0, remainingReviewLimit);
+
     // Ưu tiên: đang học → cần ôn → thẻ mới
-    return [...learningCards, ...reviewCards, ...limitedNew];
+    return [...limitedReview, ...limitedNew];
   }
 
   /** Thống kê tổng số từ theo trạng thái (chỉ tính các từ thuộc chủ đề hiện có) */
@@ -206,7 +212,7 @@ class FlashcardDB {
       const card = this._data.cards[id];
       if (!card || card.state === "new") {
         newCount++;
-      } else if (card.state === "review" && card.repetitions >= 2) {
+      } else if (card.state === "review" && card.reps >= 2) {
         known++;
       } else {
         learning++;
@@ -224,7 +230,7 @@ class FlashcardDB {
     topic.words.forEach(w => {
       const card = this._data.cards[w.id];
       if (!card || card.state === "new")                                          newW++;
-      else if (card.state === "learning" || (card.state === "review" && card.repetitions < 2)) learning++;
+      else if (card.state === "learning" || card.state === "relearning" || (card.state === "review" && card.reps < 2)) learning++;
       else                                                                         known++;
     });
     return { total: topic.words.length, known, learning, new: newW };
@@ -253,6 +259,13 @@ class FlashcardDB {
     return Object.values(this._data.cards).filter(c => c.firstStudied === today).length;
   }
 
+  /** Lấy số lượt ôn tập (không tính thẻ mới) đã thực hiện hôm nay */
+  getAlreadyReviewedToday() {
+    const today = this._todayStr();
+    const total = (this._data.stats.dailyLog[today] || {}).total || 0;
+    return Math.max(0, total - this.getAlreadyNewToday());
+  }
+
   // ----------------------------------------------------------
   // Home tab — advanced stats
   // ----------------------------------------------------------
@@ -263,7 +276,7 @@ class FlashcardDB {
    */
   getDailyTodo() {
     const now = Date.now();
-    const { dailyNewCards, learnAhead } = this._data.settings;
+    const { dailyNewCards, learnAhead, dailyReviewLimit } = this._data.settings;
     const today = this._todayStr();
     const todayLog = this._data.stats.dailyLog[today] || { reviewed: 0 };
 
@@ -281,7 +294,7 @@ class FlashcardDB {
         const card = this._data.cards[w.id];
         if (!card || card.state === 'new') {
           newCardsAvailable.push(w.id);
-        } else if (card.state === 'learning') {
+        } else if (card.state === 'learning' || card.state === 'relearning') {
           if (card.nextReview <= now + learnAhead * 60 * 1000) reviewCount++;
         } else if (card.state === 'review') {
           if (card.nextReview <= now) reviewCount++;
@@ -293,6 +306,10 @@ class FlashcardDB {
     const alreadyNewToday = this.getAlreadyNewToday();
     const remainingNewLimit = Math.max(0, dailyNewCards - alreadyNewToday);
     newCount = Math.max(0, Math.min(remainingNewLimit, newCardsAvailable.length));
+
+    // Giới hạn thẻ cần ôn theo cài đặt dailyReviewLimit (khớp với giới hạn thật trong getDueCards)
+    const remainingReviewLimit = Math.max(0, dailyReviewLimit - this.getAlreadyReviewedToday());
+    reviewCount = Math.min(reviewCount, remainingReviewLimit);
 
     const estimatedMinutes = Math.round(reviewCount * 1.2 + newCount * 2);
     return { reviewCount, newCount, estimatedMinutes };
@@ -402,37 +419,29 @@ class FlashcardDB {
    * Dự báo khả năng nhớ (Retrievability R = 0.9^(t/S)) theo FSRS
    */
   getFSRSPredictions() {
-    const todayStr = this._todayStr();
-    const todayMs = new Date(todayStr).getTime();
-    
-    // Lọc các thẻ đã học (có lastStudied)
+    const now = Date.now();
+
+    // Lọc các thẻ đã có mô hình trí nhớ FSRS-6 (đã ôn ít nhất 1 lần)
     const studiedCards = [];
     TOPICS.forEach(topic => {
       topic.words.forEach(w => {
         const card = this._data.cards[w.id];
-        if (card && card.lastStudied) {
+        if (card && card.lastReview && card.stability != null) {
           studiedCards.push(card);
         }
       });
     });
 
     if (studiedCards.length === 0) {
-      return {
-        current: 91, // Default values matching user prompt if no cards studied yet
-        day7: 89,
-        day30: 85,
-        day90: 80
-      };
+      return { current: null, day7: null, day30: null, day90: null };
     }
 
+    // R(t,S) — công thức khả năng nhớ thật của FSRS-6, xem algorithm.js
     const calculateAvgR = (daysAhead) => {
       let sumR = 0;
       studiedCards.forEach(card => {
-        const lastStudiedMs = new Date(card.lastStudied).getTime();
-        const daysElapsed = Math.max(0, (todayMs - lastStudiedMs) / (1000 * 60 * 60 * 24)) + daysAhead;
-        const S = Math.max(1, card.interval || 1);
-        const R = Math.pow(0.9, daysElapsed / S);
-        sumR += R;
+        const daysElapsed = Math.max(0, (now - card.lastReview) / DAY) + daysAhead;
+        sumR += retrievability(daysElapsed, card.stability);
       });
       return Math.round((sumR / studiedCards.length) * 100);
     };

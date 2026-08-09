@@ -3,7 +3,7 @@
 // Vai trò: Định nghĩa các template HTML phục vụ phiên học thẻ chi tiết
 // Chức năng:
 //  - Vẽ thẻ từ vựng lật 3D (mặt trước: từ mới, phiên âm; mặt sau: giải nghĩa, ví dụ, nút phát âm)
-//  - Hiển thị 4 nút đánh giá khả năng nhớ (Again, Hard, Good, Easy) dựa trên cấu hình SM-2
+//  - Hiển thị 4 nút đánh giá khả năng nhớ (Again, Hard, Good, Easy) dựa trên cấu hình FSRS-6
 //  - Hiển thị màn hình báo cáo kết quả sau khi hoàn thành buổi học (Finish Screen)
 //  - Hiển thị màn hình thông báo khi đã hoàn thành ôn tập hết thẻ trong ngày (No Cards Screen)
 // ============================================================
@@ -31,7 +31,7 @@ window.TEMPLATES.studySession = function(studySession, settings, progress, card)
       <!-- Card state badges -->
       <div class="card-state-row">
         <span class="state-pill state-${card.state}">${card.state.toUpperCase()}</span>
-        ${card.interval > 0 ? `<span class="interval-pill">⏱ ôn lại sau ${card.interval} ngày</span>` : '<span class="interval-pill">⏱ lần đầu tiên</span>'}
+        ${card.interval > 0 ? `<span class="interval-pill">⏱ ôn lại sau ${formatIntervalLabel(card.interval)}</span>` : '<span class="interval-pill">⏱ lần đầu tiên</span>'}
       </div>
 
       <!-- FLASHCARD -->
@@ -72,22 +72,22 @@ window.TEMPLATES.studySession = function(studySession, settings, progress, card)
           <button class="rating-btn again" onclick="rateCard(0)">
             <span class="rating-icon">😰</span>
             <span class="rating-name">Again</span>
-            <span class="rating-time">&lt;1m</span>
+            <span class="rating-time">${previewNextInterval(card, RATING.AGAIN)}</span>
           </button>
           <button class="rating-btn hard" onclick="rateCard(1)">
             <span class="rating-icon">😓</span>
             <span class="rating-name">Hard</span>
-            <span class="rating-time">&lt;10m</span>
+            <span class="rating-time">${previewNextInterval(card, RATING.HARD)}</span>
           </button>
           <button class="rating-btn good" onclick="rateCard(2)">
             <span class="rating-icon">🙂</span>
             <span class="rating-name">Good</span>
-            <span class="rating-time">${card.interval > 0 ? card.interval + 'd' : '1d'}</span>
+            <span class="rating-time">${previewNextInterval(card, RATING.GOOD)}</span>
           </button>
           <button class="rating-btn easy" onclick="rateCard(3)">
             <span class="rating-icon">😄</span>
             <span class="rating-name">Easy</span>
-            <span class="rating-time">${card.interval > 0 ? Math.round(card.interval * 1.3 * card.easeFactor) + 'd' : '4d'}</span>
+            <span class="rating-time">${previewNextInterval(card, RATING.EASY)}</span>
           </button>
         </div>
       </div>
@@ -139,7 +139,7 @@ window.TEMPLATES.finishScreen = function(reviewed, mins, streakDays, history = [
             ${uniqueHistory.map(item => {
               let statusText = "";
               let statusClass = "";
-              if (item.state === "learning") {
+              if (item.state === "learning" || item.state === "relearning") {
                 statusText = item.rating === 0 ? "Chưa thuộc (ôn lại sau 1 phút)" : "Hơi nhớ (ôn lại sau 10 phút)";
                 statusClass = "history-learning";
               } else if (item.state === "review") {

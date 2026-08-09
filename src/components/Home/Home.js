@@ -15,7 +15,7 @@ if (!window.TEMPLATES) window.TEMPLATES = {};
 
 window.TEMPLATES.home = function(stats, todo, progress, known, learning, newCount, totalWords, totalLearned, monthlyData, weakData, accuracy, streakRecord, streakColor, fsrs, weeklySummary) {
   // Lấy tiến trình Finance & Banking
-  const financeProg = db.getTopicProgress('finance') || { known: 0, learning: 0, total: 20 };
+  const financeProg = db.getTopicProgress('topic_finance') || { known: 0, learning: 0, total: 20 };
   const financePct = Math.round((financeProg.known + financeProg.learning) / financeProg.total * 100);
 
   return `
@@ -105,27 +105,27 @@ window.TEMPLATES.home = function(stats, todo, progress, known, learning, newCoun
     <div class="section-card">
       <div class="section-header">
         <span class="section-title">🔮 Dự báo trí nhớ FSRS</span>
-        <span class="section-badge badge-fsrs">FSRS v4</span>
+        <span class="section-badge badge-fsrs">FSRS v6</span>
       </div>
       <div class="fsrs-desc">
         Phân tích độ ổn định ký ức dựa trên lịch sử để dự báo khả năng ghi nhớ thực tế của bạn theo thời gian.
       </div>
       <div class="fsrs-card">
         <span class="fsrs-card-lbl">Khả năng nhớ hiện tại:</span>
-        <span class="fsrs-card-val">${fsrs.current}%</span>
+        <span class="fsrs-card-val">${fsrs.current !== null ? fsrs.current + '%' : '—'}</span>
       </div>
       <div class="fsrs-forecast-lines">
         <div class="forecast-row">
           <span>📅 Dự kiến 7 ngày tới:</span>
-          <span class="forecast-val day7">${fsrs.day7}%</span>
+          <span class="forecast-val day7">${fsrs.day7 !== null ? fsrs.day7 + '%' : '—'}</span>
         </div>
         <div class="forecast-row">
           <span>📅 Dự kiến 30 ngày tới:</span>
-          <span class="forecast-val day30">${fsrs.day30}%</span>
+          <span class="forecast-val day30">${fsrs.day30 !== null ? fsrs.day30 + '%' : '—'}</span>
         </div>
         <div class="forecast-row">
           <span>📅 Dự kiến 90 ngày tới:</span>
-          <span class="forecast-val day90">${fsrs.day90}%</span>
+          <span class="forecast-val day90">${fsrs.day90 !== null ? fsrs.day90 + '%' : '—'}</span>
         </div>
       </div>
     </div>

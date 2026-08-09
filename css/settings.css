@@ -1,149 +1,255 @@
 /* ============================================================
-   SETTINGS.CSS — Settings Tab Styles
-   Chứa: settings group, setting item, toggle switch,
-         input/select, about card.
+   SETTINGS.CSS (VIEW/STYLING LAYER)
+   Vai trò: Định nghĩa kiểu dáng giao diện cho Tab Cài đặt (Settings)
+   Chức năng:
+    - Bố cục các thành phần chọn, nhập số giới hạn từ học/ôn hàng ngày
+    - Phong cách các nút gạt chuyển đổi (iOS toggle switches)
+    - Thiết kế bảng thông tin giới thiệu ứng dụng (About card) và các nút xuất nhập dữ liệu
    ============================================================ */
 
 /* ---- Tab Header ---- */
-.settings-header { padding: 8px 0 20px; }
-.settings-title {
-  font-size: 24px;
-  font-weight: 800;
-  color: var(--text-primary);
+.settings-header {
+  padding: 12px 0 24px;
 }
 
-/* ---- Settings Group (grouped list of items) ---- */
+.settings-title {
+  font-size: 26px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #f8fafc 30%, #cbd5e1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+}
+
+/* ============================================================
+   SETTINGS GROUP CARD
+   ============================================================ */
+
 .settings-group {
   background: var(--bg-surface);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
 .settings-group-title {
   font-size: 11px;
-  font-weight: 700;
-  color: var(--text-muted);
+  font-weight: 800;
+  color: var(--accent-purple);
   text-transform: uppercase;
-  letter-spacing: 1px;
-  padding: 12px 18px 8px;
-  border-bottom: 1px solid var(--border);
+  letter-spacing: 1.2px;
+  padding: 16px 20px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* ---- Setting Item Row ---- */
+/* ============================================================
+   SETTING ITEM ROW
+   ============================================================ */
+
 .setting-item {
   display: flex;
   align-items: center;
-  padding: 16px 18px;
-  gap: 14px;
-  border-bottom: 1px solid var(--border);
+  padding: 18px 20px;
+  gap: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: var(--transition);
 }
-.setting-item:last-child       { border-bottom: none; }
-.setting-item.clickable        { cursor: pointer; transition: var(--transition); }
-.setting-item.clickable:hover  { background: var(--bg-elevated); }
-.setting-item.danger .setting-name { color: var(--accent-red) !important; }
 
-.setting-info  { flex: 1; }
-.setting-name  { font-size: 14px; font-weight: 600; display: block; margin-bottom: 2px; }
-.setting-desc  { font-size: 12px; color: var(--text-muted); }
+.setting-item:last-child {
+  border-bottom: none;
+}
 
-/* ---- Number Input ---- */
+.setting-item.clickable {
+  cursor: pointer;
+}
+
+.setting-item.clickable:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.setting-item.danger .setting-name {
+  color: var(--accent-red) !important;
+}
+
+.setting-info {
+  flex: 1;
+}
+
+.setting-name {
+  font-size: 14px;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 3px;
+  color: var(--text-primary);
+}
+
+.setting-desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.setting-item svg {
+  color: var(--text-muted);
+  transition: var(--transition-bounce);
+}
+.setting-item.clickable:hover svg {
+  color: var(--text-primary);
+  transform: translateX(4px);
+}
+
+/* ============================================================
+   CONTROLS (Input / Select)
+   ============================================================ */
+
 .setting-input {
-  width: 70px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
+  width: 72px;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   color: var(--text-primary);
   font-size: 14px;
-  font-weight: 600;
-  padding: 6px 10px;
+  font-weight: 700;
+  padding: 8px 10px;
   border-radius: var(--radius-sm);
   text-align: center;
   font-family: inherit;
-  transition: var(--transition);
+  transition: var(--transition-bounce);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
 }
+
 .setting-input:focus {
   outline: none;
   border-color: var(--accent-purple);
-  box-shadow: 0 0 0 3px var(--glow-purple);
+  box-shadow: 0 0 0 3px var(--glow-purple), inset 0 2px 4px rgba(0,0,0,0.15);
+  background: rgba(0, 0, 0, 0.4);
 }
 
-/* ---- Select ---- */
 .setting-select {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   color: var(--text-primary);
   font-size: 13px;
-  font-weight: 500;
-  padding: 6px 10px;
+  font-weight: 600;
+  padding: 8px 12px;
   border-radius: var(--radius-sm);
   font-family: inherit;
   cursor: pointer;
-  transition: var(--transition);
+  transition: var(--transition-bounce);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
 }
+
 .setting-select:focus {
   outline: none;
   border-color: var(--accent-purple);
+  box-shadow: 0 0 0 3px var(--glow-purple);
+  background: rgba(0, 0, 0, 0.4);
 }
 
-/* ---- Toggle Switch ---- */
+/* ============================================================
+   TOGGLE SWITCH (iOS Spring edition)
+   ============================================================ */
+
 .toggle-switch {
   position: relative;
-  width: 48px;
-  height: 26px;
+  width: 50px;
+  height: 28px;
   flex-shrink: 0;
 }
+
 .toggle-switch input {
   opacity: 0;
   width: 0; height: 0;
   position: absolute;
 }
+
 .toggle-slider {
   position: absolute;
   cursor: pointer;
   inset: 0;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 26px;
-  transition: var(--transition);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 30px;
+  transition: var(--transition-bounce);
 }
+
 .toggle-slider::before {
   content: '';
   position: absolute;
-  height: 18px; width: 18px;
+  height: 20px;
+  width: 20px;
   left: 3px;
   top: 50%;
   transform: translateY(-50%);
-  background: var(--text-muted);
+  background: var(--text-secondary);
   border-radius: 50%;
-  transition: var(--transition);
+  transition: var(--transition-bounce);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
+
 input:checked + .toggle-slider {
-  background: var(--accent-purple);
-  border-color: var(--accent-purple);
+  background: var(--gradient-primary);
+  border-color: rgba(139, 92, 246, 0.3);
+  box-shadow: 0 0 10px rgba(139, 92, 246, 0.3);
 }
+
 input:checked + .toggle-slider::before {
   transform: translateY(-50%) translateX(22px);
   background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
-/* ---- About Card ---- */
+/* ============================================================
+   ABOUT CARD
+   ============================================================ */
+
 .about-card {
   display: flex;
-  gap: 14px;
-  padding: 16px 18px;
+  gap: 16px;
+  padding: 20px;
   align-items: flex-start;
 }
+
 .about-logo {
   font-size: 32px;
-  width: 52px; height: 52px;
-  background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+  width: 56px;
+  height: 56px;
+  background: var(--gradient-primary);
   border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  box-shadow: 0 8px 20px var(--glow-purple), 
+              inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
-.about-name { font-size: 16px; font-weight: 800; margin-bottom: 2px; }
-.about-ver  { font-size: 12px; color: var(--text-muted); margin-bottom: 6px; }
-.about-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.5; }
+
+.about-info {
+  flex: 1;
+}
+
+.about-name {
+  font-size: 16px;
+  font-weight: 800;
+  margin-bottom: 2px;
+  color: var(--text-primary);
+}
+
+.about-ver {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--accent-purple);
+  margin-bottom: 8px;
+}
+
+.about-desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+

@@ -1,7 +1,11 @@
 // ============================================================
-// ALGORITHM.JS — SM-2 Spaced Repetition (Pure Functions)
-// Không phụ thuộc vào bất kỳ module nào khác.
-// Muốn đổi thuật toán (FSRS, Leitner...) chỉ cần sửa file này.
+// ALGORITHM.JS (MODEL/CORE LAYER)
+// Vai trò: Thuật toán ôn tập lặp lại ngắt quãng cốt lõi (Spaced Repetition)
+// Chức năng:
+//  - Chứa thuật toán toán học SM-2 (tương tự phần mềm Anki)
+//  - Tính toán khoảng cách ngày ôn tập tiếp theo (Interval) dựa trên phản hồi của người học
+//  - Cập nhật chỉ số Ease Factor (Độ dễ) và số lần ôn tập liên tục (Repetitions) của từng thẻ
+//  - Đây là tệp tin chứa logic tính toán thuần túy (Pure Functions), hoàn toàn độc lập với UI/Storage
 // ============================================================
 
 // --- Rating constants ---

@@ -1,7 +1,11 @@
 // ============================================================
-// DB.JS — Storage Layer (LocalStorage)
-// Phụ thuộc: algorithm.js (sm2, createCardState, RATING)
-// Muốn đổi sang IndexedDB hoặc backend API → chỉ sửa file này.
+// DB.JS (SERVICES/STORAGE LAYER)
+// Vai trò: Cơ sở dữ liệu cục bộ và quản lý lưu trữ (Local Spaced Repetition DB)
+// Chức năng:
+//  - Quản lý đọc/ghi tiến trình học vào LocalStorage để tránh mất dữ liệu khi tắt trang
+//  - Thực hiện các truy vấn thống kê dữ liệu: lấy số từ cần học hôm nay, đếm từ yếu, heatmap hoạt động
+//  - Thực hiện nạp dữ liệu mặc định của chủ đề khi người dùng truy cập lần đầu
+//  - Quản lý chức năng sao lưu: Xuất (Export) và Nhập (Import) file JSON tiến độ học tập
 // ============================================================
 
 const DB_KEY = "flashcard_lite_db";
@@ -70,7 +74,12 @@ class FlashcardDB {
   /** Cập nhật thẻ qua thuật toán SM-2, lưu storage, ghi lại rating để tính accuracy */
   updateCard(wordId, rating) {
     const card    = this.getCard(wordId);
+    const isNew   = card.state === "new";
     const updated = sm2(card, rating);          // ← gọi algorithm.js
+    
+    if (isNew) {
+      updated.firstStudied = this._todayStr();
+    }
     this._data.cards[wordId] = updated;
 
     // Ghi rating log (giữ tối đa 500 entry)
@@ -175,8 +184,10 @@ class FlashcardDB {
       }
     });
 
-    // Giới hạn thẻ mới theo cài đặt dailyNewCards
-    const limitedNew = newCards.slice(0, dailyNewCards);
+    // Giới hạn thẻ mới theo cài đặt dailyNewCards (đã trừ đi số thẻ mới đã học hôm nay)
+    const alreadyNewToday = this.getAlreadyNewToday();
+    const remainingNewLimit = Math.max(0, dailyNewCards - alreadyNewToday);
+    const limitedNew = newCards.slice(0, remainingNewLimit);
 
     // Ưu tiên: đang học → cần ôn → thẻ mới
     return [...learningCards, ...reviewCards, ...limitedNew];
@@ -225,6 +236,12 @@ class FlashcardDB {
     return result;
   }
 
+  /** Lấy số từ mới đã bắt đầu học hôm nay */
+  getAlreadyNewToday() {
+    const today = this._todayStr();
+    return Object.values(this._data.cards).filter(c => c.firstStudied === today).length;
+  }
+
   // ----------------------------------------------------------
   // Home tab — advanced stats
   // ----------------------------------------------------------
@@ -262,8 +279,9 @@ class FlashcardDB {
     });
 
     // Giới hạn thẻ mới theo cài đặt
-    const alreadyNewToday = Math.max(0, todayLog.reviewed - (todayLog.reviewed > 0 ? reviewCount : 0));
-    newCount = Math.max(0, Math.min(dailyNewCards, newCardsAvailable.length));
+    const alreadyNewToday = this.getAlreadyNewToday();
+    const remainingNewLimit = Math.max(0, dailyNewCards - alreadyNewToday);
+    newCount = Math.max(0, Math.min(remainingNewLimit, newCardsAvailable.length));
 
     const estimatedMinutes = Math.round(reviewCount * 1.2 + newCount * 2);
     return { reviewCount, newCount, estimatedMinutes };
@@ -348,12 +366,23 @@ class FlashcardDB {
     const { dailyNewCards, dailyReviewLimit } = this._data.settings;
 
     const reviewedToday = log.reviewed || 0;
-    const reviewGoal    = dailyReviewLimit;
-    const newToday      = 0; // simplified — chỉ track reviewed tổng
-    const newGoal       = dailyNewCards;
-    const overallPct    = Math.min(100, Math.round((reviewedToday / reviewGoal) * 100));
+    
+    // Đếm số lượng thẻ thực tế cần ôn và học hôm nay để đặt mục tiêu động
+    const todo = this.getDailyTodo();
+    const totalCardsToday = reviewedToday + todo.reviewCount + todo.newCount;
+    
+    const reviewGoal = totalCardsToday || dailyReviewLimit;
+    const overallPct = totalCardsToday > 0 
+      ? Math.min(100, Math.round((reviewedToday / totalCardsToday) * 100)) 
+      : 100;
 
-    return { reviewedToday, reviewGoal, newToday, newGoal, overallPct };
+    return { 
+      reviewedToday, 
+      reviewGoal, 
+      newToday: this.getAlreadyNewToday(), 
+      newGoal: dailyNewCards, 
+      overallPct 
+    };
   }
 
   // ----------------------------------------------------------

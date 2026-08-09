@@ -13,7 +13,8 @@
 /* 3. Shared UI components (toast, modal, buttons) */
 @import url('components.css');
 
-/* 4. Từng tab */
+/* 4. Từng tab & màn hình phụ */
 @import url('home.css');
 @import url('learn.css');
+@import url('study.css');
 @import url('settings.css');

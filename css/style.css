@@ -1,0 +1,19 @@
+/* ============================================================
+   STYLE.CSS — Entry Point
+   Import theo thứ tự: base → nav → components → tabs
+   Để thêm theme mới hoặc tab mới, chỉ cần thêm @import ở đây.
+   ============================================================ */
+
+/* 1. Nền tảng: tokens, reset, body, layout, keyframes */
+@import url('base.css');
+
+/* 2. Navigation bar */
+@import url('nav.css');
+
+/* 3. Shared UI components (toast, modal, buttons) */
+@import url('components.css');
+
+/* 4. Từng tab */
+@import url('home.css');
+@import url('learn.css');
+@import url('settings.css');

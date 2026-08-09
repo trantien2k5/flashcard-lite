@@ -1,0 +1,75 @@
+/* ============================================================
+   NAV.CSS — Bottom Navigation Bar
+   ============================================================ */
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  height: var(--nav-height);
+  background: rgba(19,22,43,0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  z-index: 100;
+  padding: 0 8px;
+}
+
+.tab-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: var(--transition);
+  border-radius: var(--radius-md);
+  position: relative;
+}
+
+.tab-btn .tab-icon {
+  font-size: 22px;
+  transition: var(--transition);
+  line-height: 1;
+}
+.tab-btn .tab-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  transition: var(--transition);
+}
+
+.tab-btn.active {
+  color: var(--accent-purple);
+}
+.tab-btn.active .tab-icon {
+  transform: scale(1.1) translateY(-2px);
+  filter: drop-shadow(0 0 8px var(--glow-purple));
+}
+
+/* Active indicator line on top */
+.tab-btn::after {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: 28px;
+  height: 2px;
+  background: var(--accent-purple);
+  border-radius: 2px;
+  transition: var(--transition);
+}
+.tab-btn.active::after {
+  transform: translateX(-50%) scaleX(1);
+}

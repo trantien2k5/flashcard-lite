@@ -1,0 +1,117 @@
+/* ============================================================
+   COMPONENTS.CSS — Shared UI Components
+   Chứa: Modal overlay/box, Toast notification,
+         Button variants (secondary, danger).
+   Dùng chung ở nhiều tab.
+   ============================================================ */
+
+/* ============================================================
+   MODAL
+   ============================================================ */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 20px;
+  animation: fadeIn 0.2s ease;
+}
+
+.modal-box {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-bright);
+  border-radius: var(--radius-xl);
+  padding: 28px 24px;
+  max-width: 340px;
+  width: 100%;
+  text-align: center;
+  animation: scaleIn 0.25s ease;
+  box-shadow: var(--shadow-lg);
+}
+
+.modal-icon  { font-size: 44px; margin-bottom: 14px; }
+.modal-title { font-size: 20px; font-weight: 800; margin-bottom: 10px; }
+.modal-text  {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+/* ============================================================
+   BUTTONS (shared across tabs)
+   ============================================================ */
+
+.btn-secondary {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  padding: 10px 22px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: var(--transition);
+}
+.btn-secondary:hover {
+  border-color: var(--border-bright);
+  color: var(--text-primary);
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, #f43f5e, #e11d48);
+  border: none;
+  color: white;
+  padding: 10px 22px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: var(--transition);
+  box-shadow: 0 4px 16px rgba(244,63,94,0.3);
+}
+.btn-danger:hover {
+  box-shadow: 0 8px 24px rgba(244,63,94,0.4);
+  transform: translateY(-1px);
+}
+
+/* ============================================================
+   TOAST NOTIFICATION
+   ============================================================ */
+
+.toast {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 16px);
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-bright);
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 10px 20px;
+  border-radius: 30px;
+  white-space: nowrap;
+  z-index: 300;
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+  box-shadow: var(--shadow-md);
+  pointer-events: none;
+}
+.toast-visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}

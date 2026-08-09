@@ -1,0 +1,144 @@
+/* ============================================================
+   BASE.CSS — Design Tokens, Reset, Body, Layout, Animations
+   Không phụ thuộc vào file CSS nào khác.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* ---- Design Tokens ---- */
+:root {
+  --bg-base:       #0d0f1a;
+  --bg-surface:    #13162b;
+  --bg-elevated:   #1a1e35;
+  --bg-card:       #1f2440;
+  --bg-hover:      #252a4a;
+
+  --border:        rgba(255,255,255,0.07);
+  --border-bright: rgba(255,255,255,0.14);
+
+  --text-primary:  #f0f2ff;
+  --text-secondary:#8892b0;
+  --text-muted:    #4a5580;
+
+  --accent-purple: #6366f1;
+  --accent-blue:   #3b82f6;
+  --accent-green:  #10b981;
+  --accent-amber:  #f59e0b;
+  --accent-red:    #f43f5e;
+
+  --glow-purple:   rgba(99,102,241,0.3);
+  --glow-blue:     rgba(59,130,246,0.3);
+
+  --radius-sm:     8px;
+  --radius-md:     14px;
+  --radius-lg:     20px;
+  --radius-xl:     28px;
+
+  --shadow-sm:     0 2px 8px rgba(0,0,0,0.3);
+  --shadow-md:     0 8px 24px rgba(0,0,0,0.4);
+  --shadow-lg:     0 20px 60px rgba(0,0,0,0.5);
+
+  --transition:    all 0.22s cubic-bezier(0.4,0,0.2,1);
+  --nav-height:    72px;
+}
+
+/* ---- Reset ---- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* Chống bôi đen văn bản toàn app */
+* {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Vẫn cho phép chọn text trong ô nhập liệu */
+input, textarea, [contenteditable] {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg-base);
+  color: var(--text-primary);
+  min-height: 100vh;
+  max-width: 480px;
+  margin: 0 auto;
+  position: relative;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Background gradient orbs */
+body::before {
+  content: '';
+  position: fixed;
+  top: -20%; left: -20%;
+  width: 60%; height: 60%;
+  background: radial-gradient(circle, rgba(99,102,241,0.12) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+body::after {
+  content: '';
+  position: fixed;
+  bottom: -10%; right: -20%;
+  width: 50%; height: 50%;
+  background: radial-gradient(circle, rgba(16,185,129,0.08) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ---- Layout ---- */
+.app-container {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  padding-bottom: calc(var(--nav-height) + 16px);
+}
+
+.tab-pane {
+  display: none;
+  padding: 20px 16px 0;
+  animation: fadeUp 0.3s ease;
+}
+.tab-pane.active { display: block; }
+
+/* ---- Keyframe Animations ---- */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes bounce {
+  0%   { transform: scale(0.5); opacity: 0; }
+  60%  { transform: scale(1.15); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+/* ---- Scrollbar ---- */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 4px; }
+
+/* ---- Responsive ---- */
+@media (min-width: 480px) {
+  body { box-shadow: 0 0 80px rgba(0,0,0,0.8); }
+  .bottom-nav { border-radius: 0; }
+}

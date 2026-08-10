@@ -5,7 +5,7 @@
 //  - Lắng nghe các sự kiện bấm nút của người dùng (chuyển tab, lật thẻ, chọn chủ đề, lưu cài đặt...)
 //  - Tải động (Dynamic loading) dữ liệu từ vựng chủ đề khi khởi chạy
 //  - Điều phối dữ liệu từ Service (`db.js`) và thuật toán (`algorithm.js`) để cập nhật trạng thái
-//  - Chọn và kích hoạt các cấu trúc HTML động từ thư mục `src/components/` để cập nhật hiển thị (DOM)
+//  - Chọn và kích hoạt các cấu trúc HTML động từ các file trong thư mục `js/` để cập nhật hiển thị (DOM)
 // ============================================================
 
 // ---- State ----
@@ -330,7 +330,8 @@ document.addEventListener("keydown", (e) => {
 async function loadTopicsDynamic() {
   window.TOPICS = [];
   const topicFiles = [
-    "src/data/finance.js"
+    "data/finance.js",
+    "data/toeic.js"
   ];
   
   await Promise.all(topicFiles.map(src => {

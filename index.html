@@ -17,16 +17,8 @@
   <!-- Favicon emoji -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
 
-  <!-- Global Styles -->
-  <link rel="stylesheet" href="css/index.css" />
-  <link rel="stylesheet" href="css/App.css" />
-
-  <!-- Component Styles -->
-  <link rel="stylesheet" href="css/Navigation.css" />
-  <link rel="stylesheet" href="css/Home.css" />
-  <link rel="stylesheet" href="css/Learn.css" />
-  <link rel="stylesheet" href="css/Study.css" />
-  <link rel="stylesheet" href="css/Settings.css" />
+  <!-- Toàn bộ CSS của app (1 file duy nhất, xem chú thích PHẦN bên trong) -->
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
@@ -46,6 +38,15 @@
          ================================================ -->
     <section id="tab-learn" class="tab-pane" role="main" aria-label="Learn">
       <div id="learn-content">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- ================================================
+         STATS TAB
+         ================================================ -->
+    <section id="tab-stats" class="tab-pane" role="main" aria-label="Stats">
+      <div id="stats-content">
         <!-- Rendered by JS -->
       </div>
     </section>
@@ -73,19 +74,17 @@
       <span class="tab-icon">📖</span>
       <span class="tab-label">Learn</span>
     </button>
+    <button id="nav-stats" class="tab-btn" data-tab="stats" aria-label="Stats" title="Stats">
+      <span class="tab-icon">📊</span>
+      <span class="tab-label">Stats</span>
+    </button>
     <button id="nav-settings" class="tab-btn" data-tab="settings" aria-label="Settings" title="Settings">
       <span class="tab-icon">⚙️</span>
       <span class="tab-label">Settings</span>
     </button>
   </nav>
 
-  <!-- Scripts — thứ tự quan trọng: algorithm → db → components → main -->
-  <script src="js/algorithm.js"></script>
-  <script src="js/db.js"></script>
-  <script src="js/Home.js"></script>
-  <script src="js/Learn.js"></script>
-  <script src="js/Study.js"></script>
-  <script src="js/Settings.js"></script>
-  <script src="js/main.js"></script>
+  <!-- Toàn bộ JS của app (1 file duy nhất, xem chú thích PHẦN bên trong) -->
+  <script src="app.js"></script>
 </body>
 </html>

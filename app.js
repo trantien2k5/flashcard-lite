@@ -397,9 +397,13 @@ class FlashcardDB {
    * Lấy danh sách thẻ đến hạn của một chủ đề (learning → review → new).
    * @param {string} topicId
    * @param {object} topic   - object từ data.js
+   * @param {number} [alreadyNewToday]      - truyền sẵn nếu nơi gọi cần lặp qua nhiều chủ đề
+   *   (ví dụ TEMPLATES.learnList), để tránh quét lại toàn bộ this._data.cards mỗi chủ đề —
+   *   xem getAlreadyNewToday/getAlreadyReviewedToday.
+   * @param {number} [alreadyReviewedToday]
    * @returns {CardState[]}
    */
-  getDueCards(topicId, topic) {
+  getDueCards(topicId, topic, alreadyNewToday, alreadyReviewedToday) {
     const now      = Date.now();
     const { dailyNewCards, learnAhead, dailyReviewLimit } = this._data.settings;
 
@@ -423,13 +427,13 @@ class FlashcardDB {
     });
 
     // Giới hạn thẻ mới theo cài đặt dailyNewCards (đã trừ đi số thẻ mới đã học hôm nay)
-    const alreadyNewToday = this.getAlreadyNewToday();
-    const remainingNewLimit = Math.max(0, dailyNewCards - alreadyNewToday);
+    const newToday = alreadyNewToday !== undefined ? alreadyNewToday : this.getAlreadyNewToday();
+    const remainingNewLimit = Math.max(0, dailyNewCards - newToday);
     const limitedNew = newCards.slice(0, remainingNewLimit);
 
     // Giới hạn thẻ đang học/cần ôn theo cài đặt dailyReviewLimit (đã trừ đi số đã ôn hôm nay)
-    const alreadyReviewedToday = this.getAlreadyReviewedToday();
-    const remainingReviewLimit = Math.max(0, dailyReviewLimit - alreadyReviewedToday);
+    const reviewedToday = alreadyReviewedToday !== undefined ? alreadyReviewedToday : this.getAlreadyReviewedToday(newToday);
+    const remainingReviewLimit = Math.max(0, dailyReviewLimit - reviewedToday);
     const limitedReview = [...learningCards, ...reviewCards].slice(0, remainingReviewLimit);
 
     // Ưu tiên: đang học → cần ôn → thẻ mới
@@ -495,11 +499,16 @@ class FlashcardDB {
     return Object.values(this._data.cards).filter(c => c.firstStudied === today).length;
   }
 
-  /** Lấy số lượt ôn tập (không tính thẻ mới) đã thực hiện hôm nay */
-  getAlreadyReviewedToday() {
+  /**
+   * Lấy số lượt ôn tập (không tính thẻ mới) đã thực hiện hôm nay.
+   * @param {number} [alreadyNewToday] — truyền sẵn nếu đã tính ở nơi gọi, để tránh quét lại
+   *   toàn bộ this._data.cards (xem getAlreadyNewToday) thêm một lần nữa.
+   */
+  getAlreadyReviewedToday(alreadyNewToday) {
     const today = this._todayStr();
     const total = (this._data.stats.dailyLog[today] || {}).total || 0;
-    return Math.max(0, total - this.getAlreadyNewToday());
+    const newToday = alreadyNewToday !== undefined ? alreadyNewToday : this.getAlreadyNewToday();
+    return Math.max(0, total - newToday);
   }
 
   // ----------------------------------------------------------
@@ -544,7 +553,7 @@ class FlashcardDB {
     newCount = Math.max(0, Math.min(remainingNewLimit, newCardsAvailable.length));
 
     // Giới hạn thẻ cần ôn theo cài đặt dailyReviewLimit (khớp với giới hạn thật trong getDueCards)
-    const remainingReviewLimit = Math.max(0, dailyReviewLimit - this.getAlreadyReviewedToday());
+    const remainingReviewLimit = Math.max(0, dailyReviewLimit - this.getAlreadyReviewedToday(alreadyNewToday));
     reviewCount = Math.min(reviewCount, remainingReviewLimit);
 
     const estimatedMinutes = Math.round(reviewCount * 1.2 + newCount * 2);
@@ -1196,6 +1205,10 @@ window.TEMPLATES.stats = function(stats, totalLearned, monthlyData, weakData, ac
 if (!window.TEMPLATES) window.TEMPLATES = {};
 
 window.TEMPLATES.learnList = function() {
+  // Tính 1 lần duy nhất cho toàn danh sách — thay vì để getDueCards() tự quét lại
+  // toàn bộ this._data.cards (~3000 thẻ) ở MỖI chủ đề trong 30 chủ đề bên dưới.
+  const alreadyNewToday = db.getAlreadyNewToday();
+  const alreadyReviewedToday = db.getAlreadyReviewedToday(alreadyNewToday);
   return `
     <div class="learn-header">
       <h2 class="learn-title">Chủ đề từ vựng</h2>
@@ -1205,7 +1218,7 @@ window.TEMPLATES.learnList = function() {
       ${TOPICS.map(topic => {
         const prog = db.getTopicProgress(topic.id);
         const pct = Math.round((prog.known + prog.learning) / prog.total * 100);
-        const due = db.getDueCards(topic.id, topic).length;
+        const due = db.getDueCards(topic.id, topic, alreadyNewToday, alreadyReviewedToday).length;
         return `
         <div class="topic-card" onclick="openTopicStudy('${topic.id}')" style="--topic-color: ${topic.color}">
           <div class="topic-icon-area">

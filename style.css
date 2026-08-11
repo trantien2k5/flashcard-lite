@@ -2084,6 +2084,13 @@ body.light-theme .topic-progress-bar {
 /* ============================================================
    LIGHT THEME OVERRIDES FOR STUDY SESSION
    ============================================================ */
+body.light-theme .finish-title {
+  background: linear-gradient(135deg, #0f172a, #7c3aed);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 body.light-theme .state-new {
   background: rgba(109, 40, 217, 0.08);
   color: #6d28d9;

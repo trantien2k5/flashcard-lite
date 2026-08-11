@@ -37,7 +37,7 @@
          ================================================ -->
     <section id="tab-home" class="tab-pane active" role="main" aria-label="Home">
       <div id="home-content">
-        <!-- Skeleton tĩnh hiển thị ngay khi HTML parse xong, không chờ app.js/dữ liệu chủ đề tải
+        <!-- Skeleton tĩnh hiển thị ngay khi HTML parse xong, không chờ JS/dữ liệu chủ đề tải
              (~700KB/30 file) — renderHome() sẽ ghi đè bằng nội dung thật khi sẵn sàng. -->
         <div class="skeleton-loading" aria-hidden="true">
           <div class="skeleton-block skeleton-title"></div>
@@ -99,7 +99,20 @@
     </button>
   </nav>
 
-  <!-- Toàn bộ JS của app (1 file duy nhất, xem chú thích PHẦN bên trong) -->
-  <script src="app.js"></script>
+  <!-- JS tách theo feature (core → store → shared → features → bootstrap). Không dùng
+       module — mọi file đều gắn hàm/biến vào global scope, nên THỨ TỰ nạp bên dưới
+       BẮT BUỘC giữ nguyên: file sau luôn có thể phụ thuộc file trước, không được ngược lại. -->
+  <script src="js/core/fsrs.js"></script>
+  <script src="js/core/state.js"></script>
+  <script src="js/store/flashcard-db.js"></script>
+  <script src="js/core/navigation.js"></script>
+  <script src="js/core/theme.js"></script>
+  <script src="js/shared/toast.js"></script>
+  <script src="js/features/home/home.js"></script>
+  <script src="js/features/stats/stats.js"></script>
+  <script src="js/features/learn/learn.js"></script>
+  <script src="js/features/study/study.js"></script>
+  <script src="js/features/settings/settings.js"></script>
+  <script src="js/bootstrap.js"></script>
 </body>
 </html>

@@ -1,0 +1,121 @@
+/* ================================================================
+   LAYOUT.CSS
+   Khung bố cục toàn app: vùng nội dung cuộn (.app-container), khung
+   chuyển tab (.tab-pane) và thanh điều hướng dưới cố định (bottom nav).
+   ================================================================ */
+
+/* ---- Layout ---- */
+.app-container {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  padding-bottom: calc(var(--nav-height) + 24px);
+}
+
+.tab-pane {
+  display: none;
+  padding: 24px 20px 0;
+  animation: fadeUp 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.tab-pane.active { display: block; }
+/* Chế độ học tập trung (body.study-focus): ẩn thanh nav dưới trong lúc đang
+   lật thẻ để không phân tâm; app-container bỏ luôn khoảng chừa chỗ cho nav. */
+body.study-focus .bottom-nav {
+  display: none;
+}
+body.study-focus .app-container {
+  padding-bottom: 24px;
+}
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  height: var(--nav-height);
+  background: #111322;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  z-index: 100;
+  padding: 0 10px;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4);
+  transition: var(--transition);
+}
+
+.tab-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: var(--transition-bounce);
+  border-radius: 14px;
+  position: relative;
+}
+
+.tab-btn:hover {
+  color: var(--text-secondary);
+}
+
+.tab-btn .tab-icon {
+  font-size: 22px;
+  transition: var(--transition-bounce);
+  line-height: 1;
+}
+
+.tab-btn .tab-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  transition: var(--transition);
+}
+
+.tab-btn.active {
+  color: var(--accent-purple);
+}
+
+.tab-btn.active .tab-icon {
+  transform: scale(1.15) translateY(-3px);
+  filter: drop-shadow(0 0 10px var(--glow-purple));
+}
+
+/* Active indicator dot at the bottom */
+.tab-btn::after {
+  content: '';
+  position: absolute;
+  bottom: 0px;
+  left: 50%;
+  transform: translateX(-50%) scale(0);
+  width: 5px;
+  height: 5px;
+  background: var(--accent-purple);
+  border-radius: 50%;
+  transition: var(--transition-bounce);
+  box-shadow: 0 0 8px var(--glow-purple);
+}
+
+.tab-btn.active::after {
+  transform: translateX(-50%) scale(1);
+}
+
+/* ============================================================
+   LIGHT THEME OVERRIDES FOR BOTTOM NAV
+   ============================================================ */
+body.light-theme .bottom-nav {
+  background: #ffffff;
+  border-top: 1px solid rgba(15, 23, 42, 0.08);
+  border-bottom: none;
+  border-left: none;
+  border-right: none;
+  box-shadow: 0 -4px 20px rgba(15, 23, 42, 0.05);
+}

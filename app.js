@@ -2048,6 +2048,7 @@ async function loadTopicsDynamic() {
     return new Promise((resolve) => {
       const script = document.createElement("script");
       script.src = src;
+      script.async = false; // giữ đúng thứ tự thực thi theo topicFiles dù tải song song
       script.onload = () => resolve();
       script.onerror = () => {
         console.error("Failed to load topic: " + src);

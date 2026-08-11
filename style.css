@@ -178,6 +178,7 @@ body::before {
   pointer-events: none;
   z-index: 0;
   animation: floatOrb1 15s infinite alternate ease-in-out;
+  will-change: transform;
 }
 body::after {
   content: '';
@@ -188,6 +189,7 @@ body::after {
   pointer-events: none;
   z-index: 0;
   animation: floatOrb2 12s infinite alternate ease-in-out;
+  will-change: transform;
 }
 
 @keyframes floatOrb1 {
@@ -216,8 +218,8 @@ body::after {
 
 /* ---- Keyframe Animations ---- */
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(20px); filter: blur(4px); }
-  to   { opacity: 1; transform: translateY(0); filter: blur(0); }
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes fadeIn {
@@ -232,8 +234,8 @@ body::after {
 }
 
 @keyframes scaleIn {
-  from { transform: scale(0.95); opacity: 0; filter: blur(2px); }
-  to   { transform: scale(1); opacity: 1; filter: blur(0); }
+  from { transform: scale(0.95); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
 }
 
 /* ---- Scrollbar ---- */
@@ -267,8 +269,8 @@ body::after {
   position: fixed;
   inset: 0;
   background: rgba(4, 5, 11, 0.75);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -378,8 +380,8 @@ body::after {
   left: 50%;
   transform: translateX(-50%) translateY(-24px);
   background: rgba(18, 20, 38, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: var(--text-primary);
   font-size: 13px;
@@ -697,8 +699,8 @@ body.light-theme .bottom-nav {
 
 .stat-card-v2 {
   background: var(--bg-surface);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 18px 16px;
@@ -759,8 +761,8 @@ body.light-theme .bottom-nav {
 
 .section-card {
   background: var(--bg-surface);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 20px;
@@ -849,7 +851,7 @@ body.light-theme .bottom-nav {
 .heatmap-cell {
   aspect-ratio: 1;
   border-radius: 4px;
-  transition: var(--transition);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
   cursor: default;
 }
 
@@ -1360,8 +1362,8 @@ body.light-theme .heatmap-cell.level-0 {
 
 .topic-card {
   background: var(--bg-surface);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 18px 16px;
@@ -2009,8 +2011,8 @@ body.light-theme .topic-progress-bar {
 .finish-stat {
   flex: 1;
   background: var(--bg-surface);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 16px 10px;
@@ -2288,8 +2290,8 @@ body.light-theme .history-status.history-review {
 
 .settings-group {
   background: var(--bg-surface);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   overflow: hidden;

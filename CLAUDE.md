@@ -22,14 +22,32 @@ Then open the served URL. There is no lint or test command configured.
 
 ## Architecture
 
-Everything runs client-side with global objects attached to `window`; there are no ES modules, no imports/exports. The project is 3 top-level files/folders:
+Everything runs client-side with global objects attached to `window`; there are no ES modules, no imports/exports. The project is 4 top-level files/folders:
 
 ```
 index.html
-style.css — all styles, single file, divided into numbered "PHẦN" (section) blocks in Vietnamese comments (tokens → shared components → nav → Home → Stats → Learn → Study → Settings); search "PHẦN <n>" to jump to a section
-app.js     — all scripts, single file, same "PHẦN" convention as style.css (see below)
-data/      — vocabulary topic data files (still one file per topic-group, loaded dynamically — see below); the only subfolder in the project
+css/       — styles, split by architectural layer (Base → Layout → Components → Pages), see below
+app.js     — all scripts, single file, divided into numbered "PHẦN" (section) blocks in Vietnamese comments; search "PHẦN <n>" to jump to a section
+data/      — vocabulary topic data files (one file per topic-group, loaded dynamically — see below)
 ```
+
+`css/` is split by responsibility, not by tab, so genuinely shared styles live in exactly one place instead of being duplicated per page. All 8 files are linked in `index.html`, in this order (later files may override earlier ones for the same selector, though in practice each selector is owned by exactly one file):
+
+```
+css/base.css        — design tokens (:root, incl. light-theme overrides), CSS reset, body/html base, background
+                       orbs, shared keyframes (fadeUp/fadeIn/bounce/scaleIn). No dependency on any other CSS file.
+css/layout.css       — structural regions: .app-container/.tab-pane, bottom nav (.bottom-nav/.tab-btn).
+css/components.css   — reusable UI widgets used on ≥2 tabs: modal, toast, buttons (.btn-primary/-secondary/
+                       -danger/-text), skeleton loading, .section-card/-header/-title/-badge, .home-header/
+                       .greeting-text (shared by Home + Stats headers).
+css/pages/home.css   — Home tab only (today-block, total-progress, topic overview list).
+css/pages/learn.css  — Learn tab only (topic grid/cards).
+css/pages/stats.css  — Stats tab only (stat-card-v2, FSRS forecast, weak words, achievements, heatmap).
+css/pages/study.css  — Study session only (flashcard flip, rating buttons, finish/no-cards screens).
+css/pages/settings.css — Settings tab only.
+```
+
+A selector belongs in `components.css` only if it's actually used on more than one tab (verified via `grep` in `app.js`, not just by a generic-sounding name) — e.g. `.stat-card-v2` looks generic but is Stats-only today, so it lives in `css/pages/stats.css`; if a future change reuses it elsewhere, promote it to `components.css` then.
 
 `app.js` concatenates what used to be separate script files, in dependency order, as 8 numbered "PHẦN" blocks (search `PHẦN <n>` to jump to one) — order matters because there are no modules, so a later PHẦN can reference globals a prior PHẦN defined, but not the reverse:
 
@@ -46,7 +64,7 @@ Layers (also documented as a header comment at the start of each PHẦN, in Viet
 - **`data/*.js`** (e.g. `finance.js`, `toeic.js`) — Topic/vocabulary data files. Each is an IIFE that pushes one or more `{ id, name, icon, color, description, words: [...] }` objects onto `window.TOPICS`, guarded against double-registration. These are loaded dynamically at runtime (not via static `<script>` tags in `index.html`) by `loadTopicsDynamic()` in PHẦN 8, which is the place to register new topic files.
 - **PHẦN 3 (Home)** — `TEMPLATES.home`, rendered by `renderHome()`. Deliberately minimal/action-oriented: today's due/new counts + "Bắt đầu học" CTA, overall progress bar, topic overview list. Does NOT read weak-word/FSRS/heatmap data — those queries live in PHẦN 4 only, to keep Home's render cheap.
 - **PHẦN 4 (Stats)** — `TEMPLATES.stats`, rendered by `renderStats()` (called lazily, only when the Stats tab is opened). Everything analytical: streak + 7-day accuracy, FSRS memory forecast (current/7d/30d/90d retrievability), top-3 weakest words by lapse count, achievement badges, weekly summary, and the 30-day activity heatmap.
-- **PHẦN 5–7 (Learn, Study, Settings)** — View layer. Each defines pure HTML-string template functions attached to the global `window.TEMPLATES` namespace (e.g. `TEMPLATES.studySession`, `TEMPLATES.learnList`, `TEMPLATES.settings`). They read from `db` and `TOPICS` but don't mutate state; they return template strings that PHẦN 8 injects into the DOM via `innerHTML`. Styling for each lives in its matching numbered "PHẦN" section inside `style.css`. During an active study session, `document.body` gets a `study-focus` class (set by `setStudyFocusMode()` in PHẦN 6) which hides the bottom nav via CSS for a distraction-free flip-card view.
+- **PHẦN 5–7 (Learn, Study, Settings)** — View layer. Each defines pure HTML-string template functions attached to the global `window.TEMPLATES` namespace (e.g. `TEMPLATES.studySession`, `TEMPLATES.learnList`, `TEMPLATES.settings`). They read from `db` and `TOPICS` but don't mutate state; they return template strings that PHẦN 8 injects into the DOM via `innerHTML`. Styling for each lives in the matching `css/pages/*.css` file (plus `css/components.css` for anything shared). During an active study session, `document.body` gets a `study-focus` class (set by `setStudyFocusMode()` in PHẦN 6) which hides the bottom nav via CSS for a distraction-free flip-card view.
 - **PHẦN 8 (main)** — Central controller. Owns UI state (`currentTab`, `studySession`), tab switching (`switchTab()`, generic over any `.tab-pane`/`.tab-btn[data-tab]` pair — adding a 5th tab needs no changes here), event wiring (nav buttons, keyboard shortcuts for rating cards during study: `1`-`4` and Space/Enter to flip), orchestrates `db` + `TEMPLATES` to render each tab, and drives the study-session flow (`openTopicStudy` → `renderStudySession` → `flipCard`/`rateCard` → `finishStudySession`). Runs on `DOMContentLoaded`.
 
 ### Data flow for a study session
@@ -66,7 +84,8 @@ Create a new IIFE file under `data/` following the `finance.js` pattern (unique 
 - No modules — new globals must be attached explicitly (e.g. `window.TEMPLATES.xxx = ...`, guarded with `if (!window.TEMPLATES) window.TEMPLATES = {}`).
 - PHẦN 1 (algorithm) functions are pure; keep storage/DOM concerns out of it and in PHẦN 2 (db) / the view PHẦNs instead.
 - `app.js` is one file with no modules, so top-level `const`/`let` (e.g. `DAY`, `MINUTE`, `RATING` from PHẦN 1) are visible everywhere below their declaration — this is how PHẦN 2+ reuse them — but redeclaring the same name in a later PHẦN throws a `SyntaxError`. Check existing top-level names (`Ctrl+F` in `app.js`) before adding new ones. When editing, preserve the PHẦN order (1→8); moving code across PHẦNs can break this dependency chain.
-- `style.css` and `app.js` are each intentionally a single merged file (not per-component files) — when adding a new screen/feature, append a new numbered PHẦN block (or extend an existing one) rather than creating a separate file, to keep the "1 file per concern" structure intact.
+- `app.js` is intentionally a single merged file (not per-component files) — when adding a new screen/feature, append a new numbered PHẦN block (or extend an existing one) rather than creating a separate file.
+- CSS, unlike `app.js`, is split by architectural layer (see `css/` above) — when adding a new screen, create/extend its `css/pages/<name>.css` file; only touch `css/components.css` for a style genuinely reused across ≥2 tabs, and `css/base.css`/`css/layout.css` only for true global tokens/structure. Remember to add the new `<link rel="stylesheet">` to `index.html` if it's a new file.
 
 ## Git workflow
 

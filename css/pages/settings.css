@@ -1,0 +1,291 @@
+/* ================================================================
+   PAGES/SETTINGS.CSS
+   CSS riêng cho tab Cài đặt: nhóm cài đặt, hàng setting, input/select,
+   toggle switch, khối "Giới thiệu".
+   ================================================================ */
+
+/* ---- Tab Header ---- */
+.settings-header {
+  padding: 12px 0 24px;
+}
+
+.settings-title {
+  font-size: 26px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #f8fafc 30%, #cbd5e1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+}
+
+/* ============================================================
+   SETTINGS GROUP CARD
+   ============================================================ */
+
+.settings-group {
+  background: var(--bg-surface);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.settings-group-title {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--accent-purple);
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  padding: 16px 20px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Viền cam cảnh báo khi đang xem dữ liệu MÔ PHỎNG (demo), tránh nhầm với dữ liệu thật */
+.settings-group-demo-active {
+  border-color: rgba(245, 158, 11, 0.4);
+  box-shadow: var(--shadow-sm), 0 0 0 1px rgba(245, 158, 11, 0.15);
+}
+.settings-group-demo-active .settings-group-title {
+  color: var(--accent-amber);
+}
+
+/* ============================================================
+   SETTING ITEM ROW
+   ============================================================ */
+
+.setting-item {
+  display: flex;
+  align-items: center;
+  padding: 18px 20px;
+  gap: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: var(--transition);
+}
+
+.setting-item:last-child {
+  border-bottom: none;
+}
+
+.setting-item.clickable {
+  cursor: pointer;
+}
+
+.setting-item.clickable:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.setting-item.danger .setting-name {
+  color: var(--accent-red) !important;
+}
+
+.setting-info {
+  flex: 1;
+}
+
+.setting-name {
+  font-size: 14px;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 3px;
+  color: var(--text-primary);
+}
+
+.setting-desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.setting-item svg {
+  color: var(--text-muted);
+  transition: var(--transition-bounce);
+}
+.setting-item.clickable:hover svg {
+  color: var(--text-primary);
+  transform: translateX(4px);
+}
+
+/* ============================================================
+   CONTROLS (Input / Select)
+   ============================================================ */
+
+.setting-input {
+  width: 72px;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 700;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  text-align: center;
+  font-family: inherit;
+  transition: var(--transition-bounce);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.setting-input:focus {
+  outline: none;
+  border-color: var(--accent-purple);
+  box-shadow: 0 0 0 3px var(--glow-purple), inset 0 2px 4px rgba(0,0,0,0.15);
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.setting-select {
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  cursor: pointer;
+  transition: var(--transition-bounce);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.setting-select:focus {
+  outline: none;
+  border-color: var(--accent-purple);
+  box-shadow: 0 0 0 3px var(--glow-purple);
+  background: rgba(0, 0, 0, 0.4);
+}
+
+/* ============================================================
+   TOGGLE SWITCH (iOS Spring edition)
+   ============================================================ */
+
+.toggle-switch {
+  position: relative;
+  width: 50px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0; height: 0;
+  position: absolute;
+}
+
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 30px;
+  transition: var(--transition-bounce);
+}
+
+.toggle-slider::before {
+  content: '';
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  left: 3px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--text-secondary);
+  border-radius: 50%;
+  transition: var(--transition-bounce);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+input:checked + .toggle-slider {
+  background: var(--gradient-primary);
+  border-color: rgba(139, 92, 246, 0.3);
+  box-shadow: 0 0 10px rgba(139, 92, 246, 0.3);
+}
+
+input:checked + .toggle-slider::before {
+  transform: translateY(-50%) translateX(22px);
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* ============================================================
+   ABOUT CARD
+   ============================================================ */
+
+.about-card {
+  display: flex;
+  gap: 16px;
+  padding: 20px;
+  align-items: flex-start;
+}
+
+.about-logo {
+  font-size: 32px;
+  width: 56px;
+  height: 56px;
+  background: var(--gradient-primary);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 8px 20px var(--glow-purple), 
+              inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.about-info {
+  flex: 1;
+}
+
+.about-name {
+  font-size: 16px;
+  font-weight: 800;
+  margin-bottom: 2px;
+  color: var(--text-primary);
+}
+
+.about-ver {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--accent-purple);
+  margin-bottom: 8px;
+}
+
+.about-desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* ============================================================
+   LIGHT THEME OVERRIDES FOR SETTINGS TAB
+   ============================================================ */
+body.light-theme .settings-title {
+  background: linear-gradient(135deg, #0f172a 30%, #475569 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+body.light-theme .settings-group {
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04),
+              inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+body.light-theme .setting-input,
+body.light-theme .setting-select {
+  background: rgba(15, 23, 42, 0.04);
+  color: var(--text-primary);
+  border-color: rgba(15, 23, 42, 0.12);
+}
+body.light-theme .setting-input:focus,
+body.light-theme .setting-select:focus {
+  border-color: var(--accent-purple);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
+}
+body.light-theme .toggle-slider {
+  background: rgba(15, 23, 42, 0.1);
+}
+body.light-theme .toggle-switch input:checked + .toggle-slider {
+  background: var(--accent-purple);
+}

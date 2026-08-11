@@ -1,0 +1,262 @@
+/* ================================================================
+   PAGES/HOME.CSS
+   CSS riêng cho tab Trang chủ: khối "Hôm nay cần làm gì", thanh tiến
+   độ tổng, danh sách tổng quan chủ đề. Không chứa style dùng chung
+   (xem components.css cho .section-card/.home-header/...).
+   ================================================================ */
+
+/* ============================================================
+   KHỐI HÔM NAY — Today Block (Widget Dashboard)
+   ============================================================ */
+
+.today-block {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.16) 0%, rgba(59, 130, 246, 0.08) 100%);
+  border: 1px solid rgba(139, 92, 246, 0.28);
+  border-radius: var(--radius-xl);
+  padding: 24px 20px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35),
+              inset 0 1px 1px rgba(255, 255, 255, 0.08);
+}
+
+.today-block::before {
+  content: '';
+  position: absolute;
+  top: -40%; right: -10%;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.22), transparent 70%);
+  pointer-events: none;
+}
+
+.today-block-title {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--accent-purple);
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.today-stats-row {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 22px;
+}
+
+.today-stat {
+  flex: 1;
+  text-align: center;
+}
+
+.today-stat-val {
+  font-size: 38px;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 6px;
+  letter-spacing: -1px;
+}
+
+.today-stat-lbl {
+  font-size: 11px;
+  color: var(--text-secondary);
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+.today-divider {
+  width: 1px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
+}
+
+.btn-start-study {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--gradient-primary);
+  color: white;
+  border: none;
+  padding: 15px 24px;
+  border-radius: var(--radius-lg);
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  font-family: inherit;
+  transition: var(--transition-bounce);
+  box-shadow: 0 8px 24px var(--glow-purple), 
+              inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  letter-spacing: 0.3px;
+}
+
+.btn-start-study:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(139, 92, 246, 0.5),
+              0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.btn-start-study:active {
+  transform: scale(0.97);
+}
+
+.btn-start-study svg {
+  transition: var(--transition-bounce);
+}
+.btn-start-study:hover svg {
+  transform: scale(1.1) translateX(2px);
+}
+/* ============================================================
+   DAILY PROGRESS & PROGRESS BARS
+   ============================================================ */
+
+.progress-bar-wrap {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-radius: 20px;
+  height: 10px;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+
+.progress-bar {
+  height: 100%;
+  border-radius: 20px;
+  background: var(--gradient-primary);
+  transition: width 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+  position: relative;
+}
+
+.progress-bar::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; bottom: 0;
+  width: 40px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2));
+  border-radius: 20px;
+}
+/* ============================================================
+   TOPIC OVERVIEW LIST
+   ============================================================ */
+
+.topic-overview-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.topic-overview-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.topic-icon-sm {
+  font-size: 18px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.topic-info {
+  flex: 1;
+}
+
+.topic-name-sm {
+  font-size: 13px;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 6px;
+  color: var(--text-primary);
+}
+
+.mini-progress {
+  height: 5px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.mini-bar {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.topic-pct {
+  font-size: 12px;
+  font-weight: 800;
+  min-width: 38px;
+  text-align: right;
+}
+body.light-theme .today-block {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.08) 0%, rgba(37, 99, 235, 0.04) 100%);
+  border-color: rgba(124, 58, 237, 0.2);
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.06),
+              inset 0 1px 1px rgba(255, 255, 255, 0.6);
+}
+.total-progress-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
+.progress-detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.progress-detail-row.line-learning {
+  padding-left: 10px;
+  border-left: 2px solid #f59e0b;
+  margin-left: 4px;
+}
+
+.progress-detail-row.line-mastered {
+  padding-left: 10px;
+  border-left: 2px solid #10b981;
+  margin-left: 4px;
+}
+
+.progress-detail-row.line-time {
+  padding-left: 10px;
+  border-left: 2px solid #a78bfa;
+  margin-left: 4px;
+}
+
+.val-primary {
+  color: var(--text-primary);
+  font-weight: 800;
+}
+
+.val-learning {
+  color: #f59e0b;
+  font-weight: 800;
+}
+
+.val-mastered {
+  color: #10b981;
+  font-weight: 800;
+}
+
+.val-time {
+  color: #a78bfa;
+  font-weight: 800;
+}

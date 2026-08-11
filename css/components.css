@@ -1,0 +1,316 @@
+/* ================================================================
+   COMPONENTS.CSS
+   Các thành phần UI tái sử dụng ở nhiều màn hình: Modal, Toast, Button
+   (primary/secondary/danger/text), Skeleton loading, card tiêu đề
+   trang (.home-header/.greeting-text) và khung card dùng chung
+   (.section-card/.section-header/.section-title/.section-badge, dùng
+   ở cả Home lẫn Stats).
+   ================================================================ */
+
+/* ============================================================
+   MODAL
+   ============================================================ */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 5, 11, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 24px;
+  animation: fadeIn 0.25s ease;
+}
+
+.modal-box {
+  background: linear-gradient(135deg, rgba(20, 24, 46, 0.9) 0%, rgba(10, 11, 22, 0.95) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-xl);
+  padding: 32px 24px;
+  max-width: 350px;
+  width: 100%;
+  text-align: center;
+  animation: scaleIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 
+              0 0 40px rgba(139, 92, 246, 0.1),
+              inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.modal-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  display: inline-block;
+  animation: bounce 0.6s ease;
+}
+
+.modal-title {
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 12px;
+  background: linear-gradient(135deg, #fff, #cbd5e1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.modal-text {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+  padding: 12px 24px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: var(--transition-bounce);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+.btn-secondary:active {
+  transform: scale(0.96);
+}
+
+.btn-danger {
+  background: var(--gradient-danger);
+  border: none;
+  color: white;
+  padding: 12px 24px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: var(--transition-bounce);
+  box-shadow: 0 4px 16px rgba(244, 63, 94, 0.35);
+}
+.btn-danger:hover {
+  box-shadow: 0 8px 24px rgba(244, 63, 94, 0.5);
+  transform: translateY(-2px);
+}
+.btn-danger:active {
+  transform: scale(0.96);
+}
+
+/* ============================================================
+   TOAST NOTIFICATION (iOS Top-style)
+   ============================================================ */
+
+.toast {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-24px);
+  background: rgba(18, 20, 38, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 50px;
+  white-space: nowrap;
+  z-index: 300;
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.25);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+}
+.toast-visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+.toast-success {
+  border-left: 3px solid var(--accent-green);
+}
+.toast-danger {
+  border-left: 3px solid var(--accent-red);
+}
+
+/* ============================================================
+   LIGHT THEME OVERRIDES FOR GLOBAL COMPONENTS
+   ============================================================ */
+body.light-theme .modal-box {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.98) 100%);
+  border-color: rgba(15, 23, 42, 0.08);
+  box-shadow: 0 30px 60px rgba(15, 23, 42, 0.1), 
+              inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+body.light-theme .modal-title {
+  background: linear-gradient(135deg, #0f172a, #475569);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+body.light-theme .btn-secondary {
+  background: rgba(15, 23, 42, 0.04);
+  border-color: rgba(15, 23, 42, 0.08);
+  color: var(--text-primary);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+}
+body.light-theme .btn-secondary:hover {
+  background: rgba(15, 23, 42, 0.08);
+  border-color: rgba(15, 23, 42, 0.16);
+}
+
+body.light-theme .toast {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(15, 23, 42, 0.08);
+  color: var(--text-primary);
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.08);
+}
+
+/* ============================================================
+   SKELETON LOADING (hiển thị tĩnh trong lúc chờ app.js nạp dữ liệu
+   chủ đề — xem #home-content trong index.html)
+   ============================================================ */
+.skeleton-block {
+  background: linear-gradient(90deg, var(--bg-surface) 25%, var(--bg-hover) 50%, var(--bg-surface) 75%);
+  background-size: 200% 100%;
+  border-radius: var(--radius-lg);
+  margin-bottom: 16px;
+  animation: skeletonPulse 1.4s ease-in-out infinite;
+}
+.skeleton-title {
+  height: 32px;
+  width: 60%;
+}
+@keyframes skeletonPulse {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+.home-header {
+  padding: 12px 0 24px;
+}
+
+.greeting-text {
+  font-size: 26px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #f8fafc 30%, #c084fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+}
+
+.greeting-sub {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+  font-weight: 500;
+}
+/* ============================================================
+   SECTION CARD (Shared Box)
+   ============================================================ */
+
+.section-card {
+  background: var(--bg-surface);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.2px;
+}
+
+.section-badge {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent-purple);
+  background: rgba(139, 92, 246, 0.12);
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid rgba(139, 92, 246, 0.15);
+}
+/* ============================================================
+   SHARED TEXT BUTTONS
+   ============================================================ */
+
+.btn-text {
+  background: none;
+  border: none;
+  color: var(--accent-purple);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  transition: var(--transition-bounce);
+  font-family: inherit;
+}
+.btn-text:hover {
+  background: rgba(139, 92, 246, 0.12);
+  transform: translateX(3px);
+}
+body.light-theme .greeting-text {
+  background: linear-gradient(135deg, #0f172a 30%, #7c3aed 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+/* Primary Button Upgrade */
+.btn-primary {
+  background: var(--gradient-primary);
+  color: white;
+  border: none;
+  padding: 15px 36px;
+  border-radius: var(--radius-lg);
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: var(--transition-bounce);
+  font-family: inherit;
+  box-shadow: 0 8px 24px var(--glow-purple), 
+              inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  letter-spacing: 0.3px;
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(139, 92, 246, 0.5);
+}
+
+.btn-primary:active {
+  transform: scale(0.97);
+}

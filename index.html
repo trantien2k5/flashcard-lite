@@ -29,7 +29,14 @@
          ================================================ -->
     <section id="tab-home" class="tab-pane active" role="main" aria-label="Home">
       <div id="home-content">
-        <!-- Rendered by JS -->
+        <!-- Skeleton tĩnh hiển thị ngay khi HTML parse xong, không chờ app.js/dữ liệu chủ đề tải
+             (~700KB/30 file) — renderHome() sẽ ghi đè bằng nội dung thật khi sẵn sàng. -->
+        <div class="skeleton-loading" aria-hidden="true">
+          <div class="skeleton-block skeleton-title"></div>
+          <div class="skeleton-block" style="height:120px"></div>
+          <div class="skeleton-block" style="height:140px"></div>
+          <div class="skeleton-block" style="height:220px"></div>
+        </div>
       </div>
     </section>
 

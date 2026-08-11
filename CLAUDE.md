@@ -67,3 +67,11 @@ Create a new IIFE file under `data/` following the `finance.js` pattern (unique 
 - PHẦN 1 (algorithm) functions are pure; keep storage/DOM concerns out of it and in PHẦN 2 (db) / the view PHẦNs instead.
 - `app.js` is one file with no modules, so top-level `const`/`let` (e.g. `DAY`, `MINUTE`, `RATING` from PHẦN 1) are visible everywhere below their declaration — this is how PHẦN 2+ reuse them — but redeclaring the same name in a later PHẦN throws a `SyntaxError`. Check existing top-level names (`Ctrl+F` in `app.js`) before adding new ones. When editing, preserve the PHẦN order (1→8); moving code across PHẦNs can break this dependency chain.
 - `style.css` and `app.js` are each intentionally a single merged file (not per-component files) — when adding a new screen/feature, append a new numbered PHẦN block (or extend an existing one) rather than creating a separate file, to keep the "1 file per concern" structure intact.
+
+## Git workflow
+
+The user has authorized skipping manual review: after making a change, commit, push to the session's assigned branch, open/update the PR, and merge it immediately (no need to pause for confirmation before merging). Direct `git push` to `main` is not available in this session type — landing on `main` always goes through opening a PR on the assigned branch and merging it via the GitHub API.
+
+## "Khung 3000 từ" vocabulary framework
+
+Design target: 30 topics × 100 words (60 core / 25 intermediate / 15 advanced) = 3000 words. Status: **complete** — all 30 topic files under `data/` (see the `topicFiles` array in `loadTopicsDynamic()`, PHẦN 8 of `app.js`) are registered and each has exactly 100 words, with 3000 globally-unique word IDs and no topic-ID collisions. `data/finance.js` (old 20-word version, superseded by `data/finance_banking.js`) and `data/toeic.js` (old TOEIC set) exist on disk but are deliberately left unregistered — see the comment right after the `topicFiles` array.

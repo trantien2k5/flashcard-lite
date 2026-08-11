@@ -440,6 +440,26 @@ body.light-theme .toast {
   box-shadow: 0 12px 32px rgba(15, 23, 42, 0.08);
 }
 
+/* ============================================================
+   SKELETON LOADING (hiển thị tĩnh trong lúc chờ app.js nạp dữ liệu
+   chủ đề — xem #home-content trong index.html)
+   ============================================================ */
+.skeleton-block {
+  background: linear-gradient(90deg, var(--bg-surface) 25%, var(--bg-hover) 50%, var(--bg-surface) 75%);
+  background-size: 200% 100%;
+  border-radius: var(--radius-lg);
+  margin-bottom: 16px;
+  animation: skeletonPulse 1.4s ease-in-out infinite;
+}
+.skeleton-title {
+  height: 32px;
+  width: 60%;
+}
+@keyframes skeletonPulse {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
 /* ================================================================
    PHẦN 3: THANH ĐIỀU HƯỚNG DƯỚI (BOTTOM NAVIGATION)
    (Gốc: Navigation.css)

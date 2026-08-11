@@ -1033,7 +1033,7 @@ window.TEMPLATES.home = function(stats, todo, known, learning, totalWords, total
 
 window.TEMPLATES.stats = function(stats, totalLearned, monthlyData, weakData, accuracy, streakRecord, streakColor, fsrs, weeklySummary) {
   // Lấy tiến trình Tài chính & Ngân hàng (dùng cho thành tích "hoàn thành chủ đề")
-  const financeProg = db.getTopicProgress('topic_finance') || { known: 0, learning: 0, total: 20 };
+  const financeProg = db.getTopicProgress('topic_finance_banking') || { known: 0, learning: 0, total: 100 };
   const financePct = Math.round((financeProg.known + financeProg.learning) / financeProg.total * 100);
 
   return `

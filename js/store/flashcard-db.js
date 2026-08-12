@@ -163,17 +163,15 @@ class FlashcardDB {
 
   /**
    * Lấy danh sách thẻ đến hạn của một chủ đề (learning → review → new).
+   * Không giới hạn số lượng — dailyNewCards giờ chỉ là mục tiêu hiển thị
+   * (xem getDailyTodo), không dùng để chặn bớt thẻ ở đây nữa.
    * @param {string} topicId
    * @param {object} topic   - object từ data.js
-   * @param {number} [alreadyNewToday]      - truyền sẵn nếu nơi gọi cần lặp qua nhiều chủ đề
-   *   (ví dụ TEMPLATES.learnList), để tránh quét lại toàn bộ this._data.cards mỗi chủ đề —
-   *   xem getAlreadyNewToday/getAlreadyReviewedToday.
-   * @param {number} [alreadyReviewedToday]
    * @returns {CardState[]}
    */
-  getDueCards(topicId, topic, alreadyNewToday, alreadyReviewedToday) {
+  getDueCards(topicId, topic) {
     const now      = Date.now();
-    const { dailyNewCards, learnAhead, dailyReviewLimit } = this._data.settings;
+    const { learnAhead } = this._data.settings;
 
     const newCards      = [];
     const reviewCards   = [];
@@ -194,18 +192,8 @@ class FlashcardDB {
       }
     });
 
-    // Giới hạn thẻ mới theo cài đặt dailyNewCards (đã trừ đi số thẻ mới đã học hôm nay)
-    const newToday = alreadyNewToday !== undefined ? alreadyNewToday : this.getAlreadyNewToday();
-    const remainingNewLimit = Math.max(0, dailyNewCards - newToday);
-    const limitedNew = newCards.slice(0, remainingNewLimit);
-
-    // Giới hạn thẻ đang học/cần ôn theo cài đặt dailyReviewLimit (đã trừ đi số đã ôn hôm nay)
-    const reviewedToday = alreadyReviewedToday !== undefined ? alreadyReviewedToday : this.getAlreadyReviewedToday(newToday);
-    const remainingReviewLimit = Math.max(0, dailyReviewLimit - reviewedToday);
-    const limitedReview = [...learningCards, ...reviewCards].slice(0, remainingReviewLimit);
-
     // Ưu tiên: đang học → cần ôn → thẻ mới
-    return [...limitedReview, ...limitedNew];
+    return [...learningCards, ...reviewCards, ...newCards];
   }
 
   /** Thống kê tổng số từ theo trạng thái (chỉ tính các từ thuộc chủ đề hiện có) */
@@ -267,47 +255,26 @@ class FlashcardDB {
     return Object.values(this._data.cards).filter(c => c.firstStudied === today).length;
   }
 
-  /**
-   * Lấy số lượt ôn tập (không tính thẻ mới) đã thực hiện hôm nay.
-   * @param {number} [alreadyNewToday] — truyền sẵn nếu đã tính ở nơi gọi, để tránh quét lại
-   *   toàn bộ this._data.cards (xem getAlreadyNewToday) thêm một lần nữa.
-   */
-  getAlreadyReviewedToday(alreadyNewToday) {
-    const today = this._todayStr();
-    const total = (this._data.stats.dailyLog[today] || {}).total || 0;
-    const newToday = alreadyNewToday !== undefined ? alreadyNewToday : this.getAlreadyNewToday();
-    return Math.max(0, total - newToday);
-  }
-
   // ----------------------------------------------------------
   // Home tab — advanced stats
   // ----------------------------------------------------------
 
   /**
-   * Tính số thẻ cần làm hôm nay trên toàn bộ chủ đề.
-   * @returns {{ reviewCount, newCount, estimatedMinutes }}
+   * Tính số thẻ cần ôn hôm nay (không giới hạn) và tiến độ so với mục tiêu
+   * từ mới mỗi ngày (dailyNewCards — giờ chỉ là mục tiêu hiển thị, xem
+   * getDueCards để biết lý do bỏ giới hạn cứng).
+   * @returns {{ reviewCount, newStartedToday, newGoal }}
    */
   getDailyTodo() {
     const now = Date.now();
-    const { dailyNewCards, learnAhead, dailyReviewLimit } = this._data.settings;
-    const today = this._todayStr();
-    const todayLog = this._data.stats.dailyLog[today] || { reviewed: 0 };
+    const { learnAhead } = this._data.settings;
 
     let reviewCount = 0;
-    let newCount    = 0;
-    let newSeen     = 0; // thẻ mới đã học hôm nay
-
-    // Đếm newSeen từ dailyLog (thẻ mới đã được thêm hôm nay)
-    // Ước tính: mỗi thẻ review ~1.2 phút, thẻ mới ~2 phút
-    const allCards = Object.values(this._data.cards);
-    const newCardsAvailable = [];
-
     TOPICS.forEach(topic => {
       topic.words.forEach(w => {
         const card = this._data.cards[w.id];
-        if (!card || card.state === 'new') {
-          newCardsAvailable.push(w.id);
-        } else if (card.state === 'learning' || card.state === 'relearning') {
+        if (!card || card.state === 'new') return;
+        if (card.state === 'learning' || card.state === 'relearning') {
           if (card.nextReview <= now + learnAhead * 60 * 1000) reviewCount++;
         } else if (card.state === 'review') {
           if (card.nextReview <= now) reviewCount++;
@@ -315,17 +282,11 @@ class FlashcardDB {
       });
     });
 
-    // Giới hạn thẻ mới theo cài đặt
-    const alreadyNewToday = this.getAlreadyNewToday();
-    const remainingNewLimit = Math.max(0, dailyNewCards - alreadyNewToday);
-    newCount = Math.max(0, Math.min(remainingNewLimit, newCardsAvailable.length));
-
-    // Giới hạn thẻ cần ôn theo cài đặt dailyReviewLimit (khớp với giới hạn thật trong getDueCards)
-    const remainingReviewLimit = Math.max(0, dailyReviewLimit - this.getAlreadyReviewedToday(alreadyNewToday));
-    reviewCount = Math.min(reviewCount, remainingReviewLimit);
-
-    const estimatedMinutes = Math.round(reviewCount * 1.2 + newCount * 2);
-    return { reviewCount, newCount, estimatedMinutes };
+    return {
+      reviewCount,
+      newStartedToday: this.getAlreadyNewToday(),
+      newGoal: this._data.settings.dailyNewCards
+    };
   }
 
   /**
@@ -395,37 +356,6 @@ class FlashcardDB {
       result.push({ date: key, count, level });
     }
     return result;
-  }
-
-  /**
-   * Tiến độ mục tiêu ngày hôm nay.
-   * @returns {{ reviewedToday, reviewGoal, newToday, newGoal, overallPct }}
-   */
-  getDailyProgress() {
-    const today    = this._todayStr();
-    const log      = this._data.stats.dailyLog[today] || { reviewed: 0, minutes: 0 };
-    const { dailyNewCards, dailyReviewLimit } = this._data.settings;
-
-    const reviewedToday = log.reviewed || 0;
-    const minutesToday  = log.minutes || 0;
-    
-    // Đếm số lượng thẻ thực tế cần ôn và học hôm nay để đặt mục tiêu động
-    const todo = this.getDailyTodo();
-    const totalCardsToday = reviewedToday + todo.reviewCount + todo.newCount;
-    
-    const reviewGoal = totalCardsToday || dailyReviewLimit;
-    const overallPct = totalCardsToday > 0 
-      ? Math.min(100, Math.round((reviewedToday / totalCardsToday) * 100)) 
-      : 100;
-
-    return { 
-      reviewedToday, 
-      reviewGoal, 
-      newToday: this.getAlreadyNewToday(), 
-      newGoal: dailyNewCards, 
-      overallPct,
-      minutesToday
-    };
   }
 
   /**

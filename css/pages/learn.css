@@ -116,30 +116,6 @@ body.light-theme .topic-icon-area {
   line-height: 1;
 }
 
-.due-badge {
-  font-size: 10px;
-  font-weight: 800;
-  color: #fbbf24;
-  background: rgba(245, 158, 11, 0.12);
-  padding: 4px 10px;
-  border-radius: 20px;
-  border: 1px solid rgba(245, 158, 11, 0.2);
-  letter-spacing: 0.2px;
-  flex-shrink: 0;
-}
-
-.done-badge {
-  font-size: 10px;
-  font-weight: 800;
-  color: #34d399;
-  background: rgba(16, 185, 129, 0.12);
-  padding: 4px 10px;
-  border-radius: 20px;
-  border: 1px solid rgba(16, 185, 129, 0.2);
-  letter-spacing: 0.2px;
-  flex-shrink: 0;
-}
-
 .topic-card-name {
   font-size: 16px;
   font-weight: 800;

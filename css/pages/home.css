@@ -76,6 +76,60 @@
   flex-shrink: 0;
 }
 
+/* ============================================================
+   GOAL RING — vòng tròn mục tiêu từ mới hôm nay (nhỏ gọn, tự chạy
+   animation khi vừa render, không giới hạn cứng — chỉ để theo dõi)
+   ============================================================ */
+.today-stat-ring {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.goal-ring-wrap {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 6px;
+}
+
+.goal-ring-track {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.08);
+  stroke-width: 6;
+}
+
+.goal-ring-fill {
+  fill: none;
+  stroke: var(--accent-purple);
+  stroke-width: 6;
+  stroke-linecap: round;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+  stroke-dasharray: var(--circumference);
+  animation: goalRingFill 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+}
+
+.goal-ring-fill.is-done {
+  stroke: var(--accent-green);
+}
+
+@keyframes goalRingFill {
+  from { stroke-dashoffset: var(--circumference); }
+  to   { stroke-dashoffset: var(--offset); }
+}
+
+.goal-ring-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
 .btn-start-study {
   width: 100%;
   display: flex;
@@ -206,6 +260,9 @@ body.light-theme .today-block {
   border-color: rgba(124, 58, 237, 0.2);
   box-shadow: 0 16px 36px rgba(15, 23, 42, 0.06),
               inset 0 1px 1px rgba(255, 255, 255, 0.6);
+}
+body.light-theme .goal-ring-track {
+  stroke: rgba(15, 23, 42, 0.08);
 }
 .total-progress-details {
   display: flex;

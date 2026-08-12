@@ -7,10 +7,6 @@
 if (!window.TEMPLATES) window.TEMPLATES = {};
 
 window.TEMPLATES.learnList = function() {
-  // Tính 1 lần duy nhất cho toàn danh sách — thay vì để getDueCards() tự quét lại
-  // toàn bộ this._data.cards (~3000 thẻ) ở MỖI chủ đề trong 30 chủ đề bên dưới.
-  const alreadyNewToday = db.getAlreadyNewToday();
-  const alreadyReviewedToday = db.getAlreadyReviewedToday(alreadyNewToday);
   return `
     <div class="learn-header">
       <h2 class="learn-title">Chủ đề từ vựng</h2>
@@ -20,7 +16,7 @@ window.TEMPLATES.learnList = function() {
       ${TOPICS.map(topic => {
         const prog = db.getTopicProgress(topic.id);
         const pct = Math.round((prog.known + prog.learning) / prog.total * 100);
-        const due = db.getDueCards(topic.id, topic, alreadyNewToday, alreadyReviewedToday).length;
+        const due = db.getDueCards(topic.id, topic).length;
         return `
         <div class="topic-card" onclick="openTopicStudy('${topic.id}')" style="--topic-color: ${topic.color}">
           <div class="topic-icon-area">

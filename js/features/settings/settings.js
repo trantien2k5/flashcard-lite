@@ -36,25 +36,13 @@ window.TEMPLATES.settings = function(s, isDemoActive) {
 
       <div class="setting-item">
         <div class="setting-info">
-          <span class="setting-name">Thẻ mới mỗi ngày</span>
-          <span class="setting-desc">Số thẻ từ mới tối đa được giới thiệu mỗi ngày</span>
+          <span class="setting-name">Mục tiêu từ mới mỗi ngày</span>
+          <span class="setting-desc">Chỉ để theo dõi tiến độ ở Trang chủ — không giới hạn số từ thật sự học được</span>
         </div>
         <div class="setting-control">
           <input type="number" class="setting-input" id="set-daily-new"
             value="${s.dailyNewCards}" min="1" max="100"
             onchange="saveSetting('dailyNewCards', +this.value)">
-        </div>
-      </div>
-
-      <div class="setting-item">
-        <div class="setting-info">
-          <span class="setting-name">Giới hạn ôn tập mỗi ngày</span>
-          <span class="setting-desc">Số lần ôn tập tối đa trong một ngày</span>
-        </div>
-        <div class="setting-control">
-          <input type="number" class="setting-input" id="set-daily-review"
-            value="${s.dailyReviewLimit}" min="10" max="500"
-            onchange="saveSetting('dailyReviewLimit', +this.value)">
         </div>
       </div>
 

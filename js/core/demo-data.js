@@ -28,8 +28,16 @@ FlashcardDB.prototype.enableDemoData = function () {
 
 /** Tắt dữ liệu mô phỏng: khôi phục lại đúng dữ liệu thật đã sao lưu. */
 FlashcardDB.prototype.disableDemoData = function () {
+  let restored = null;
   const backup = localStorage.getItem(DEMO_BACKUP_KEY);
-  this._data = backup ? JSON.parse(backup) : this._defaultData();
+  if (backup) {
+    try {
+      restored = JSON.parse(backup);
+    } catch (e) {
+      console.warn("Demo backup parse error:", e);
+    }
+  }
+  this._data = this._withDefaults(restored || this._defaultData());
   localStorage.removeItem(DEMO_BACKUP_KEY);
   this.save();
 };

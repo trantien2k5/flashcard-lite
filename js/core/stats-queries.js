@@ -12,8 +12,8 @@
 
 /**
  * Lấy danh sách thẻ đến hạn của một chủ đề (learning → review → new).
- * Không giới hạn số lượng — dailyNewCards giờ chỉ là mục tiêu hiển thị
- * (xem getDailyTodo), không dùng để chặn bớt thẻ ở đây nữa.
+ * Không giới hạn số lượng — dailyNewCards chỉ còn là một setting cấu hình
+ * trong Cài đặt, không dùng để chặn bớt thẻ ở đây nữa.
  * @param {string} topicId
  * @param {object} topic   - object từ data.js
  * @returns {CardState[]}
@@ -83,63 +83,6 @@ FlashcardDB.prototype.getTopicProgress = function (topicId) {
     else known++;
   });
   return { total: topic.words.length, known, learning, new: newW };
-};
-
-/** Dữ liệu hoạt động 7 ngày gần nhất (cho biểu đồ) */
-FlashcardDB.prototype.getWeeklyActivity = function () {
-  const DAYS_VI = ["CN", "T2", "T3", "T4", "T5", "T6", "T7"];
-  const result = [];
-  for (let i = 6; i >= 0; i--) {
-    const d = new Date();
-    d.setDate(d.getDate() - i);
-    const key = d.toISOString().slice(0, 10);
-    result.push({
-      date: key,
-      day: DAYS_VI[d.getDay()],
-      count: (this._data.stats.dailyLog[key] || {}).reviewed || 0,
-    });
-  }
-  return result;
-};
-
-/** Lấy số từ mới đã bắt đầu học hôm nay */
-FlashcardDB.prototype.getAlreadyNewToday = function () {
-  const today = this._todayStr();
-  return Object.values(this._data.cards).filter((c) => c.firstStudied === today).length;
-};
-
-// ----------------------------------------------------------
-// Home tab — advanced stats
-// ----------------------------------------------------------
-
-/**
- * Tính số thẻ cần ôn hôm nay (không giới hạn) và tiến độ so với mục tiêu
- * từ mới mỗi ngày (dailyNewCards — giờ chỉ là mục tiêu hiển thị, xem
- * getDueCards để biết lý do bỏ giới hạn cứng).
- * @returns {{ reviewCount, newStartedToday, newGoal }}
- */
-FlashcardDB.prototype.getDailyTodo = function () {
-  const now = Date.now();
-  const { learnAhead } = this._data.settings;
-
-  let reviewCount = 0;
-  TOPICS.forEach((topic) => {
-    topic.words.forEach((w) => {
-      const card = this._data.cards[w.id];
-      if (!card || card.state === "new") return;
-      if (card.state === "learning" || card.state === "relearning") {
-        if (card.nextReview <= now + learnAhead * 60 * 1000) reviewCount++;
-      } else if (card.state === "review") {
-        if (card.nextReview <= now) reviewCount++;
-      }
-    });
-  });
-
-  return {
-    reviewCount,
-    newStartedToday: this.getAlreadyNewToday(),
-    newGoal: this._data.settings.dailyNewCards,
-  };
 };
 
 /**

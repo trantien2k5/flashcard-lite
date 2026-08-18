@@ -22,15 +22,31 @@ class FlashcardDB {
     try {
       const raw = localStorage.getItem(DB_KEY);
       if (raw) {
-        const parsed = JSON.parse(raw);
-        // Dữ liệu lưu từ trước khi có tính năng demo sẽ thiếu "meta" — bổ sung an toàn
-        if (!parsed.meta) parsed.meta = { isDemo: false };
-        return parsed;
+        return this._withDefaults(JSON.parse(raw));
       }
     } catch (e) {
       console.warn("DB load error:", e);
     }
     return this._defaultData();
+  }
+
+  /** Vá các field top-level/nested còn thiếu bằng giá trị mặc định — dữ liệu cũ, import,
+   *  hoặc bị chỉnh tay thiếu field (ví dụ thiếu "meta" từ trước khi có demo, hay thiếu
+   *  "stats.dailyLog") sẽ không làm crash các query đọc sâu vào cấu trúc này. */
+  _withDefaults(parsed) {
+    const d = this._defaultData();
+    const p = parsed && typeof parsed === "object" ? parsed : {};
+    return {
+      cards: p.cards && typeof p.cards === "object" ? p.cards : d.cards,
+      settings: { ...d.settings, ...(p.settings || {}) },
+      stats: {
+        ...d.stats,
+        ...(p.stats || {}),
+        dailyLog: (p.stats && p.stats.dailyLog) || d.stats.dailyLog,
+        ratingLog: (p.stats && p.stats.ratingLog) || d.stats.ratingLog,
+      },
+      meta: { ...d.meta, ...(p.meta || {}) },
+    };
   }
 
   _defaultData() {
@@ -175,7 +191,7 @@ class FlashcardDB {
   importData(json) {
     try {
       const parsed = JSON.parse(json);
-      this._data = parsed;
+      this._data = this._withDefaults(parsed);
       this.save();
       return true;
     } catch (e) {

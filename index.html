@@ -103,21 +103,21 @@
       </button>
     </nav>
 
-    <!-- Thứ tự nạp bắt buộc: js/fsrs.js (thuật toán thuần túy) → js/storage.js (class
-       FlashcardDB, persistence thuần) → js/stats-queries.js + js/demo-data.js (gắn thêm
-       method vào FlashcardDB.prototype) → js/app.js (state/điều hướng/theme/toast + khởi
-       động app) → js/pages/*.js (logic từng tab, dùng db + app.js). Không dùng module —
+    <!-- Thứ tự nạp bắt buộc: js/core/fsrs.js (thuật toán thuần túy) → js/core/storage.js
+       (class FlashcardDB, persistence thuần) → js/core/stats-queries.js + js/core/demo-data.js
+       (gắn thêm method vào FlashcardDB.prototype) → js/core/app.js (state/điều hướng/theme/toast
+       + khởi động app) → js/features/*.js (logic từng tab, dùng db + app.js). Không dùng module —
        mọi hàm/biến gắn vào global scope. -->
-    <script src="js/fsrs.js"></script>
-    <script src="js/storage.js"></script>
-    <script src="js/stats-queries.js"></script>
-    <script src="js/demo-data.js"></script>
-    <script src="js/app.js"></script>
-    <script src="js/pages/review.js"></script>
-    <script src="js/pages/stats.js"></script>
-    <script src="js/pages/topics.js"></script>
-    <script src="js/pages/study.js"></script>
-    <script src="js/pages/settings.js"></script>
-    <script src="js/pages/practice.js"></script>
+    <script src="js/core/fsrs.js"></script>
+    <script src="js/core/storage.js"></script>
+    <script src="js/core/stats-queries.js"></script>
+    <script src="js/core/demo-data.js"></script>
+    <script src="js/core/app.js"></script>
+    <script src="js/features/review.js"></script>
+    <script src="js/features/stats.js"></script>
+    <script src="js/features/topics.js"></script>
+    <script src="js/features/study.js"></script>
+    <script src="js/features/settings.js"></script>
+    <script src="js/features/practice.js"></script>
   </body>
 </html>

@@ -249,8 +249,11 @@ function rateCard(rating) {
 
   // If Again/Hard (learning), optionally re-queue
   if (rating === RATING.AGAIN) {
-    // Re-add to end of queue for this session
-    studySession.queue.push({ card: db.getCard(word.id), word });
+    // Chèn lại cách ~4 thẻ thay vì dồn xuống cuối hàng đợi: nhãn nút Again hứa "ôn lại
+    // sau 1 phút" (bước học ngắn của FSRS) — dồn xuống cuối một hàng đợi 30-50 thẻ sẽ khiến
+    // thẻ chỉ quay lại sau rất lâu, phá vỡ đúng lúc quãng lặp ngắn hạn cần để ghi nhớ.
+    const insertAt = Math.min(studySession.queue.length, current + 1 + 4);
+    studySession.queue.splice(insertAt, 0, { card: db.getCard(word.id), word });
     studySession.totalDue++; // đếm thêm lượt ôn lại để thanh tiến độ không vượt quá 100%
   }
 

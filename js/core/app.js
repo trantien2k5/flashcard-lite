@@ -1,7 +1,7 @@
 // ================================================================
 // CORE.JS — State, điều hướng, theme, toast dùng chung toàn app
 // (state đang mở, phiên học đang chạy). Nạp sớm để mọi trang trong
-// js/pages/ tham chiếu được, bất kể thứ tự nạp giữa các trang. Không
+// js/features/ tham chiếu được, bất kể thứ tự nạp giữa các trang. Không
 // chứa thuật toán (xem fsrs.js) hay lưu trữ dữ liệu (xem storage.js).
 // ================================================================
 
@@ -59,7 +59,7 @@ function showToast(message, type = "success") {
 }
 // ================================================================
 // BOOTSTRAP.JS — Điểm khởi động app
-// Nạp CUỐI CÙNG — cần mọi hàm render (js/pages/*.js) đã tồn tại.
+// Nạp CUỐI CÙNG — cần mọi hàm render (js/features/*.js) đã tồn tại.
 // Nạp dữ liệu chủ đề động (data/*.js), lắng nghe sự kiện DOMContentLoaded,
 // vẽ giao diện lần đầu. ĐẶT CUỐI cùng khi nạp script vì cần mọi hàm/biến
 // ở các file core/store/shared/features đã tồn tại trước.

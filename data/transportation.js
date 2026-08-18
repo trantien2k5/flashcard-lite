@@ -1,7 +1,7 @@
 // ============================================================
 // TOPIC: Giao thông vận tải (100 từ)
 // ============================================================
-(function() {
+(function () {
   const topic = {
     id: "topic_transportation",
     name: "Giao thông vận tải",
@@ -108,11 +108,11 @@
       { id: "trans_97", word: "roadworthiness", phonetic: "/ˈroʊdwɜːrðinəs/", pos: "noun", meaning: "Tình trạng đủ điều kiện lưu hành", example: "The inspection confirmed the car's roadworthiness.", tier: "advanced" },
       { id: "trans_98", word: "tailgating", phonetic: "/ˈteɪlɡeɪtɪŋ/", pos: "noun", meaning: "Bám đuôi xe quá gần", example: "Tailgating is a common cause of accidents.", tier: "advanced" },
       { id: "trans_99", word: "jaywalking", phonetic: "/ˈdʒeɪwɔːkɪŋ/", pos: "noun", meaning: "Băng qua đường sai luật", example: "Jaywalking can result in a fine.", tier: "advanced" },
-      { id: "trans_100", word: "carbon emissions", phonetic: "/ˈkɑːrbən ɪˈmɪʃnz/", pos: "noun", meaning: "Khí thải carbon", example: "Electric cars produce fewer carbon emissions.", tier: "advanced" }
-    ]
+      { id: "trans_100", word: "carbon emissions", phonetic: "/ˈkɑːrbən ɪˈmɪʃnz/", pos: "noun", meaning: "Khí thải carbon", example: "Electric cars produce fewer carbon emissions.", tier: "advanced" },
+    ],
   };
   if (!window.TOPICS) window.TOPICS = [];
-  if (!window.TOPICS.some(t => t.id === topic.id)) {
+  if (!window.TOPICS.some((t) => t.id === topic.id)) {
     window.TOPICS.push(topic);
   }
 })();

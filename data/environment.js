@@ -1,7 +1,7 @@
 // ============================================================
 // TOPIC: Môi trường (100 từ)
 // ============================================================
-(function() {
+(function () {
   const topic = {
     id: "topic_environment",
     name: "Môi trường",
@@ -108,11 +108,11 @@
       { id: "env_97", word: "afforestation", phonetic: "/əˌfɒrɪˈsteɪʃn/", pos: "noun", meaning: "Trồng rừng mới", example: "Afforestation programs aim to restore degraded land.", tier: "advanced" },
       { id: "env_98", word: "environmental degradation", phonetic: "/ɪnˌvaɪrənˈmentl ˌdeɡrəˈdeɪʃn/", pos: "noun", meaning: "Sự suy thoái môi trường", example: "Unregulated mining causes severe environmental degradation.", tier: "advanced" },
       { id: "env_99", word: "carbon offsetting", phonetic: "/ˈkɑːrbən ˈɒfsetɪŋ/", pos: "noun", meaning: "Bù đắp carbon", example: "The airline offers carbon offsetting for flights.", tier: "advanced" },
-      { id: "env_100", word: "anthropogenic", phonetic: "/ˌænθrəpoʊˈdʒenɪk/", pos: "adjective", meaning: "Do con người gây ra", example: "Most climate scientists agree warming is largely anthropogenic.", tier: "advanced" }
-    ]
+      { id: "env_100", word: "anthropogenic", phonetic: "/ˌænθrəpoʊˈdʒenɪk/", pos: "adjective", meaning: "Do con người gây ra", example: "Most climate scientists agree warming is largely anthropogenic.", tier: "advanced" },
+    ],
   };
   if (!window.TOPICS) window.TOPICS = [];
-  if (!window.TOPICS.some(t => t.id === topic.id)) {
+  if (!window.TOPICS.some((t) => t.id === topic.id)) {
     window.TOPICS.push(topic);
   }
 })();

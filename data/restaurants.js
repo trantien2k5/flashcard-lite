@@ -1,7 +1,7 @@
 // ============================================================
 // TOPIC: Nhà hàng (100 từ)
 // ============================================================
-(function() {
+(function () {
   const topic = {
     id: "topic_restaurants",
     name: "Nhà hàng",
@@ -108,11 +108,11 @@
       { id: "rest_97", word: "gratuity", phonetic: "/ɡrəˈtuːəti/", pos: "noun", meaning: "Tiền boa, tiền thưởng thêm", example: "A gratuity of fifteen percent is customary.", tier: "advanced" },
       { id: "rest_98", word: "prix fixe", phonetic: "/priː fɪks/", pos: "noun", meaning: "Thực đơn giá cố định nhiều món", example: "The restaurant offers a prix fixe menu on weekends.", tier: "advanced" },
       { id: "rest_99", word: "à la carte", phonetic: "/ɑː lə ˈkɑːrt/", pos: "adjective", meaning: "Gọi món riêng lẻ theo thực đơn", example: "We ordered à la carte instead of the set menu.", tier: "advanced" },
-      { id: "rest_100", word: "Michelin star", phonetic: "/ˈmɪʃlɪn stɑːr/", pos: "noun", meaning: "Sao Michelin (danh hiệu nhà hàng)", example: "The restaurant was awarded a Michelin star last year.", tier: "advanced" }
-    ]
+      { id: "rest_100", word: "Michelin star", phonetic: "/ˈmɪʃlɪn stɑːr/", pos: "noun", meaning: "Sao Michelin (danh hiệu nhà hàng)", example: "The restaurant was awarded a Michelin star last year.", tier: "advanced" },
+    ],
   };
   if (!window.TOPICS) window.TOPICS = [];
-  if (!window.TOPICS.some(t => t.id === topic.id)) {
+  if (!window.TOPICS.some((t) => t.id === topic.id)) {
     window.TOPICS.push(topic);
   }
 })();

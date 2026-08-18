@@ -1,7 +1,7 @@
 // ============================================================
 // TOPIC: Kế toán (100 từ)
 // ============================================================
-(function() {
+(function () {
   const topic = {
     id: "topic_accounting",
     name: "Kế toán",
@@ -108,11 +108,11 @@
       { id: "acc_97", word: "cost-benefit analysis", phonetic: "/kɒst ˈbenɪfɪt əˈnæləsɪs/", pos: "noun", meaning: "Phân tích chi phí - lợi ích", example: "A cost-benefit analysis was done before approving the new project.", tier: "advanced" },
       { id: "acc_98", word: "liquidity ratio", phonetic: "/lɪˈkwɪdɪti ˈreɪʃioʊ/", pos: "noun", meaning: "Tỷ số thanh khoản", example: "The liquidity ratio shows if the firm can pay short-term debts.", tier: "advanced" },
       { id: "acc_99", word: "audit trail", phonetic: "/ˈɔːdɪt treɪl/", pos: "noun", meaning: "Dấu vết kiểm toán", example: "The audit trail allows every transaction to be traced back.", tier: "advanced" },
-      { id: "acc_100", word: "off-balance-sheet", phonetic: "/ɒf ˈbæləns ʃiːt/", pos: "adjective", meaning: "Ngoại bảng", example: "Off-balance-sheet items are not shown directly on the balance sheet.", tier: "advanced" }
-    ]
+      { id: "acc_100", word: "off-balance-sheet", phonetic: "/ɒf ˈbæləns ʃiːt/", pos: "adjective", meaning: "Ngoại bảng", example: "Off-balance-sheet items are not shown directly on the balance sheet.", tier: "advanced" },
+    ],
   };
   if (!window.TOPICS) window.TOPICS = [];
-  if (!window.TOPICS.some(t => t.id === topic.id)) {
+  if (!window.TOPICS.some((t) => t.id === topic.id)) {
     window.TOPICS.push(topic);
   }
 })();

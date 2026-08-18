@@ -1,7 +1,7 @@
 // ============================================================
 // TOPIC: Du lịch (100 từ)
 // ============================================================
-(function() {
+(function () {
   const topic = {
     id: "topic_travel",
     name: "Du lịch",
@@ -108,11 +108,11 @@
       { id: "trav_97", word: "transit visa", phonetic: "/ˈtrænsɪt ˈviːzə/", pos: "noun", meaning: "Thị thực quá cảnh", example: "He needed a transit visa to change planes there.", tier: "advanced" },
       { id: "trav_98", word: "non-refundable", phonetic: "/nɒn rɪˈfʌndəbl/", pos: "adjective", meaning: "Không hoàn tiền", example: "The discounted ticket is non-refundable.", tier: "advanced" },
       { id: "trav_99", word: "chartered flight", phonetic: "/ˈtʃɑːrtərd flaɪt/", pos: "noun", meaning: "Chuyến bay thuê riêng", example: "The company booked a chartered flight for the team.", tier: "advanced" },
-      { id: "trav_100", word: "travel advisory", phonetic: "/ˈtrævl ədˈvaɪzəri/", pos: "noun", meaning: "Cảnh báo du lịch", example: "The government issued a travel advisory for the region.", tier: "advanced" }
-    ]
+      { id: "trav_100", word: "travel advisory", phonetic: "/ˈtrævl ədˈvaɪzəri/", pos: "noun", meaning: "Cảnh báo du lịch", example: "The government issued a travel advisory for the region.", tier: "advanced" },
+    ],
   };
   if (!window.TOPICS) window.TOPICS = [];
-  if (!window.TOPICS.some(t => t.id === topic.id)) {
+  if (!window.TOPICS.some((t) => t.id === topic.id)) {
     window.TOPICS.push(topic);
   }
 })();

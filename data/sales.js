@@ -1,7 +1,7 @@
 // ============================================================
 // TOPIC: Bán hàng (100 từ)
 // ============================================================
-(function() {
+(function () {
   const topic = {
     id: "topic_sales",
     name: "Bán hàng",
@@ -108,11 +108,11 @@
       { id: "sales_97", word: "deal pipeline stage", phonetic: "/diːl ˈpaɪplaɪn steɪdʒ/", pos: "noun", meaning: "Giai đoạn của thương vụ", example: "Each deal pipeline stage requires different follow-up actions.", tier: "advanced" },
       { id: "sales_98", word: "quota attainment", phonetic: "/ˈkwoʊtə əˈteɪnmənt/", pos: "noun", meaning: "Mức đạt được chỉ tiêu", example: "Quota attainment is reviewed at the end of every quarter.", tier: "advanced" },
       { id: "sales_99", word: "revenue growth rate", phonetic: "/ˈrevənjuː ɡroʊθ reɪt/", pos: "noun", meaning: "Tốc độ tăng trưởng doanh thu", example: "The revenue growth rate slowed slightly this year.", tier: "advanced" },
-      { id: "sales_100", word: "churn rate", phonetic: "/tʃɜːrn reɪt/", pos: "noun", meaning: "Tỷ lệ khách hàng rời bỏ", example: "A high churn rate can offset strong new sales.", tier: "advanced" }
-    ]
+      { id: "sales_100", word: "churn rate", phonetic: "/tʃɜːrn reɪt/", pos: "noun", meaning: "Tỷ lệ khách hàng rời bỏ", example: "A high churn rate can offset strong new sales.", tier: "advanced" },
+    ],
   };
   if (!window.TOPICS) window.TOPICS = [];
-  if (!window.TOPICS.some(t => t.id === topic.id)) {
+  if (!window.TOPICS.some((t) => t.id === topic.id)) {
     window.TOPICS.push(topic);
   }
 })();

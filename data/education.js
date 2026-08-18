@@ -1,7 +1,7 @@
 // ============================================================
 // TOPIC: Giáo dục (100 từ)
 // ============================================================
-(function() {
+(function () {
   const topic = {
     id: "topic_education",
     name: "Giáo dục",
@@ -108,11 +108,11 @@
       { id: "edu_97", word: "remedial", phonetic: "/rɪˈmiːdiəl/", pos: "adjective", meaning: "Mang tính bổ trợ, phụ đạo", example: "She attends remedial classes to catch up in math.", tier: "advanced" },
       { id: "edu_98", word: "valedictorian", phonetic: "/ˌvælɪdɪkˈtɔːriən/", pos: "noun", meaning: "Thủ khoa tốt nghiệp", example: "The valedictorian gave a moving speech at graduation.", tier: "advanced" },
       { id: "edu_99", word: "alma mater", phonetic: "/ˌælmə ˈmɑːtər/", pos: "noun", meaning: "Trường cũ (nơi từng theo học)", example: "He often donates money to his alma mater.", tier: "advanced" },
-      { id: "edu_100", word: "tenure", phonetic: "/ˈtenjər/", pos: "noun", meaning: "Chế độ biên chế lâu dài (giảng viên)", example: "She was granted tenure after years of research.", tier: "advanced" }
-    ]
+      { id: "edu_100", word: "tenure", phonetic: "/ˈtenjər/", pos: "noun", meaning: "Chế độ biên chế lâu dài (giảng viên)", example: "She was granted tenure after years of research.", tier: "advanced" },
+    ],
   };
   if (!window.TOPICS) window.TOPICS = [];
-  if (!window.TOPICS.some(t => t.id === topic.id)) {
+  if (!window.TOPICS.some((t) => t.id === topic.id)) {
     window.TOPICS.push(topic);
   }
 })();

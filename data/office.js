@@ -1,7 +1,7 @@
 // ============================================================
 // TOPIC: Văn phòng (100 từ)
 // ============================================================
-(function() {
+(function () {
   const topic = {
     id: "topic_office",
     name: "Văn phòng",
@@ -108,11 +108,11 @@
       { id: "off_97", word: "bureaucracy", phonetic: "/bjʊəˈrɒkrəsi/", pos: "noun", meaning: "Bộ máy hành chính quan liêu", example: "Getting approval took weeks due to bureaucracy.", tier: "advanced" },
       { id: "off_98", word: "protocol", phonetic: "/ˈproʊtəkɒl/", pos: "noun", meaning: "Quy trình / Nghi thức", example: "Employees must follow office security protocol.", tier: "advanced" },
       { id: "off_99", word: "compliance", phonetic: "/kəmˈplaɪəns/", pos: "noun", meaning: "Sự tuân thủ", example: "The office ensures compliance with safety regulations.", tier: "advanced" },
-      { id: "off_100", word: "confidentiality", phonetic: "/ˌkɒnfɪˌdenʃiˈæləti/", pos: "noun", meaning: "Tính bảo mật", example: "Staff must sign an agreement on confidentiality.", tier: "advanced" }
-    ]
+      { id: "off_100", word: "confidentiality", phonetic: "/ˌkɒnfɪˌdenʃiˈæləti/", pos: "noun", meaning: "Tính bảo mật", example: "Staff must sign an agreement on confidentiality.", tier: "advanced" },
+    ],
   };
   if (!window.TOPICS) window.TOPICS = [];
-  if (!window.TOPICS.some(t => t.id === topic.id)) {
+  if (!window.TOPICS.some((t) => t.id === topic.id)) {
     window.TOPICS.push(topic);
   }
 })();

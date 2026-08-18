@@ -1,7 +1,7 @@
 // ============================================================
 // TOPIC: Công nghệ (100 từ)
 // ============================================================
-(function() {
+(function () {
   const topic = {
     id: "topic_technology",
     name: "Công nghệ",
@@ -108,11 +108,11 @@
       { id: "tech_97", word: "obfuscation", phonetic: "/ɒbˌfʌskeɪˈʃn/", pos: "noun", meaning: "Sự làm rối mã nguồn", example: "Developers use code obfuscation to protect their software.", tier: "advanced" },
       { id: "tech_98", word: "virtualization", phonetic: "/ˌvɜːrtʃuəlaɪˈzeɪʃn/", pos: "noun", meaning: "Ảo hóa", example: "Virtualization allows one server to run many systems.", tier: "advanced" },
       { id: "tech_99", word: "redundancy", phonetic: "/rɪˈdʌndənsi/", pos: "noun", meaning: "Sự dự phòng (hệ thống)", example: "The data center has redundancy to prevent downtime.", tier: "advanced" },
-      { id: "tech_100", word: "obsolescence", phonetic: "/ˌɒbsəˈlesəns/", pos: "noun", meaning: "Sự lỗi thời", example: "Planned obsolescence forces consumers to buy new devices.", tier: "advanced" }
-    ]
+      { id: "tech_100", word: "obsolescence", phonetic: "/ˌɒbsəˈlesəns/", pos: "noun", meaning: "Sự lỗi thời", example: "Planned obsolescence forces consumers to buy new devices.", tier: "advanced" },
+    ],
   };
   if (!window.TOPICS) window.TOPICS = [];
-  if (!window.TOPICS.some(t => t.id === topic.id)) {
+  if (!window.TOPICS.some((t) => t.id === topic.id)) {
     window.TOPICS.push(topic);
   }
 })();

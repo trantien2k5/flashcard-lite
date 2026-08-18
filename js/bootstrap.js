@@ -39,24 +39,26 @@ async function loadTopicsDynamic() {
     "data/shipping_logistics.js",
     "data/contracts_legal.js",
     "data/company_management.js",
-    "data/economics_trade.js"
+    "data/economics_trade.js",
     // data/finance.js và data/toeic.js (bộ TOEIC cũ) tạm không nạp — vẫn còn trong
     // thư mục data/ nếu muốn dùng lại, chỉ cần thêm 2 dòng path vào mảng này.
   ];
-  
-  await Promise.all(topicFiles.map(src => {
-    return new Promise((resolve) => {
-      const script = document.createElement("script");
-      script.src = src;
-      script.async = false; // giữ đúng thứ tự thực thi theo topicFiles dù tải song song
-      script.onload = () => resolve();
-      script.onerror = () => {
-        console.error("Failed to load topic: " + src);
-        resolve(); // resolve anyway to not block
-      };
-      document.head.appendChild(script);
-    });
-  }));
+
+  await Promise.all(
+    topicFiles.map((src) => {
+      return new Promise((resolve) => {
+        const script = document.createElement("script");
+        script.src = src;
+        script.async = false; // giữ đúng thứ tự thực thi theo topicFiles dù tải song song
+        script.onload = () => resolve();
+        script.onerror = () => {
+          console.error("Failed to load topic: " + src);
+          resolve(); // resolve anyway to not block
+        };
+        document.head.appendChild(script);
+      });
+    }),
+  );
 }
 // ============================================================
 // INIT
@@ -66,7 +68,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   applyTheme(db.settings.theme || "dark");
 
   // Tab buttons
-  document.querySelectorAll(".tab-btn").forEach(btn => {
+  document.querySelectorAll(".tab-btn").forEach((btn) => {
     btn.addEventListener("click", () => switchTab(btn.dataset.tab));
   });
 

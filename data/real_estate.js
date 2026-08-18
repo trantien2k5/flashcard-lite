@@ -1,7 +1,7 @@
 // ============================================================
 // TOPIC: Bất động sản (100 từ)
 // ============================================================
-(function() {
+(function () {
   const topic = {
     id: "topic_real_estate",
     name: "Bất động sản",
@@ -108,11 +108,11 @@
       { id: "re_97", word: "land banking", phonetic: "/lænd ˈbæŋkɪŋ/", pos: "noun", meaning: "Tích trữ đất chờ tăng giá", example: "The investor practiced land banking, holding lots for future sale.", tier: "advanced" },
       { id: "re_98", word: "real estate cycle", phonetic: "/ˈriːəl ɪˈsteɪt ˈsaɪkl/", pos: "noun", meaning: "Chu kỳ bất động sản", example: "Understanding the real estate cycle helps investors time their purchases.", tier: "advanced" },
       { id: "re_99", word: "mixed-use development", phonetic: "/mɪkst juːs dɪˈveləpmənt/", pos: "noun", meaning: "Khu phát triển đa chức năng", example: "The mixed-use development combines shops, offices, and apartments.", tier: "advanced" },
-      { id: "re_100", word: "amortization schedule", phonetic: "/əˌmɔːrtɪˈzeɪʃn ˈʃedjuːl/", pos: "noun", meaning: "Bảng lịch trình trả nợ dần", example: "The amortization schedule shows how much principal is paid each month.", tier: "advanced" }
-    ]
+      { id: "re_100", word: "amortization schedule", phonetic: "/əˌmɔːrtɪˈzeɪʃn ˈʃedjuːl/", pos: "noun", meaning: "Bảng lịch trình trả nợ dần", example: "The amortization schedule shows how much principal is paid each month.", tier: "advanced" },
+    ],
   };
   if (!window.TOPICS) window.TOPICS = [];
-  if (!window.TOPICS.some(t => t.id === topic.id)) {
+  if (!window.TOPICS.some((t) => t.id === topic.id)) {
     window.TOPICS.push(topic);
   }
 })();

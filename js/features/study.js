@@ -11,7 +11,7 @@ function formatIntervalLabel(days) {
 }
 if (!window.TEMPLATES) window.TEMPLATES = {};
 
-window.TEMPLATES.studySession = function(studySession, settings, progress, card) {
+window.TEMPLATES.studySession = function (studySession, settings, progress, card) {
   const { queue, current, topic, flipped } = studySession;
   const { word } = queue[current];
   return `
@@ -38,10 +38,10 @@ window.TEMPLATES.studySession = function(studySession, settings, progress, card)
 
       <!-- FLASHCARD -->
       <div class="flashcard-container" id="flashcard-container">
-        <div class="flashcard ${flipped ? 'flipped' : ''}" id="flashcard" onclick="flipCard()">
+        <div class="flashcard ${flipped ? "flipped" : ""}" id="flashcard" onclick="flipCard()">
           <div class="card-front">
             <div class="card-inner-front">
-              ${settings.showPhonetic ? `<div class="card-phonetic">${word.phonetic}</div>` : ''}
+              ${settings.showPhonetic ? `<div class="card-phonetic">${word.phonetic}</div>` : ""}
               <div class="card-word">${word.word}</div>
               <div class="card-pos">${word.pos}</div>
               <div class="card-tap-hint">
@@ -54,7 +54,7 @@ window.TEMPLATES.studySession = function(studySession, settings, progress, card)
             <div class="card-inner-back">
               <div class="card-word-small">${word.word}</div>
               <div class="card-meaning">${word.meaning}</div>
-              ${settings.showExample ? `<div class="card-example">"${word.example}"</div>` : ''}
+              ${settings.showExample ? `<div class="card-example">"${word.example}"</div>` : ""}
               <button class="btn-tts" onclick="speakWord(event, '${word.word}')">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline-block; vertical-align:middle; margin-right:4px;">
                   <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
@@ -68,7 +68,7 @@ window.TEMPLATES.studySession = function(studySession, settings, progress, card)
       </div>
 
       <!-- Rating buttons (only shown after flip) -->
-      <div class="rating-section ${flipped ? 'visible' : 'hidden'}" id="rating-section">
+      <div class="rating-section ${flipped ? "visible" : "hidden"}" id="rating-section">
         <p class="rating-label">Bạn nhớ từ này tốt đến đâu?</p>
         <div class="rating-buttons">
           <button class="rating-btn again" onclick="rateCard(0)">
@@ -97,7 +97,7 @@ window.TEMPLATES.studySession = function(studySession, settings, progress, card)
   `;
 };
 
-window.TEMPLATES.finishScreen = function(reviewed, mins, streakDays, history = [], isEarly = false) {
+window.TEMPLATES.finishScreen = function (reviewed, mins, streakDays, history = [], isEarly = false) {
   // Lọc lấy trạng thái cuối cùng của mỗi từ trong phiên học
   const uniqueHistory = [];
   const seenWords = new Set();
@@ -125,7 +125,7 @@ window.TEMPLATES.finishScreen = function(reviewed, mins, streakDays, history = [
           <div class="finish-stat-lbl">Thẻ đã ôn</div>
         </div>
         <div class="finish-stat">
-          <div class="finish-stat-val">${mins < 0.1 ? '1m' : Math.round(mins) + 'm'}</div>
+          <div class="finish-stat-val">${mins < 0.1 ? "1m" : Math.round(mins) + "m"}</div>
           <div class="finish-stat-lbl">Phút học</div>
         </div>
         <div class="finish-stat">
@@ -134,37 +134,43 @@ window.TEMPLATES.finishScreen = function(reviewed, mins, streakDays, history = [
         </div>
       </div>
 
-      ${uniqueHistory.length > 0 ? `
+      ${
+        uniqueHistory.length > 0
+          ? `
         <div class="session-history-section">
           <div class="session-history-title">📊 Chi tiết trạng thái thẻ từ:</div>
           <div class="session-history-list">
-            ${uniqueHistory.map(item => {
-              let statusText = "";
-              let statusClass = "";
-              if (item.state === "learning" || item.state === "relearning") {
-                statusText = item.rating === 0 ? "Chưa thuộc (ôn lại sau 1 phút)" : "Hơi nhớ (ôn lại sau 10 phút)";
-                statusClass = "history-learning";
-              } else if (item.state === "review") {
-                statusText = `Đã thuộc (ôn lại sau ${item.interval} ngày)`;
-                statusClass = "history-review";
-              }
-              return `
+            ${uniqueHistory
+              .map((item) => {
+                let statusText = "";
+                let statusClass = "";
+                if (item.state === "learning" || item.state === "relearning") {
+                  statusText = item.rating === 0 ? "Chưa thuộc (ôn lại sau 1 phút)" : "Hơi nhớ (ôn lại sau 10 phút)";
+                  statusClass = "history-learning";
+                } else if (item.state === "review") {
+                  statusText = `Đã thuộc (ôn lại sau ${item.interval} ngày)`;
+                  statusClass = "history-review";
+                }
+                return `
                 <div class="history-item">
                   <span class="history-word">${item.word}</span>
                   <span class="history-status ${statusClass}">${statusText}</span>
                 </div>
               `;
-            }).join("")}
+              })
+              .join("")}
           </div>
         </div>
-      ` : ''}
+      `
+          : ""
+      }
 
       <button class="btn-primary" onclick="renderLearnList()" style="margin-top: 24px;">Quay lại danh sách</button>
     </div>
   `;
 };
 
-window.TEMPLATES.noCardsScreen = function(topic, prog) {
+window.TEMPLATES.noCardsScreen = function (topic, prog) {
   return `
     <div class="finish-screen">
       <div class="finish-animation">✅</div>
@@ -215,9 +221,7 @@ function renderStudySession() {
   const progress = Math.round((current / totalDue) * 100);
   const settings = db.settings;
 
-  document.getElementById("learn-content").innerHTML = TEMPLATES.studySession(
-    studySession, settings, progress, card
-  );
+  document.getElementById("learn-content").innerHTML = TEMPLATES.studySession(studySession, settings, progress, card);
 }
 function flipCard() {
   if (studySession.flipped) return;
@@ -237,7 +241,7 @@ function rateCard(rating) {
     word: word.word,
     rating: rating,
     state: updated.state,
-    interval: updated.interval
+    interval: updated.interval,
   });
 
   // If Again/Hard (learning), optionally re-queue
@@ -262,9 +266,9 @@ function _scoreVoice(v) {
   if (!/^en/i.test(v.lang)) return -1; // không phải tiếng Anh -> loại
   const name = v.name.toLowerCase();
   let score = 0;
-  if (name.includes("natural")) score += 100;  // Microsoft "Online (Natural)" — tự nhiên nhất trên Windows/Edge
-  if (name.includes("online")) score += 50;    // giọng chạy trên mạng thường chất lượng cao hơn giọng cài sẵn máy
-  if (name.includes("google")) score += 40;    // Google US English (Chrome) — ổn định, khá tự nhiên
+  if (name.includes("natural")) score += 100; // Microsoft "Online (Natural)" — tự nhiên nhất trên Windows/Edge
+  if (name.includes("online")) score += 50; // giọng chạy trên mạng thường chất lượng cao hơn giọng cài sẵn máy
+  if (name.includes("google")) score += 40; // Google US English (Chrome) — ổn định, khá tự nhiên
   if (v.lang.toLowerCase() === "en-us") score += 20; // ưu tiên giọng Mỹ
   if (!v.localService) score += 10;
   return score;
@@ -275,10 +279,11 @@ function _loadBestVoice() {
   if (!("speechSynthesis" in window)) return;
   const voices = window.speechSynthesis.getVoices();
   if (!voices.length) return;
-  _ttsVoice = voices
-    .map(v => ({ v, score: _scoreVoice(v) }))
-    .filter(x => x.score >= 0)
-    .sort((a, b) => b.score - a.score)[0]?.v || null;
+  _ttsVoice =
+    voices
+      .map((v) => ({ v, score: _scoreVoice(v) }))
+      .filter((x) => x.score >= 0)
+      .sort((a, b) => b.score - a.score)[0]?.v || null;
 }
 
 if ("speechSynthesis" in window) {
@@ -322,28 +327,22 @@ function endStudyEarly() {
   const reviewed = studySession.reviewed;
   db.recordStudySession(reviewed, Math.round(mins * 10) / 10);
 
-  document.getElementById("learn-content").innerHTML = TEMPLATES.finishScreen(
-    reviewed, mins, db.stats.streakDays, studySession.history, true
-  );
+  document.getElementById("learn-content").innerHTML = TEMPLATES.finishScreen(reviewed, mins, db.stats.streakDays, studySession.history, true);
   studySession = null;
 }
 function finishStudySession() {
   setStudyFocusMode(false);
 
-  const mins = Math.round((Date.now() - studySession.startTime) / 60000 * 10) / 10;
+  const mins = Math.round(((Date.now() - studySession.startTime) / 60000) * 10) / 10;
   const reviewed = studySession.reviewed;
   db.recordStudySession(reviewed, mins);
 
-  document.getElementById("learn-content").innerHTML = TEMPLATES.finishScreen(
-    reviewed, mins, db.stats.streakDays, studySession.history, false
-  );
+  document.getElementById("learn-content").innerHTML = TEMPLATES.finishScreen(reviewed, mins, db.stats.streakDays, studySession.history, false);
   studySession = null;
 }
 function showNoCardsModal(topic) {
   const prog = db.getTopicProgress(topic.id);
-  document.getElementById("learn-content").innerHTML = TEMPLATES.noCardsScreen(
-    topic, prog
-  );
+  document.getElementById("learn-content").innerHTML = TEMPLATES.noCardsScreen(topic, prog);
 }
 document.addEventListener("keydown", (e) => {
   if (!studySession) return;

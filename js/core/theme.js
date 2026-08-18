@@ -4,7 +4,7 @@
 // ================================================================
 
 function applyTheme(theme) {
-  const isLight = (theme === "light");
+  const isLight = theme === "light";
   document.documentElement.classList.toggle("light-theme", isLight);
   document.body.classList.toggle("light-theme", isLight);
 }

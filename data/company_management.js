@@ -108,11 +108,11 @@
       { id: "mgmt_97", word: "organizational ambidexterity", phonetic: "/ˌɔːɡənaɪˈzeɪʃənl ˌæmbɪdekˈsterəti/", pos: "noun", meaning: "Năng lực song hành khai thác và đổi mới", example: "Organizational ambidexterity lets a firm innovate while running its core business.", tier: "advanced" },
       { id: "mgmt_98", word: "upward delegation", phonetic: "/ˈʌpwəd ˌdelɪˈɡeɪʃn/", pos: "noun", meaning: "Đẩy việc ngược lên cấp trên", example: "Managers should avoid upward delegation by empowering their teams to decide.", tier: "advanced" },
       { id: "mgmt_99", word: "corporate divestment", phonetic: "/ˈkɔːpərət daɪˈvestmənt/", pos: "noun", meaning: "Việc thoái vốn/bán tài sản doanh nghiệp", example: "Corporate divestment freed up capital for new investments.", tier: "advanced" },
-      { id: "mgmt_100", word: "organizational entropy", phonetic: "/ˌɔːɡənaɪˈzeɪʃənl ˈentrəpi/", pos: "noun", meaning: "Sự suy giảm trật tự trong tổ chức", example: "Without clear processes, the fast-growing company suffered from organizational entropy.", tier: "advanced" }
-    ]
+      { id: "mgmt_100", word: "organizational entropy", phonetic: "/ˌɔːɡənaɪˈzeɪʃənl ˈentrəpi/", pos: "noun", meaning: "Sự suy giảm trật tự trong tổ chức", example: "Without clear processes, the fast-growing company suffered from organizational entropy.", tier: "advanced" },
+    ],
   };
   if (!window.TOPICS) window.TOPICS = [];
-  if (!window.TOPICS.some(t => t.id === topic.id)) {
+  if (!window.TOPICS.some((t) => t.id === topic.id)) {
     window.TOPICS.push(topic);
   }
 })();

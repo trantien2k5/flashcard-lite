@@ -1,7 +1,7 @@
 // ============================================================
 // TOPIC: Marketing & Quảng cáo (100 từ)
 // ============================================================
-(function() {
+(function () {
   const topic = {
     id: "topic_marketing_advertising",
     name: "Marketing & Quảng cáo",
@@ -108,11 +108,11 @@
       { id: "mktg_97", word: "subliminal advertising", phonetic: "/sʌbˈlɪmɪnl ˈædvərtaɪzɪŋ/", pos: "noun", meaning: "Quảng cáo tiềm thức", example: "Subliminal advertising is banned in many countries.", tier: "advanced" },
       { id: "mktg_98", word: "cannibalization", phonetic: "/kəˌnɪbəlaɪˈzeɪʃn/", pos: "noun", meaning: "Sự lấn át doanh số lẫn nhau", example: "The new product caused cannibalization of the old one.", tier: "advanced" },
       { id: "mktg_99", word: "disruptive marketing", phonetic: "/dɪsˈrʌptɪv ˈmɑːrkɪtɪŋ/", pos: "noun", meaning: "Tiếp thị đột phá", example: "Disruptive marketing challenges traditional industry norms.", tier: "advanced" },
-      { id: "mktg_100", word: "omnichannel", phonetic: "/ˈɒmnitʃænl/", pos: "adjective", meaning: "Đa kênh liền mạch", example: "The retailer adopted an omnichannel sales approach.", tier: "advanced" }
-    ]
+      { id: "mktg_100", word: "omnichannel", phonetic: "/ˈɒmnitʃænl/", pos: "adjective", meaning: "Đa kênh liền mạch", example: "The retailer adopted an omnichannel sales approach.", tier: "advanced" },
+    ],
   };
   if (!window.TOPICS) window.TOPICS = [];
-  if (!window.TOPICS.some(t => t.id === topic.id)) {
+  if (!window.TOPICS.some((t) => t.id === topic.id)) {
     window.TOPICS.push(topic);
   }
 })();

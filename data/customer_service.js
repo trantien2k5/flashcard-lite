@@ -1,7 +1,7 @@
 // ============================================================
 // TOPIC: Chăm sóc khách hàng (100 từ)
 // ============================================================
-(function() {
+(function () {
   const topic = {
     id: "topic_customer_service",
     name: "Chăm sóc khách hàng",
@@ -108,11 +108,11 @@
       { id: "cs_97", word: "voice of customer", phonetic: "/vɔɪs əv ˈkʌstəmər/", pos: "noun", meaning: "Tiếng nói của khách hàng", example: "The team collects voice of customer data through surveys.", tier: "advanced" },
       { id: "cs_98", word: "churn rate", phonetic: "/tʃɜːrn reɪt/", pos: "noun", meaning: "Tỷ lệ khách hàng rời bỏ", example: "The churn rate dropped after improving support quality.", tier: "advanced" },
       { id: "cs_99", word: "brand advocacy", phonetic: "/brænd ˈædvəkəsi/", pos: "noun", meaning: "Sự ủng hộ thương hiệu", example: "Happy customers often turn into sources of brand advocacy.", tier: "advanced" },
-      { id: "cs_100", word: "empowerment", phonetic: "/ɪmˈpaʊərmənt/", pos: "noun", meaning: "Sự trao quyền", example: "Agent empowerment allows staff to resolve issues without approval.", tier: "advanced" }
-    ]
+      { id: "cs_100", word: "empowerment", phonetic: "/ɪmˈpaʊərmənt/", pos: "noun", meaning: "Sự trao quyền", example: "Agent empowerment allows staff to resolve issues without approval.", tier: "advanced" },
+    ],
   };
   if (!window.TOPICS) window.TOPICS = [];
-  if (!window.TOPICS.some(t => t.id === topic.id)) {
+  if (!window.TOPICS.some((t) => t.id === topic.id)) {
     window.TOPICS.push(topic);
   }
 })();

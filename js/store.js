@@ -33,27 +33,27 @@ class FlashcardDB {
 
   _defaultData() {
     return {
-      cards: {},           // wordId → CardState
+      cards: {}, // wordId → CardState
       settings: {
-        dailyNewCards:    20,
+        dailyNewCards: 20,
         dailyReviewLimit: 100,
-        showPhonetic:     true,
-        showExample:      true,
-        studyOrder:       "due",   // "due" | "random" | "alphabetical"
-        learnAhead:       20,      // phút — lấy trước thẻ sắp đến hạn
-        theme:            "dark"
+        showPhonetic: true,
+        showExample: true,
+        studyOrder: "due", // "due" | "random" | "alphabetical"
+        learnAhead: 20, // phút — lấy trước thẻ sắp đến hạn
+        theme: "dark",
       },
       stats: {
-        streakDays:        0,
-        streakRecord:      0,    // kỷ lục streak cao nhất
-        lastStudyDate:     null,
+        streakDays: 0,
+        streakRecord: 0, // kỷ lục streak cao nhất
+        lastStudyDate: null,
         totalStudyMinutes: 0,
-        dailyLog:          {},   // "YYYY-MM-DD" → { reviewed, minutes, correct, total }
-        ratingLog:         []    // 200 rating gần nhất: { ts, rating } — để tính accuracy
+        dailyLog: {}, // "YYYY-MM-DD" → { reviewed, minutes, correct, total }
+        ratingLog: [], // 200 rating gần nhất: { ts, rating } — để tính accuracy
       },
       meta: {
-        isDemo: false   // true khi đang xem dữ liệu mô phỏng (xem enableDemoData/disableDemoData)
-      }
+        isDemo: false, // true khi đang xem dữ liệu mô phỏng (xem enableDemoData/disableDemoData)
+      },
     };
   }
 
@@ -79,10 +79,10 @@ class FlashcardDB {
 
   /** Cập nhật thẻ qua thuật toán FSRS-6, lưu storage, ghi lại rating để tính accuracy */
   updateCard(wordId, rating) {
-    const card    = this.getCard(wordId);
-    const isNew   = card.state === "new";
-    const updated = fsrs(card, rating);          // ← gọi algorithm.js
-    
+    const card = this.getCard(wordId);
+    const isNew = card.state === "new";
+    const updated = fsrs(card, rating); // ← gọi algorithm.js
+
     if (isNew) {
       updated.firstStudied = this._todayStr();
     }
@@ -110,7 +110,9 @@ class FlashcardDB {
   // Settings
   // ----------------------------------------------------------
 
-  get settings() { return this._data.settings; }
+  get settings() {
+    return this._data.settings;
+  }
 
   updateSettings(patch) {
     this._data.settings = { ...this._data.settings, ...patch };
@@ -121,7 +123,9 @@ class FlashcardDB {
   // Stats & Streak
   // ----------------------------------------------------------
 
-  get stats() { return this._data.stats; }
+  get stats() {
+    return this._data.stats;
+  }
 
   /**
    * Ghi lại phiên học: cập nhật streak, daily log, tổng thời gian.
@@ -129,10 +133,10 @@ class FlashcardDB {
    * @param {number} minutes
    */
   recordStudySession(wordsStudied, minutes) {
-    const today     = this._todayStr();
+    const today = this._todayStr();
     const yesterday = this._dateStr(-1);
-    const stats     = this._data.stats;
-    const lastDate  = stats.lastStudyDate;
+    const stats = this._data.stats;
+    const lastDate = stats.lastStudyDate;
 
     // Streak
     if (lastDate === yesterday) {
@@ -150,9 +154,9 @@ class FlashcardDB {
     if (!stats.dailyLog[today]) {
       stats.dailyLog[today] = { reviewed: 0, minutes: 0 };
     }
-    stats.dailyLog[today].reviewed     += wordsStudied;
-    stats.dailyLog[today].minutes      += minutes;
-    stats.totalStudyMinutes            += minutes;
+    stats.dailyLog[today].reviewed += wordsStudied;
+    stats.dailyLog[today].minutes += minutes;
+    stats.totalStudyMinutes += minutes;
 
     this.save();
   }
@@ -170,14 +174,14 @@ class FlashcardDB {
    * @returns {CardState[]}
    */
   getDueCards(topicId, topic) {
-    const now      = Date.now();
+    const now = Date.now();
     const { learnAhead } = this._data.settings;
 
-    const newCards      = [];
-    const reviewCards   = [];
+    const newCards = [];
+    const reviewCards = [];
     const learningCards = [];
 
-    topic.words.forEach(w => {
+    topic.words.forEach((w) => {
       const card = this.getCard(w.id);
       if (card.state === "new") {
         newCards.push(card);
@@ -198,13 +202,15 @@ class FlashcardDB {
 
   /** Thống kê tổng số từ theo trạng thái (chỉ tính các từ thuộc chủ đề hiện có) */
   getTotalWordStats() {
-    let known = 0, learning = 0, newCount = 0;
+    let known = 0,
+      learning = 0,
+      newCount = 0;
     const activeWordIds = new Set();
-    TOPICS.forEach(topic => {
-      topic.words.forEach(w => activeWordIds.add(w.id));
+    TOPICS.forEach((topic) => {
+      topic.words.forEach((w) => activeWordIds.add(w.id));
     });
 
-    activeWordIds.forEach(id => {
+    activeWordIds.forEach((id) => {
       const card = this._data.cards[id];
       if (!card || card.state === "new") {
         newCount++;
@@ -219,15 +225,17 @@ class FlashcardDB {
 
   /** Tiến độ học của một chủ đề */
   getTopicProgress(topicId) {
-    const topic = TOPICS.find(t => t.id === topicId);
+    const topic = TOPICS.find((t) => t.id === topicId);
     if (!topic) return null;
 
-    let known = 0, learning = 0, newW = 0;
-    topic.words.forEach(w => {
+    let known = 0,
+      learning = 0,
+      newW = 0;
+    topic.words.forEach((w) => {
       const card = this._data.cards[w.id];
-      if (!card || card.state === "new")                                          newW++;
+      if (!card || card.state === "new") newW++;
       else if (card.state === "learning" || card.state === "relearning" || (card.state === "review" && card.reps < 2)) learning++;
-      else                                                                         known++;
+      else known++;
     });
     return { total: topic.words.length, known, learning, new: newW };
   }
@@ -235,15 +243,15 @@ class FlashcardDB {
   /** Dữ liệu hoạt động 7 ngày gần nhất (cho biểu đồ) */
   getWeeklyActivity() {
     const DAYS_VI = ["CN", "T2", "T3", "T4", "T5", "T6", "T7"];
-    const result  = [];
+    const result = [];
     for (let i = 6; i >= 0; i--) {
-      const d   = new Date();
+      const d = new Date();
       d.setDate(d.getDate() - i);
       const key = d.toISOString().slice(0, 10);
       result.push({
-        date:  key,
-        day:   DAYS_VI[d.getDay()],
-        count: (this._data.stats.dailyLog[key] || {}).reviewed || 0
+        date: key,
+        day: DAYS_VI[d.getDay()],
+        count: (this._data.stats.dailyLog[key] || {}).reviewed || 0,
       });
     }
     return result;
@@ -252,7 +260,7 @@ class FlashcardDB {
   /** Lấy số từ mới đã bắt đầu học hôm nay */
   getAlreadyNewToday() {
     const today = this._todayStr();
-    return Object.values(this._data.cards).filter(c => c.firstStudied === today).length;
+    return Object.values(this._data.cards).filter((c) => c.firstStudied === today).length;
   }
 
   // ----------------------------------------------------------
@@ -270,13 +278,13 @@ class FlashcardDB {
     const { learnAhead } = this._data.settings;
 
     let reviewCount = 0;
-    TOPICS.forEach(topic => {
-      topic.words.forEach(w => {
+    TOPICS.forEach((topic) => {
+      topic.words.forEach((w) => {
         const card = this._data.cards[w.id];
-        if (!card || card.state === 'new') return;
-        if (card.state === 'learning' || card.state === 'relearning') {
+        if (!card || card.state === "new") return;
+        if (card.state === "learning" || card.state === "relearning") {
           if (card.nextReview <= now + learnAhead * 60 * 1000) reviewCount++;
-        } else if (card.state === 'review') {
+        } else if (card.state === "review") {
           if (card.nextReview <= now) reviewCount++;
         }
       });
@@ -285,7 +293,7 @@ class FlashcardDB {
     return {
       reviewCount,
       newStartedToday: this.getAlreadyNewToday(),
-      newGoal: this._data.settings.dailyNewCards
+      newGoal: this._data.settings.dailyNewCards,
     };
   }
 
@@ -295,16 +303,16 @@ class FlashcardDB {
    */
   getWeakWords() {
     const weakList = [];
-    TOPICS.forEach(topic => {
-      topic.words.forEach(w => {
+    TOPICS.forEach((topic) => {
+      topic.words.forEach((w) => {
         const card = this._data.cards[w.id];
         if (card && card.lapses >= 2) {
           weakList.push({
-            word:   w.word,
+            word: w.word,
             meaning: w.meaning,
             lapses: card.lapses,
-            topic:  topic.name,
-            topicIcon: topic.icon
+            topic: topic.name,
+            topicIcon: topic.icon,
           });
         }
       });
@@ -321,10 +329,10 @@ class FlashcardDB {
    */
   getAccuracyRate(days = 7) {
     const cutoff = Date.now() - days * 24 * 60 * 60 * 1000;
-    const log    = this._data.stats.ratingLog || [];
-    const recent = log.filter(r => r.ts >= cutoff);
+    const log = this._data.stats.ratingLog || [];
+    const recent = log.filter((r) => r.ts >= cutoff);
     if (recent.length === 0) return null;
-    const correct = recent.filter(r => r.rating !== RATING.AGAIN).length;
+    const correct = recent.filter((r) => r.rating !== RATING.AGAIN).length;
     return Math.round((correct / recent.length) * 100);
   }
 
@@ -339,20 +347,17 @@ class FlashcardDB {
     for (let i = 29; i >= 0; i--) {
       const d = new Date();
       d.setDate(d.getDate() - i);
-      const key   = d.toISOString().slice(0, 10);
+      const key = d.toISOString().slice(0, 10);
       const count = (this._data.stats.dailyLog[key] || {}).reviewed || 0;
       if (count > maxCount) maxCount = count;
     }
     for (let i = 29; i >= 0; i--) {
-      const d    = new Date();
+      const d = new Date();
       d.setDate(d.getDate() - i);
-      const key   = d.toISOString().slice(0, 10);
+      const key = d.toISOString().slice(0, 10);
       const count = (this._data.stats.dailyLog[key] || {}).reviewed || 0;
       const ratio = count / maxCount;
-      const level = count === 0 ? 0
-                  : ratio < 0.25 ? 1
-                  : ratio < 0.5  ? 2
-                  : ratio < 0.75 ? 3 : 4;
+      const level = count === 0 ? 0 : ratio < 0.25 ? 1 : ratio < 0.5 ? 2 : ratio < 0.75 ? 3 : 4;
       result.push({ date: key, count, level });
     }
     return result;
@@ -366,8 +371,8 @@ class FlashcardDB {
 
     // Lọc các thẻ đã có mô hình trí nhớ FSRS-6 (đã ôn ít nhất 1 lần)
     const studiedCards = [];
-    TOPICS.forEach(topic => {
-      topic.words.forEach(w => {
+    TOPICS.forEach((topic) => {
+      topic.words.forEach((w) => {
         const card = this._data.cards[w.id];
         if (card && card.lastReview && card.stability != null) {
           studiedCards.push(card);
@@ -382,7 +387,7 @@ class FlashcardDB {
     // R(t,S) — công thức khả năng nhớ thật của FSRS-6, xem algorithm.js
     const calculateAvgR = (daysAhead) => {
       let sumR = 0;
-      studiedCards.forEach(card => {
+      studiedCards.forEach((card) => {
         const daysElapsed = Math.max(0, (now - card.lastReview) / DAY) + daysAhead;
         sumR += retrievability(daysElapsed, card.stability);
       });
@@ -393,7 +398,7 @@ class FlashcardDB {
       current: calculateAvgR(0),
       day7: calculateAvgR(7),
       day30: calculateAvgR(30),
-      day90: calculateAvgR(90)
+      day90: calculateAvgR(90),
     };
   }
 
@@ -412,7 +417,7 @@ class FlashcardDB {
 
     // 1. Số từ mới bắt đầu học trong 7 ngày qua
     const cards = Object.values(this._data.cards);
-    cards.forEach(card => {
+    cards.forEach((card) => {
       if (card.firstStudied) {
         const firstStudiedMs = new Date(card.firstStudied).getTime();
         const diffDays = (todayMs - firstStudiedMs) / (1000 * 60 * 60 * 24);
@@ -428,7 +433,7 @@ class FlashcardDB {
       d.setDate(d.getDate() - i);
       const key = d.toISOString().slice(0, 10);
       const log = this._data.stats.dailyLog[key] || { reviewed: 0, correct: 0, total: 0 };
-      
+
       reviewedCount += log.reviewed || 0;
       correctCount += log.correct || 0;
       totalRateCount += log.total || 0;
@@ -439,7 +444,7 @@ class FlashcardDB {
     return {
       studied: studiedCount,
       reviewed: reviewedCount,
-      accuracy: accuracy
+      accuracy: accuracy,
     };
   }
 
@@ -517,31 +522,29 @@ class FlashcardDB {
         lastStudyDate: this._todayStr(),
         totalStudyMinutes: 0,
         dailyLog: {},
-        ratingLog: []
+        ratingLog: [],
       },
-      meta: { isDemo: true }
+      meta: { isDemo: true },
     };
 
     // ---- 1. Lịch sử 35 ngày gần nhất: dailyLog + ratingLog (streak/heatmap/độ chính xác) ----
     let totalMinutes = 0;
     for (let i = 0; i < DAYS_HISTORY; i++) {
-      const dayTs  = now - i * DAY;
+      const dayTs = now - i * DAY;
       const dayKey = new Date(dayTs).toISOString().slice(0, 10);
       // 12 ngày gần nhất luôn có học (khớp streakDays=12), các ngày trước ~30% là ngày nghỉ
       const studied = i < 12 || Math.random() > 0.3;
       if (!studied) continue;
 
       const reviewed = 5 + Math.floor(Math.random() * 25);
-      const correct  = Math.round(reviewed * (0.75 + Math.random() * 0.2));
-      const minutes  = +(reviewed * (0.4 + Math.random() * 0.4)).toFixed(1);
+      const correct = Math.round(reviewed * (0.75 + Math.random() * 0.2));
+      const minutes = +(reviewed * (0.4 + Math.random() * 0.4)).toFixed(1);
       totalMinutes += minutes;
       data.stats.dailyLog[dayKey] = { reviewed, minutes, correct, total: reviewed };
 
       for (let r = 0; r < reviewed; r++) {
         const ts = dayTs - Math.floor(Math.random() * DAY * 0.8);
-        const rating = r >= correct ? RATING.AGAIN
-          : Math.random() < 0.3 ? RATING.HARD
-          : Math.random() < 0.85 ? RATING.GOOD : RATING.EASY;
+        const rating = r >= correct ? RATING.AGAIN : Math.random() < 0.3 ? RATING.HARD : Math.random() < 0.85 ? RATING.GOOD : RATING.EASY;
         data.stats.ratingLog.push({ ts, rating });
       }
     }
@@ -553,11 +556,11 @@ class FlashcardDB {
 
     // ---- 2. Trạng thái từng thẻ: ~60% số từ đã từng động vào, đủ 4 trạng thái ----
     const allWords = [];
-    TOPICS.forEach(topic => topic.words.forEach(w => allWords.push(w)));
+    TOPICS.forEach((topic) => topic.words.forEach((w) => allWords.push(w)));
     const shuffled = [...allWords].sort(() => Math.random() - 0.5);
     const studiedWords = shuffled.slice(0, Math.round(shuffled.length * 0.6));
 
-    studiedWords.forEach(w => {
+    studiedWords.forEach((w) => {
       const roll = Math.random();
       let state, reps, lapses, stability, interval, dueOffsetDays;
 
@@ -581,7 +584,7 @@ class FlashcardDB {
         // Đã tốt nghiệp ra review — phần lớn ổn định, ~12% là "từ yếu" (lapses cao)
         state = "review";
         const isWeak = Math.random() < 0.12;
-        lapses = isWeak ? 2 + Math.floor(Math.random() * 4) : (Math.random() < 0.15 ? 1 : 0);
+        lapses = isWeak ? 2 + Math.floor(Math.random() * 4) : Math.random() < 0.15 ? 1 : 0;
         reps = isWeak ? 1 + Math.floor(Math.random() * 2) : 2 + Math.floor(Math.random() * 8);
         stability = 3 + Math.random() * 55;
         interval = Math.max(1, Math.round(stability));
@@ -605,7 +608,7 @@ class FlashcardDB {
         lastReview,
         lapses,
         state,
-        firstStudied
+        firstStudied,
       };
     });
 

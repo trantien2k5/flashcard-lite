@@ -1,7 +1,7 @@
 // ============================================================
 // TOPIC: Cuộc sống hằng ngày (100 từ)
 // ============================================================
-(function() {
+(function () {
   const topic = {
     id: "topic_daily_life",
     name: "Cuộc sống hằng ngày",
@@ -108,11 +108,11 @@
       { id: "dl_97", word: "habitual", phonetic: "/həˈbɪtʃuəl/", pos: "adjective", meaning: "Theo thói quen, thường xuyên", example: "His habitual lateness annoys his coworkers.", tier: "advanced" },
       { id: "dl_98", word: "mundane", phonetic: "/mʌnˈdeɪn/", pos: "adjective", meaning: "Tầm thường, thường ngày", example: "She tried to find joy in mundane tasks.", tier: "advanced" },
       { id: "dl_99", word: "tedious", phonetic: "/ˈtiːdiəs/", pos: "adjective", meaning: "Tẻ nhạt, mất thời gian", example: "Ironing clothes is a tedious chore.", tier: "advanced" },
-      { id: "dl_100", word: "indispensable", phonetic: "/ˌɪndɪˈspensəbl/", pos: "adjective", meaning: "Không thể thiếu, thiết yếu", example: "A good routine is indispensable for a healthy life.", tier: "advanced" }
-    ]
+      { id: "dl_100", word: "indispensable", phonetic: "/ˌɪndɪˈspensəbl/", pos: "adjective", meaning: "Không thể thiếu, thiết yếu", example: "A good routine is indispensable for a healthy life.", tier: "advanced" },
+    ],
   };
   if (!window.TOPICS) window.TOPICS = [];
-  if (!window.TOPICS.some(t => t.id === topic.id)) {
+  if (!window.TOPICS.some((t) => t.id === topic.id)) {
     window.TOPICS.push(topic);
   }
 })();

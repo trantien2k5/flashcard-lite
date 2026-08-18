@@ -1,7 +1,7 @@
 // ============================================================
 // TOPIC: Tuyển dụng & Việc làm (100 từ)
 // ============================================================
-(function() {
+(function () {
   const topic = {
     id: "topic_employment_recruitment",
     name: "Tuyển dụng & Việc làm",
@@ -108,11 +108,11 @@
       { id: "emp_97", word: "tenure", phonetic: "/ˈtenjər/", pos: "noun", meaning: "Nhiệm kỳ / Thâm niên công tác", example: "She was granted tenure after seven years.", tier: "advanced" },
       { id: "emp_98", word: "sabbatical", phonetic: "/səˈbætɪkl/", pos: "noun", meaning: "Kỳ nghỉ dài hạn (có lương hoặc không)", example: "He took a sabbatical to travel and write.", tier: "advanced" },
       { id: "emp_99", word: "redundancy", phonetic: "/rɪˈdʌndənsi/", pos: "noun", meaning: "Dư thừa nhân sự (dẫn đến sa thải)", example: "Her position was made redundant during restructuring.", tier: "advanced" },
-      { id: "emp_100", word: "whistleblower", phonetic: "/ˈwɪslbloʊər/", pos: "noun", meaning: "Người tố giác sai phạm", example: "The whistleblower exposed the company's fraud.", tier: "advanced" }
-    ]
+      { id: "emp_100", word: "whistleblower", phonetic: "/ˈwɪslbloʊər/", pos: "noun", meaning: "Người tố giác sai phạm", example: "The whistleblower exposed the company's fraud.", tier: "advanced" },
+    ],
   };
   if (!window.TOPICS) window.TOPICS = [];
-  if (!window.TOPICS.some(t => t.id === topic.id)) {
+  if (!window.TOPICS.some((t) => t.id === topic.id)) {
     window.TOPICS.push(topic);
   }
 })();

@@ -17,7 +17,9 @@
   padding: 24px 20px 0;
   animation: fadeUp 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
-.tab-pane.active { display: block; }
+.tab-pane.active {
+  display: block;
+}
 /* Chế độ học tập trung (body.study-focus): ẩn thanh nav dưới trong lúc đang
    lật thẻ để không phân tâm; app-container bỏ luôn khoảng chừa chỗ cho nav. */
 body.study-focus .bottom-nav {
@@ -91,7 +93,7 @@ body.study-focus .app-container {
 
 /* Active indicator dot at the bottom */
 .tab-btn::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0px;
   left: 50%;

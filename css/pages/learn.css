@@ -47,27 +47,28 @@
   transition: var(--transition-bounce);
   position: relative;
   overflow: hidden;
-  box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  box-shadow:
+    var(--shadow-sm),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
   display: flex;
   align-items: flex-start;
   gap: 16px;
 }
 
 .topic-card::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at top left,
-    color-mix(in srgb, var(--topic-color) 10%, transparent),
-    transparent 60%);
+  background: radial-gradient(circle at top left, color-mix(in srgb, var(--topic-color) 10%, transparent), transparent 60%);
   pointer-events: none;
 }
 
 .topic-card:hover {
   border-color: var(--topic-color);
   transform: translateY(-3px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35), 
-              0 0 16px color-mix(in srgb, var(--topic-color) 20%, transparent);
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.35),
+    0 0 16px color-mix(in srgb, var(--topic-color) 20%, transparent);
 }
 
 .topic-card:active {
@@ -182,12 +183,14 @@ body.light-theme .learn-title {
   background-clip: text;
 }
 body.light-theme .topic-card {
-  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.05),
-              inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  box-shadow:
+    0 10px 24px rgba(15, 23, 42, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
 }
 body.light-theme .topic-card:hover {
-  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.08), 
-              0 0 16px color-mix(in srgb, var(--topic-color) 12%, transparent);
+  box-shadow:
+    0 16px 36px rgba(15, 23, 42, 0.08),
+    0 0 16px color-mix(in srgb, var(--topic-color) 12%, transparent);
 }
 body.light-theme .topic-progress-bar {
   background: rgba(15, 23, 42, 0.04);

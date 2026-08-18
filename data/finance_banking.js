@@ -1,7 +1,7 @@
 // ============================================================
 // TOPIC: Tài chính & Ngân hàng nâng cao (100 từ)
 // ============================================================
-(function() {
+(function () {
   const topic = {
     id: "topic_finance_banking",
     name: "Tài chính & Ngân hàng nâng cao",
@@ -108,11 +108,11 @@
       { id: "finb_97", word: "capital adequacy ratio", phonetic: "/ˈkæpɪtl ˈædɪkwəsi ˈreɪʃioʊ/", pos: "noun", meaning: "Tỷ lệ an toàn vốn", example: "Regulators require banks to maintain a minimum capital adequacy ratio.", tier: "advanced" },
       { id: "finb_98", word: "non-performing loan", phonetic: "/nɒn pərˈfɔːrmɪŋ loʊn/", pos: "noun", meaning: "Nợ xấu", example: "The bank wrote off several non-performing loans this year.", tier: "advanced" },
       { id: "finb_99", word: "letter of credit", phonetic: "/ˈletər əv ˈkredɪt/", pos: "noun", meaning: "Thư tín dụng", example: "The exporter required a letter of credit before shipping the goods.", tier: "advanced" },
-      { id: "finb_100", word: "syndicated loan", phonetic: "/ˈsɪndɪkeɪtɪd loʊn/", pos: "noun", meaning: "Khoản vay hợp vốn", example: "Several banks joined together to provide a syndicated loan.", tier: "advanced" }
-    ]
+      { id: "finb_100", word: "syndicated loan", phonetic: "/ˈsɪndɪkeɪtɪd loʊn/", pos: "noun", meaning: "Khoản vay hợp vốn", example: "Several banks joined together to provide a syndicated loan.", tier: "advanced" },
+    ],
   };
   if (!window.TOPICS) window.TOPICS = [];
-  if (!window.TOPICS.some(t => t.id === topic.id)) {
+  if (!window.TOPICS.some((t) => t.id === topic.id)) {
     window.TOPICS.push(topic);
   }
 })();

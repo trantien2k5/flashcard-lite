@@ -1,7 +1,7 @@
 // ============================================================
 // TOPIC: Internet & Giao tiếp (100 từ)
 // ============================================================
-(function() {
+(function () {
   const topic = {
     id: "topic_internet_communication",
     name: "Internet & Giao tiếp",
@@ -108,11 +108,11 @@
       { id: "net_97", word: "obfuscated", phonetic: "/ˈɒbfʌskeɪtɪd/", pos: "adjective", meaning: "Bị làm rối, che giấu", example: "The hacker used an obfuscated address to hide his location.", tier: "advanced" },
       { id: "net_98", word: "peer-to-peer", phonetic: "/ˌpɪər tə ˈpɪər/", pos: "adjective", meaning: "Ngang hàng (mạng)", example: "The file was shared through a peer-to-peer network.", tier: "advanced" },
       { id: "net_99", word: "interoperability", phonetic: "/ˌɪntərˌɒpərəˈbɪləti/", pos: "noun", meaning: "Khả năng liên thông hệ thống", example: "Interoperability between apps allows data to sync smoothly.", tier: "advanced" },
-      { id: "net_100", word: "telecommunication", phonetic: "/ˌtelikəˌmjuːnɪˈkeɪʃn/", pos: "noun", meaning: "Viễn thông", example: "The telecommunication company upgraded its network infrastructure.", tier: "advanced" }
-    ]
+      { id: "net_100", word: "telecommunication", phonetic: "/ˌtelikəˌmjuːnɪˈkeɪʃn/", pos: "noun", meaning: "Viễn thông", example: "The telecommunication company upgraded its network infrastructure.", tier: "advanced" },
+    ],
   };
   if (!window.TOPICS) window.TOPICS = [];
-  if (!window.TOPICS.some(t => t.id === topic.id)) {
+  if (!window.TOPICS.some((t) => t.id === topic.id)) {
     window.TOPICS.push(topic);
   }
 })();

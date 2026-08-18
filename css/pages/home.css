@@ -17,15 +17,18 @@
   margin-bottom: 20px;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35),
-              inset 0 1px 1px rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 16px 36px rgba(0, 0, 0, 0.35),
+    inset 0 1px 1px rgba(255, 255, 255, 0.08);
 }
 
 .today-block::before {
-  content: '';
+  content: "";
   position: absolute;
-  top: -40%; right: -10%;
-  width: 200px; height: 200px;
+  top: -40%;
+  right: -10%;
+  width: 200px;
+  height: 200px;
   background: radial-gradient(circle, rgba(139, 92, 246, 0.22), transparent 70%);
   pointer-events: none;
 }
@@ -115,8 +118,12 @@
 }
 
 @keyframes goalRingFill {
-  from { stroke-dashoffset: var(--circumference); }
-  to   { stroke-dashoffset: var(--offset); }
+  from {
+    stroke-dashoffset: var(--circumference);
+  }
+  to {
+    stroke-dashoffset: var(--offset);
+  }
 }
 
 .goal-ring-center {
@@ -146,15 +153,17 @@
   cursor: pointer;
   font-family: inherit;
   transition: var(--transition-bounce);
-  box-shadow: 0 8px 24px var(--glow-purple), 
-              inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  box-shadow:
+    0 8px 24px var(--glow-purple),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
   letter-spacing: 0.3px;
 }
 
 .btn-start-study:hover {
   transform: translateY(-3px);
-  box-shadow: 0 12px 32px rgba(139, 92, 246, 0.5),
-              0 0 0 1px rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 12px 32px rgba(139, 92, 246, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
 }
 
 .btn-start-study:active {
@@ -189,9 +198,11 @@
 }
 
 .progress-bar::after {
-  content: '';
+  content: "";
   position: absolute;
-  top: 0; right: 0; bottom: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
   width: 40px;
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2));
   border-radius: 20px;
@@ -258,8 +269,9 @@
 body.light-theme .today-block {
   background: linear-gradient(135deg, rgba(124, 58, 237, 0.08) 0%, rgba(37, 99, 235, 0.04) 100%);
   border-color: rgba(124, 58, 237, 0.2);
-  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.06),
-              inset 0 1px 1px rgba(255, 255, 255, 0.6);
+  box-shadow:
+    0 16px 36px rgba(15, 23, 42, 0.06),
+    inset 0 1px 1px rgba(255, 255, 255, 0.6);
 }
 body.light-theme .goal-ring-track {
   stroke: rgba(15, 23, 42, 0.08);

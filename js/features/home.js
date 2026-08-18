@@ -6,12 +6,12 @@
 
 if (!window.TEMPLATES) window.TEMPLATES = {};
 
-window.TEMPLATES.home = function(stats, todo, known, learning, totalWords, totalLearned) {
+window.TEMPLATES.home = function (stats, todo, known, learning, totalWords, totalLearned) {
   // Vòng tròn mục tiêu từ mới hôm nay — dailyNewCards giờ chỉ là mục tiêu hiển thị,
   // không giới hạn cứng số từ thật sự học được (xem db.getDueCards).
-  const goalPct  = todo.newGoal > 0 ? Math.min(100, Math.round(todo.newStartedToday / todo.newGoal * 100)) : 100;
+  const goalPct = todo.newGoal > 0 ? Math.min(100, Math.round((todo.newStartedToday / todo.newGoal) * 100)) : 100;
   const goalDone = todo.newGoal > 0 && todo.newStartedToday >= todo.newGoal;
-  const RING_R    = 26;
+  const RING_R = 26;
   const RING_CIRC = 2 * Math.PI * RING_R;
   const ringOffset = RING_CIRC * (1 - goalPct / 100);
 
@@ -31,12 +31,12 @@ window.TEMPLATES.home = function(stats, todo, known, learning, totalWords, total
           <div class="goal-ring-wrap">
             <svg class="goal-ring" width="64" height="64" viewBox="0 0 64 64">
               <circle class="goal-ring-track" cx="32" cy="32" r="${RING_R}"></circle>
-              <circle class="goal-ring-fill ${goalDone ? 'is-done' : ''}" cx="32" cy="32" r="${RING_R}"
+              <circle class="goal-ring-fill ${goalDone ? "is-done" : ""}" cx="32" cy="32" r="${RING_R}"
                 style="--circumference:${RING_CIRC}; --offset:${ringOffset}"></circle>
             </svg>
-            <div class="goal-ring-center">${goalDone ? '✓' : todo.newStartedToday}</div>
+            <div class="goal-ring-center">${goalDone ? "✓" : todo.newStartedToday}</div>
           </div>
-          <div class="today-stat-lbl">${goalDone ? 'Từ mới: Xong! 🎉' : `Từ mới ${todo.newStartedToday}/${todo.newGoal}`}</div>
+          <div class="today-stat-lbl">${goalDone ? "Từ mới: Xong! 🎉" : `Từ mới ${todo.newStartedToday}/${todo.newGoal}`}</div>
         </div>
         <div class="today-divider"></div>
         <div class="today-stat">
@@ -82,7 +82,7 @@ window.TEMPLATES.home = function(stats, todo, known, learning, totalWords, total
         </div>
       </div>
       <div class="progress-bar-wrap" style="margin-top:14px; margin-bottom:0">
-        <div class="progress-bar" style="width:${totalWords > 0 ? Math.round(totalLearned/totalWords*100) : 0}%"></div>
+        <div class="progress-bar" style="width:${totalWords > 0 ? Math.round((totalLearned / totalWords) * 100) : 0}%"></div>
       </div>
     </div>
 
@@ -94,16 +94,16 @@ window.TEMPLATES.home = function(stats, todo, known, learning, totalWords, total
         <button class="btn-text" onclick="switchTab('learn')">Học ngay →</button>
       </div>
       <div class="topic-overview-list">
-        ${TOPICS
-          .map(t => {
-            const prog = db.getTopicProgress(t.id);
-            const pct  = Math.round((prog.known + prog.learning) / prog.total * 100);
-            const due  = db.getDueCards(t.id, t).length;
-            return { t, pct, due };
-          })
+        ${TOPICS.map((t) => {
+          const prog = db.getTopicProgress(t.id);
+          const pct = Math.round(((prog.known + prog.learning) / prog.total) * 100);
+          const due = db.getDueCards(t.id, t).length;
+          return { t, pct, due };
+        })
           .sort((a, b) => b.due - a.due || a.pct - b.pct)
           .slice(0, 3)
-          .map(({ t, pct, due }) => `
+          .map(
+            ({ t, pct, due }) => `
           <div class="topic-overview-item">
             <span class="topic-icon-sm">${t.icon}</span>
             <div class="topic-info">
@@ -112,23 +112,23 @@ window.TEMPLATES.home = function(stats, todo, known, learning, totalWords, total
                 <div class="mini-bar" style="width:${pct}%; background:${t.color}"></div>
               </div>
             </div>
-            ${due > 0 ? `<span class="due-badge">${due} cần ôn</span>` : ''}
+            ${due > 0 ? `<span class="due-badge">${due} cần ôn</span>` : ""}
             <span class="topic-pct" style="color:${t.color}">${pct}%</span>
-          </div>`).join("")}
+          </div>`,
+          )
+          .join("")}
       </div>
     </div>
   `;
 };
 function renderHome() {
-  const stats       = db.stats;
-  const todo        = db.getDailyTodo();
+  const stats = db.stats;
+  const todo = db.getDailyTodo();
   const { known, learning } = db.getTotalWordStats();
-  const totalWords  = TOPICS.reduce((s, t) => s + t.words.length, 0);
+  const totalWords = TOPICS.reduce((s, t) => s + t.words.length, 0);
   const totalLearned = known + learning;
 
-  document.getElementById("home-content").innerHTML = TEMPLATES.home(
-    stats, todo, known, learning, totalWords, totalLearned
-  );
+  document.getElementById("home-content").innerHTML = TEMPLATES.home(stats, todo, known, learning, totalWords, totalLearned);
 }
 function getGreeting() {
   const h = new Date().getHours();

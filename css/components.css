@@ -34,9 +34,10 @@
   width: 100%;
   text-align: center;
   animation: scaleIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 
-              0 0 40px rgba(139, 92, 246, 0.1),
-              inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 30px 60px rgba(0, 0, 0, 0.6),
+    0 0 40px rgba(139, 92, 246, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .modal-icon {
@@ -158,8 +159,9 @@
 body.light-theme .modal-box {
   background: linear-gradient(145deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.98) 100%);
   border-color: rgba(15, 23, 42, 0.08);
-  box-shadow: 0 30px 60px rgba(15, 23, 42, 0.1), 
-              inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  box-shadow:
+    0 30px 60px rgba(15, 23, 42, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
 }
 body.light-theme .modal-title {
   background: linear-gradient(135deg, #0f172a, #475569);
@@ -202,8 +204,12 @@ body.light-theme .toast {
   width: 60%;
 }
 @keyframes skeletonPulse {
-  0%   { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }
 .home-header {
   padding: 12px 0 24px;
@@ -238,7 +244,9 @@ body.light-theme .toast {
   border-radius: var(--radius-lg);
   padding: 20px;
   margin-bottom: 20px;
-  box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  box-shadow:
+    var(--shadow-sm),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
 .section-header {
@@ -301,8 +309,9 @@ body.light-theme .greeting-text {
   cursor: pointer;
   transition: var(--transition-bounce);
   font-family: inherit;
-  box-shadow: 0 8px 24px var(--glow-purple), 
-              inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  box-shadow:
+    0 8px 24px var(--glow-purple),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
   letter-spacing: 0.3px;
 }
 

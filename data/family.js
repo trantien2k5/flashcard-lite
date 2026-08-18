@@ -1,7 +1,7 @@
 // ============================================================
 // TOPIC: Gia đình & Các mối quan hệ (100 từ)
 // ============================================================
-(function() {
+(function () {
   const topic = {
     id: "topic_family",
     name: "Gia đình & Các mối quan hệ",
@@ -108,11 +108,11 @@
       { id: "fam_97", word: "codependency", phonetic: "/ˌkoʊdɪˈpendənsi/", pos: "noun", meaning: "Sự phụ thuộc lẫn nhau quá mức", example: "The therapist helped them address their codependency.", tier: "advanced" },
       { id: "fam_98", word: "estrangement", phonetic: "/ɪˈstreɪndʒmənt/", pos: "noun", meaning: "Sự xa cách, đoạn tuyệt quan hệ", example: "Years of estrangement ended with a tearful reunion.", tier: "advanced" },
       { id: "fam_99", word: "progeny", phonetic: "/ˈprɒdʒəni/", pos: "noun", meaning: "Con cháu, hậu duệ", example: "The old tree symbolizes the family and its progeny.", tier: "advanced" },
-      { id: "fam_100", word: "endearment", phonetic: "/ɪnˈdɪərmənt/", pos: "noun", meaning: "Lời trìu mến, âu yếm", example: "She called her daughter by a term of endearment.", tier: "advanced" }
-    ]
+      { id: "fam_100", word: "endearment", phonetic: "/ɪnˈdɪərmənt/", pos: "noun", meaning: "Lời trìu mến, âu yếm", example: "She called her daughter by a term of endearment.", tier: "advanced" },
+    ],
   };
   if (!window.TOPICS) window.TOPICS = [];
-  if (!window.TOPICS.some(t => t.id === topic.id)) {
+  if (!window.TOPICS.some((t) => t.id === topic.id)) {
     window.TOPICS.push(topic);
   }
 })();

@@ -5,10 +5,10 @@
 
 function switchTab(tabName) {
   currentTab = tabName;
-  document.querySelectorAll(".tab-btn").forEach(btn => {
+  document.querySelectorAll(".tab-btn").forEach((btn) => {
     btn.classList.toggle("active", btn.dataset.tab === tabName);
   });
-  document.querySelectorAll(".tab-pane").forEach(pane => {
+  document.querySelectorAll(".tab-pane").forEach((pane) => {
     pane.classList.toggle("active", pane.id === `tab-${tabName}`);
   });
   if (tabName === "home") renderHome();

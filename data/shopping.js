@@ -1,7 +1,7 @@
 // ============================================================
 // TOPIC: Mua sắm (100 từ)
 // ============================================================
-(function() {
+(function () {
   const topic = {
     id: "topic_shopping",
     name: "Mua sắm",
@@ -108,11 +108,11 @@
       { id: "shop_97", word: "brand loyalty", phonetic: "/brænd ˈlɔɪəlti/", pos: "noun", meaning: "Sự trung thành với thương hiệu", example: "The company built strong brand loyalty over the years.", tier: "advanced" },
       { id: "shop_98", word: "depreciation", phonetic: "/dɪˌpriːʃiˈeɪʃn/", pos: "noun", meaning: "Sự giảm giá trị (theo thời gian)", example: "A new car suffers rapid depreciation in its first year.", tier: "advanced" },
       { id: "shop_99", word: "surcharge", phonetic: "/ˈsɜːrtʃɑːrdʒ/", pos: "noun", meaning: "Phụ phí", example: "There is a small surcharge for credit card payments.", tier: "advanced" },
-      { id: "shop_100", word: "refurbished", phonetic: "/riːˈfɜːrbɪʃt/", pos: "adjective", meaning: "Tân trang, tái sản xuất", example: "She bought a refurbished laptop at half the price.", tier: "advanced" }
-    ]
+      { id: "shop_100", word: "refurbished", phonetic: "/riːˈfɜːrbɪʃt/", pos: "adjective", meaning: "Tân trang, tái sản xuất", example: "She bought a refurbished laptop at half the price.", tier: "advanced" },
+    ],
   };
   if (!window.TOPICS) window.TOPICS = [];
-  if (!window.TOPICS.some(t => t.id === topic.id)) {
+  if (!window.TOPICS.some((t) => t.id === topic.id)) {
     window.TOPICS.push(topic);
   }
 })();

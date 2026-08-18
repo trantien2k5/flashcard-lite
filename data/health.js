@@ -1,7 +1,7 @@
 // ============================================================
 // TOPIC: Sức khỏe & Y tế (100 từ)
 // ============================================================
-(function() {
+(function () {
   const topic = {
     id: "topic_health",
     name: "Sức khỏe & Y tế",
@@ -108,11 +108,11 @@
       { id: "health_97", word: "respiratory", phonetic: "/ˈrespərətɔːri/", pos: "adjective", meaning: "Thuộc hô hấp", example: "Smoking can cause serious respiratory problems.", tier: "advanced" },
       { id: "health_98", word: "orthopedic", phonetic: "/ˌɔːrθəˈpiːdɪk/", pos: "adjective", meaning: "Thuộc chỉnh hình, xương khớp", example: "He saw an orthopedic surgeon for his knee.", tier: "advanced" },
       { id: "health_99", word: "psychiatric", phonetic: "/ˌsaɪkiˈætrɪk/", pos: "adjective", meaning: "Thuộc tâm thần học", example: "She received psychiatric care after the accident.", tier: "advanced" },
-      { id: "health_100", word: "palliative care", phonetic: "/ˈpæliətɪv ker/", pos: "noun", meaning: "Chăm sóc giảm nhẹ", example: "The hospital offers palliative care for terminally ill patients.", tier: "advanced" }
-    ]
+      { id: "health_100", word: "palliative care", phonetic: "/ˈpæliətɪv ker/", pos: "noun", meaning: "Chăm sóc giảm nhẹ", example: "The hospital offers palliative care for terminally ill patients.", tier: "advanced" },
+    ],
   };
   if (!window.TOPICS) window.TOPICS = [];
-  if (!window.TOPICS.some(t => t.id === topic.id)) {
+  if (!window.TOPICS.some((t) => t.id === topic.id)) {
     window.TOPICS.push(topic);
   }
 })();

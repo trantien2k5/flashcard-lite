@@ -1,7 +1,7 @@
 // ============================================================
 // TOPIC: Giải trí (100 từ)
 // ============================================================
-(function() {
+(function () {
   const topic = {
     id: "topic_entertainment",
     name: "Giải trí",
@@ -12,7 +12,7 @@
       { id: "ent_1", word: "movie", phonetic: "/ˈmuːvi/", pos: "noun", meaning: "Bộ phim", example: "We watched a great movie last night.", tier: "core" },
       { id: "ent_2", word: "actor", phonetic: "/ˈæktər/", pos: "noun", meaning: "Diễn viên nam", example: "The actor won an award for his performance.", tier: "core" },
       { id: "ent_3", word: "actress", phonetic: "/ˈæktrəs/", pos: "noun", meaning: "Diễn viên nữ", example: "The actress starred in three films this year.", tier: "core" },
-      { id: "ent_4", word: "director", phonetic: "/dəˈrektər/", pos: "noun", meaning: "Đạo diễn", example: "The director shouted \"action\" to start the scene.", tier: "core" },
+      { id: "ent_4", word: "director", phonetic: "/dəˈrektər/", pos: "noun", meaning: "Đạo diễn", example: 'The director shouted "action" to start the scene.', tier: "core" },
       { id: "ent_5", word: "cinema", phonetic: "/ˈsɪnəmə/", pos: "noun", meaning: "Rạp chiếu phim", example: "Let's go to the cinema this weekend.", tier: "core" },
       { id: "ent_6", word: "theater", phonetic: "/ˈθiːətər/", pos: "noun", meaning: "Nhà hát / Rạp hát", example: "They performed the play in a large theater.", tier: "core" },
       { id: "ent_7", word: "concert", phonetic: "/ˈkɒnsət/", pos: "noun", meaning: "Buổi hòa nhạc", example: "I bought tickets for the rock concert.", tier: "core" },
@@ -108,11 +108,11 @@
       { id: "ent_97", word: "monologue", phonetic: "/ˈmɒnəlɒɡ/", pos: "noun", meaning: "Độc thoại", example: "The actor delivered a powerful monologue in the final scene.", tier: "advanced" },
       { id: "ent_98", word: "improv", phonetic: "/ˈɪmprɒv/", pos: "noun", meaning: "Kịch ứng tác", example: "The comedy troupe performs improv every Saturday night.", tier: "advanced" },
       { id: "ent_99", word: "syndication", phonetic: "/ˌsɪndɪˈkeɪʃn/", pos: "noun", meaning: "Việc phân phối lại chương trình cho nhiều đài", example: "The sitcom earned millions through television syndication.", tier: "advanced" },
-      { id: "ent_100", word: "avant-garde", phonetic: "/ˌævɒ̃ˈɡɑːrd/", pos: "adjective", meaning: "Tiên phong, tiền vệ (nghệ thuật)", example: "The director is known for his avant-garde filmmaking style.", tier: "advanced" }
-    ]
+      { id: "ent_100", word: "avant-garde", phonetic: "/ˌævɒ̃ˈɡɑːrd/", pos: "adjective", meaning: "Tiên phong, tiền vệ (nghệ thuật)", example: "The director is known for his avant-garde filmmaking style.", tier: "advanced" },
+    ],
   };
   if (!window.TOPICS) window.TOPICS = [];
-  if (!window.TOPICS.some(t => t.id === topic.id)) {
+  if (!window.TOPICS.some((t) => t.id === topic.id)) {
     window.TOPICS.push(topic);
   }
 })();

@@ -5,4 +5,4 @@
 // ================================================================
 
 let currentTab = "home";
-let studySession = null;  // Active study session
+let studySession = null; // Active study session

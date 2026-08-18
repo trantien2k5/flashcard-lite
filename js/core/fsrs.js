@@ -8,30 +8,30 @@
 
 // --- Rating constants ---
 const RATING = {
-  AGAIN: 0,  // Không nhớ, học lại
-  HARD:  1,  // Nhớ nhưng khó
-  GOOD:  2,  // Nhớ bình thường
-  EASY:  3   // Nhớ rất dễ
+  AGAIN: 0, // Không nhớ, học lại
+  HARD: 1, // Nhớ nhưng khó
+  GOOD: 2, // Nhớ bình thường
+  EASY: 3, // Nhớ rất dễ
 };
 
 // --- Hằng số thời gian ---
 const MINUTE = 60 * 1000;
-const DAY    = 24 * 60 * MINUTE;
+const DAY = 24 * 60 * MINUTE;
 
 // --- Tham số FSRS-6 (bộ trọng số mặc định do open-spaced-repetition huấn luyện, 21 giá trị w0..w20) ---
-const FSRS_WEIGHTS = [
-  0.212, 1.2931, 2.3065, 8.2956, 6.4133, 0.8334, 3.0194, 0.001, 1.8722,
-  0.1666, 0.796, 1.4835, 0.0614, 0.2629, 1.6483, 0.6014, 1.8729, 0.5425,
-  0.0912, 0.0658, 0.1542
-];
+const FSRS_WEIGHTS = [0.212, 1.2931, 2.3065, 8.2956, 6.4133, 0.8334, 3.0194, 0.001, 1.8722, 0.1666, 0.796, 1.4835, 0.0614, 0.2629, 1.6483, 0.6014, 1.8729, 0.5425, 0.0912, 0.0658, 0.1542];
 
-const REQUEST_RETENTION  = 0.9;    // xác suất nhớ mục tiêu khi lên lịch ôn tiếp theo
-const MAX_INTERVAL_DAYS  = 36500;  // chặn trên ~100 năm, tránh số phi thực tế
-const DECAY  = -FSRS_WEIGHTS[20];
+const REQUEST_RETENTION = 0.9; // xác suất nhớ mục tiêu khi lên lịch ôn tiếp theo
+const MAX_INTERVAL_DAYS = 36500; // chặn trên ~100 năm, tránh số phi thực tế
+const DECAY = -FSRS_WEIGHTS[20];
 const FACTOR = Math.pow(0.9, 1 / DECAY) - 1; // đảm bảo R(t=S) luôn = 90%
 
-function clampD(d) { return Math.min(10, Math.max(1, d)); }
-function clampS(s) { return Math.max(0.01, s); }
+function clampD(d) {
+  return Math.min(10, Math.max(1, d));
+}
+function clampS(s) {
+  return Math.max(0.01, s);
+}
 
 /**
  * Tạo trạng thái mặc định cho một thẻ mới.
@@ -41,21 +41,21 @@ function clampS(s) { return Math.max(0.01, s); }
 function createCardState(wordId) {
   return {
     wordId,
-    difficulty:  null,   // D ∈ [1,10] — độ khó ghi nhớ của từ này với người học, null = chưa ôn lần nào
-    stability:   null,   // S (đơn vị: ngày) — độ ổn định trí nhớ, null = chưa ôn lần nào
-    interval:    0,      // khoảng ôn kế tiếp được lên lịch (đơn vị ngày, có thể lẻ khi đang ở bước học ngắn)
-    reps:        0,      // số lần ôn thành công liên tiếp kể từ lần quên gần nhất
-    nextReview:  0,      // timestamp (ms), 0 = thẻ mới chưa học
-    lastReview:  null,   // timestamp lần ôn gần nhất
-    lapses:      0,      // số lần quên sau khi đã vào trạng thái review
-    state:       "new"   // "new" | "learning" | "review" | "relearning"
+    difficulty: null, // D ∈ [1,10] — độ khó ghi nhớ của từ này với người học, null = chưa ôn lần nào
+    stability: null, // S (đơn vị: ngày) — độ ổn định trí nhớ, null = chưa ôn lần nào
+    interval: 0, // khoảng ôn kế tiếp được lên lịch (đơn vị ngày, có thể lẻ khi đang ở bước học ngắn)
+    reps: 0, // số lần ôn thành công liên tiếp kể từ lần quên gần nhất
+    nextReview: 0, // timestamp (ms), 0 = thẻ mới chưa học
+    lastReview: null, // timestamp lần ôn gần nhất
+    lapses: 0, // số lần quên sau khi đã vào trạng thái review
+    state: "new", // "new" | "learning" | "review" | "relearning"
   };
 }
 
 /** R(t, S) — xác suất nhớ được sau t ngày kể từ lần ôn có độ ổn định S (ngày). */
 function retrievability(elapsedDays, stability) {
   if (!stability || stability <= 0) return 0;
-  return Math.pow(1 + FACTOR * elapsedDays / stability, DECAY);
+  return Math.pow(1 + (FACTOR * elapsedDays) / stability, DECAY);
 }
 
 /** Số ngày cần để khả năng nhớ giảm xuống còn `requestRetention` — dùng để lên lịch ôn tiếp theo. */
@@ -75,9 +75,9 @@ function initDifficulty(rating) {
 
 function nextDifficulty(D, rating) {
   const w = FSRS_WEIGHTS;
-  const deltaD  = -w[6] * (rating - 2); // rating-2 ≡ (G-3) khi G ở thang 1..4, GOOD là mốc trung tâm
-  const dPrime  = D + deltaD * (10 - D) / 9;
-  const easyD0  = clampD(w[4] - Math.exp(w[5] * 3) + 1); // D0 ứng với rating Easy — mốc hồi quy trung bình
+  const deltaD = -w[6] * (rating - 2); // rating-2 ≡ (G-3) khi G ở thang 1..4, GOOD là mốc trung tâm
+  const dPrime = D + (deltaD * (10 - D)) / 9;
+  const easyD0 = clampD(w[4] - Math.exp(w[5] * 3) + 1); // D0 ứng với rating Easy — mốc hồi quy trung bình
   return clampD(w[7] * easyD0 + (1 - w[7]) * dPrime);
 }
 
@@ -85,7 +85,7 @@ function nextDifficulty(D, rating) {
 function nextRecallStability(D, S, R, rating) {
   const w = FSRS_WEIGHTS;
   const hardPenalty = rating === RATING.HARD ? w[15] : 1;
-  const easyBonus   = rating === RATING.EASY ? w[16] : 1;
+  const easyBonus = rating === RATING.EASY ? w[16] : 1;
   const factor = (11 - D) * Math.pow(S, -w[9]) * (Math.exp((1 - R) * w[10]) - 1);
   return clampS(S * (1 + Math.exp(w[8]) * factor * hardPenalty * easyBonus));
 }
@@ -120,7 +120,7 @@ function _computeFSRS(card, rating, now, requestRetention) {
   const isFirstReview = S0 == null;
 
   const elapsedDays = card.lastReview ? Math.max(0, (now - card.lastReview) / DAY) : 0;
-  const R = (!isFirstReview) ? retrievability(elapsedDays, S0) : 1;
+  const R = !isFirstReview ? retrievability(elapsedDays, S0) : 1;
 
   let D, S;
   if (isFirstReview) {
@@ -142,16 +142,16 @@ function _computeFSRS(card, rating, now, requestRetention) {
 
   if (rating === RATING.AGAIN) {
     // Quên hoàn toàn → bước học ngắn, ôn lại sau 1 phút
-    nextState = (state === "review" || state === "relearning") ? "relearning" : "learning";
-    interval  = 1 / 1440;
+    nextState = state === "review" || state === "relearning" ? "relearning" : "learning";
+    interval = 1 / 1440;
   } else if (inLearningPhase && rating === RATING.HARD) {
     // Nhớ khó khi còn đang học/học lại → thêm một bước học ngắn trước khi tốt nghiệp
-    nextState = (state === "new" || isFirstReview) ? "learning" : state;
-    interval  = 10 / 1440;
+    nextState = state === "new" || isFirstReview ? "learning" : state;
+    interval = 10 / 1440;
   } else {
     // Good/Easy, hoặc Hard khi đã ở review → tốt nghiệp / tiếp tục ở review
     nextState = "review";
-    interval  = intervalForStability(S, requestRetention);
+    interval = intervalForStability(S, requestRetention);
   }
 
   return { D, S, nextState, interval };
@@ -171,7 +171,7 @@ function fsrs(card, rating, requestRetention = REQUEST_RETENTION) {
   const { D, S, nextState, interval } = _computeFSRS(card, rating, now, requestRetention);
 
   let lapses = card.lapses || 0;
-  let reps   = card.reps || 0;
+  let reps = card.reps || 0;
   if (rating === RATING.AGAIN) {
     lapses = card.state === "review" ? lapses + 1 : lapses;
     reps = 0;
@@ -182,13 +182,13 @@ function fsrs(card, rating, requestRetention = REQUEST_RETENTION) {
   return {
     ...card,
     difficulty: D,
-    stability:  S,
+    stability: S,
     interval,
     reps,
     lapses,
-    state:      nextState,
+    state: nextState,
     nextReview: now + interval * DAY,
-    lastReview: now
+    lastReview: now,
   };
 }
 

@@ -6,16 +6,16 @@
 
 if (!window.TEMPLATES) window.TEMPLATES = {};
 
-window.TEMPLATES.learnList = function() {
+window.TEMPLATES.learnList = function () {
   return `
     <div class="learn-header">
       <h2 class="learn-title">Chủ đề từ vựng</h2>
       <p class="learn-subtitle">Chọn một chủ đề để bắt đầu học</p>
     </div>
     <div class="topic-grid">
-      ${TOPICS.map(topic => {
+      ${TOPICS.map((topic) => {
         const prog = db.getTopicProgress(topic.id);
-        const pct = Math.round((prog.known + prog.learning) / prog.total * 100);
+        const pct = Math.round(((prog.known + prog.learning) / prog.total) * 100);
         const due = db.getDueCards(topic.id, topic).length;
         return `
         <div class="topic-card" onclick="openTopicStudy('${topic.id}')" style="--topic-color: ${topic.color}">
@@ -25,7 +25,7 @@ window.TEMPLATES.learnList = function() {
           <div class="topic-info-area">
             <div class="topic-title-row">
               <h3 class="topic-card-name">${topic.name}</h3>
-              ${due > 0 ? `<span class="due-badge">${due} cần ôn</span>` : (pct === 100 ? '<span class="done-badge">✓ Xong</span>' : '')}
+              ${due > 0 ? `<span class="due-badge">${due} cần ôn</span>` : pct === 100 ? '<span class="done-badge">✓ Xong</span>' : ""}
             </div>
             <p class="topic-card-desc">${topic.description}</p>
             
@@ -49,7 +49,7 @@ function renderLearnList() {
   document.getElementById("learn-content").innerHTML = TEMPLATES.learnList();
 }
 function openTopicStudy(topicId) {
-  const topic = TOPICS.find(t => t.id === topicId);
+  const topic = TOPICS.find((t) => t.id === topicId);
   if (!topic) return;
 
   const dueCards = db.getDueCards(topicId, topic);
@@ -60,10 +60,12 @@ function openTopicStudy(topicId) {
   }
 
   // Map word data
-  const queue = dueCards.map(card => ({
-    card,
-    word: topic.words.find(w => w.id === card.wordId)
-  })).filter(item => item.word);
+  const queue = dueCards
+    .map((card) => ({
+      card,
+      word: topic.words.find((w) => w.id === card.wordId),
+    }))
+    .filter((item) => item.word);
 
   applyStudyOrder(queue, db.settings.studyOrder);
 
@@ -76,7 +78,7 @@ function openTopicStudy(topicId) {
     reviewed: 0,
     startTime: Date.now(),
     flipped: false,
-    history: []
+    history: [],
   };
 
   setStudyFocusMode(true);

@@ -1,7 +1,7 @@
 // ============================================================
 // TOPIC: Vận hành doanh nghiệp (100 từ)
 // ============================================================
-(function() {
+(function () {
   const topic = {
     id: "topic_business_operations",
     name: "Vận hành doanh nghiệp",
@@ -108,11 +108,11 @@
       { id: "bizop_97", word: "due diligence", phonetic: "/djuː ˈdɪlɪdʒəns/", pos: "noun", meaning: "Thẩm định chuyên sâu", example: "The buyer conducted due diligence before the acquisition.", tier: "advanced" },
       { id: "bizop_98", word: "synergy", phonetic: "/ˈsɪnərdʒi/", pos: "noun", meaning: "Hiệu ứng cộng hưởng", example: "The merger created synergy between the two teams.", tier: "advanced" },
       { id: "bizop_99", word: "divestiture", phonetic: "/daɪˈvestɪtʃər/", pos: "noun", meaning: "Sự thoái vốn/bán tài sản", example: "The divestiture of the unit raised needed cash.", tier: "advanced" },
-      { id: "bizop_100", word: "turnaround", phonetic: "/ˈtɜːrnəraʊnd/", pos: "noun", meaning: "Sự phục hồi/xoay chuyển tình thế", example: "The new CEO led a remarkable business turnaround.", tier: "advanced" }
-    ]
+      { id: "bizop_100", word: "turnaround", phonetic: "/ˈtɜːrnəraʊnd/", pos: "noun", meaning: "Sự phục hồi/xoay chuyển tình thế", example: "The new CEO led a remarkable business turnaround.", tier: "advanced" },
+    ],
   };
   if (!window.TOPICS) window.TOPICS = [];
-  if (!window.TOPICS.some(t => t.id === topic.id)) {
+  if (!window.TOPICS.some((t) => t.id === topic.id)) {
     window.TOPICS.push(topic);
   }
 })();

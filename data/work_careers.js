@@ -1,7 +1,7 @@
 // ============================================================
 // TOPIC: Công việc & Sự nghiệp (100 từ)
 // ============================================================
-(function() {
+(function () {
   const topic = {
     id: "topic_work_careers",
     name: "Công việc & Sự nghiệp",
@@ -108,11 +108,11 @@
       { id: "work_97", word: "succession planning", phonetic: "/səkˈseʃn ˈplænɪŋ/", pos: "noun", meaning: "Kế hoạch kế thừa nhân sự", example: "The board discussed succession planning for the CEO role.", tier: "advanced" },
       { id: "work_98", word: "gig economy", phonetic: "/ɡɪɡ ɪˈkɒnəmi/", pos: "noun", meaning: "Nền kinh tế việc làm tự do", example: "The gig economy has grown rapidly with app-based work.", tier: "advanced" },
       { id: "work_99", word: "glass ceiling", phonetic: "/ɡlæs ˈsiːlɪŋ/", pos: "noun", meaning: "Rào cản vô hình trong thăng tiến", example: "She broke through the glass ceiling to become CEO.", tier: "advanced" },
-      { id: "work_100", word: "constructive dismissal", phonetic: "/kənˈstrʌktɪv dɪsˈmɪsl/", pos: "noun", meaning: "Sự sa thải gián tiếp", example: "He claimed constructive dismissal after being forced to resign.", tier: "advanced" }
-    ]
+      { id: "work_100", word: "constructive dismissal", phonetic: "/kənˈstrʌktɪv dɪsˈmɪsl/", pos: "noun", meaning: "Sự sa thải gián tiếp", example: "He claimed constructive dismissal after being forced to resign.", tier: "advanced" },
+    ],
   };
   if (!window.TOPICS) window.TOPICS = [];
-  if (!window.TOPICS.some(t => t.id === topic.id)) {
+  if (!window.TOPICS.some((t) => t.id === topic.id)) {
     window.TOPICS.push(topic);
   }
 })();

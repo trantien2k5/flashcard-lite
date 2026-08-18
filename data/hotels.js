@@ -1,7 +1,7 @@
 // ============================================================
 // TOPIC: Khách sạn (100 từ)
 // ============================================================
-(function() {
+(function () {
   const topic = {
     id: "topic_hotels",
     name: "Khách sạn",
@@ -108,11 +108,11 @@
       { id: "hotel_97", word: "force majeure", phonetic: "/fɔːrs mæˈʒɜːr/", pos: "noun", meaning: "Trường hợp bất khả kháng", example: "The clause covers cancellations due to force majeure.", tier: "advanced" },
       { id: "hotel_98", word: "chargeback", phonetic: "/ˈtʃɑːrdʒbæk/", pos: "noun", meaning: "Hoàn tiền qua ngân hàng do tranh chấp", example: "The guest filed a chargeback for the disputed charge.", tier: "advanced" },
       { id: "hotel_99", word: "walked guest", phonetic: "/wɔːkt ɡest/", pos: "noun", meaning: "Khách bị chuyển sang khách sạn khác do hết phòng", example: "The hotel arranged a taxi for the walked guest.", tier: "advanced" },
-      { id: "hotel_100", word: "blackout dates", phonetic: "/ˈblækaʊt deɪts/", pos: "noun", meaning: "Ngày không áp dụng ưu đãi", example: "Reward nights cannot be used during blackout dates.", tier: "advanced" }
-    ]
+      { id: "hotel_100", word: "blackout dates", phonetic: "/ˈblækaʊt deɪts/", pos: "noun", meaning: "Ngày không áp dụng ưu đãi", example: "Reward nights cannot be used during blackout dates.", tier: "advanced" },
+    ],
   };
   if (!window.TOPICS) window.TOPICS = [];
-  if (!window.TOPICS.some(t => t.id === topic.id)) {
+  if (!window.TOPICS.some((t) => t.id === topic.id)) {
     window.TOPICS.push(topic);
   }
 })();

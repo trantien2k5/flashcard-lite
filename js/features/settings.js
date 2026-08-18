@@ -6,21 +6,21 @@
 
 if (!window.TEMPLATES) window.TEMPLATES = {};
 
-window.TEMPLATES.settings = function(s, isDemoActive) {
+window.TEMPLATES.settings = function (s, isDemoActive) {
   return `
     <div class="settings-header">
       <h2 class="settings-title">⚙️ Cài đặt</h2>
     </div>
 
-    <div class="settings-group ${isDemoActive ? 'settings-group-demo-active' : ''}">
+    <div class="settings-group ${isDemoActive ? "settings-group-demo-active" : ""}">
       <div class="settings-group-title">🧪 Dữ liệu thử nghiệm</div>
 
       <div class="setting-item">
         <div class="setting-info">
           <span class="setting-name">Dữ liệu mô phỏng (Demo)</span>
-          <span class="setting-desc">${isDemoActive
-            ? 'Đang xem dữ liệu GIẢ LẬP để test giao diện. Dữ liệu thật của bạn đã được lưu tạm — tắt công tắc để khôi phục.'
-            : 'Nạp thử dữ liệu của một người đã học lâu ngày (streak, thẻ đến hạn, từ yếu, thành tích...) để xem giao diện. Dữ liệu thật sẽ được lưu tạm, không mất gì.'}</span>
+          <span class="setting-desc">${
+            isDemoActive ? "Đang xem dữ liệu GIẢ LẬP để test giao diện. Dữ liệu thật của bạn đã được lưu tạm — tắt công tắc để khôi phục." : "Nạp thử dữ liệu của một người đã học lâu ngày (streak, thẻ đến hạn, từ yếu, thành tích...) để xem giao diện. Dữ liệu thật sẽ được lưu tạm, không mất gì."
+          }</span>
         </div>
         <label class="toggle-switch">
           <input type="checkbox" id="set-demo"
@@ -54,9 +54,9 @@ window.TEMPLATES.settings = function(s, isDemoActive) {
         <div class="setting-control">
           <select class="setting-select" id="set-order"
             onchange="saveSetting('studyOrder', this.value)">
-            <option value="due" ${s.studyOrder==="due"?"selected":""}>Theo ngày cần ôn</option>
-            <option value="random" ${s.studyOrder==="random"?"selected":""}>Ngẫu nhiên</option>
-            <option value="alphabetical" ${s.studyOrder==="alphabetical"?"selected":""}>Theo bảng chữ cái</option>
+            <option value="due" ${s.studyOrder === "due" ? "selected" : ""}>Theo ngày cần ôn</option>
+            <option value="random" ${s.studyOrder === "random" ? "selected" : ""}>Ngẫu nhiên</option>
+            <option value="alphabetical" ${s.studyOrder === "alphabetical" ? "selected" : ""}>Theo bảng chữ cái</option>
           </select>
         </div>
       </div>
@@ -189,7 +189,7 @@ function exportData() {
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = `flashcard_lite_backup_${new Date().toISOString().slice(0,10)}.json`;
+  a.download = `flashcard_lite_backup_${new Date().toISOString().slice(0, 10)}.json`;
   a.click();
   URL.revokeObjectURL(url);
   showToast("Xuất dữ liệu thành công!");
@@ -198,7 +198,7 @@ function importData(event) {
   const file = event.target.files[0];
   if (!file) return;
   const reader = new FileReader();
-  reader.onload = e => {
+  reader.onload = (e) => {
     const success = db.importData(e.target.result);
     showToast(success ? "Nhập dữ liệu thành công!" : "Nhập thất bại — file không hợp lệ");
     if (success) renderSettings();

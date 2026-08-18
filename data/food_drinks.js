@@ -1,7 +1,7 @@
 // ============================================================
 // TOPIC: Ẩm thực & Đồ uống (100 từ)
 // ============================================================
-(function() {
+(function () {
   const topic = {
     id: "topic_food_drinks",
     name: "Ẩm thực & Đồ uống",
@@ -108,11 +108,11 @@
       { id: "food_97", word: "epicurean", phonetic: "/ˌepɪkjʊˈriːən/", pos: "adjective", meaning: "Sành ăn uống, hưởng thụ ẩm thực", example: "He enjoys an epicurean lifestyle of fine dining.", tier: "advanced" },
       { id: "food_98", word: "sustenance", phonetic: "/ˈsʌstənəns/", pos: "noun", meaning: "Nguồn dinh dưỡng, sự nuôi sống", example: "Rice provides sustenance for millions of people.", tier: "advanced" },
       { id: "food_99", word: "vegan", phonetic: "/ˈviːɡən/", pos: "adjective", meaning: "Thuần chay", example: "This restaurant has a full vegan menu.", tier: "advanced" },
-      { id: "food_100", word: "gluten-free", phonetic: "/ˈɡluːtən friː/", pos: "adjective", meaning: "Không chứa gluten", example: "She ordered a gluten-free pasta dish.", tier: "advanced" }
-    ]
+      { id: "food_100", word: "gluten-free", phonetic: "/ˈɡluːtən friː/", pos: "adjective", meaning: "Không chứa gluten", example: "She ordered a gluten-free pasta dish.", tier: "advanced" },
+    ],
   };
   if (!window.TOPICS) window.TOPICS = [];
-  if (!window.TOPICS.some(t => t.id === topic.id)) {
+  if (!window.TOPICS.some((t) => t.id === topic.id)) {
     window.TOPICS.push(topic);
   }
 })();

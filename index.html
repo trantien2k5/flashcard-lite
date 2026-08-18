@@ -1,118 +1,116 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="description" content="FlashCard Lite – Học từ vựng tiếng Anh hiệu quả với thuật toán Anki. Hơn 100 từ vựng theo chủ đề, tự động lên lịch ôn tập." />
-  <meta name="theme-color" content="#0d0f1a" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content="FlashCard Lite – Học từ vựng tiếng Anh hiệu quả với thuật toán Anki. Hơn 100 từ vựng theo chủ đề, tự động lên lịch ôn tập." />
+    <meta name="theme-color" content="#0d0f1a" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-  <title>FlashCard Lite – Học Tiếng Anh</title>
+    <title>FlashCard Lite – Học Tiếng Anh</title>
 
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-  <!-- Favicon emoji -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
+    <!-- Favicon emoji -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
 
-  <!-- CSS tách theo kiến trúc Base → Layout → Components → Pages (xem css/README nếu cần,
+    <!-- CSS tách theo kiến trúc Base → Layout → Components → Pages (xem css/README nếu cần,
        hoặc chú thích đầu mỗi file). Thứ tự nạp phản ánh đúng thứ tự phụ thuộc. -->
-  <link rel="stylesheet" href="css/base.css" />
-  <link rel="stylesheet" href="css/layout.css" />
-  <link rel="stylesheet" href="css/components.css" />
-  <link rel="stylesheet" href="css/pages/home.css" />
-  <link rel="stylesheet" href="css/pages/learn.css" />
-  <link rel="stylesheet" href="css/pages/stats.css" />
-  <link rel="stylesheet" href="css/pages/study.css" />
-  <link rel="stylesheet" href="css/pages/settings.css" />
-</head>
-<body>
-
-  <div class="app-container">
-
-    <!-- ================================================
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/pages/home.css" />
+    <link rel="stylesheet" href="css/pages/learn.css" />
+    <link rel="stylesheet" href="css/pages/stats.css" />
+    <link rel="stylesheet" href="css/pages/study.css" />
+    <link rel="stylesheet" href="css/pages/settings.css" />
+  </head>
+  <body>
+    <div class="app-container">
+      <!-- ================================================
          HOME TAB
          ================================================ -->
-    <section id="tab-home" class="tab-pane active" role="main" aria-label="Home">
-      <div id="home-content">
-        <!-- Skeleton tĩnh hiển thị ngay khi HTML parse xong, không chờ JS/dữ liệu chủ đề tải
+      <section id="tab-home" class="tab-pane active" role="main" aria-label="Home">
+        <div id="home-content">
+          <!-- Skeleton tĩnh hiển thị ngay khi HTML parse xong, không chờ JS/dữ liệu chủ đề tải
              (~700KB/30 file) — renderHome() sẽ ghi đè bằng nội dung thật khi sẵn sàng. -->
-        <div class="skeleton-loading" aria-hidden="true">
-          <div class="skeleton-block skeleton-title"></div>
-          <div class="skeleton-block" style="height:120px"></div>
-          <div class="skeleton-block" style="height:140px"></div>
-          <div class="skeleton-block" style="height:220px"></div>
+          <div class="skeleton-loading" aria-hidden="true">
+            <div class="skeleton-block skeleton-title"></div>
+            <div class="skeleton-block" style="height: 120px"></div>
+            <div class="skeleton-block" style="height: 140px"></div>
+            <div class="skeleton-block" style="height: 220px"></div>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- ================================================
+      <!-- ================================================
          LEARN TAB
          ================================================ -->
-    <section id="tab-learn" class="tab-pane" role="main" aria-label="Learn">
-      <div id="learn-content">
-        <!-- Rendered by JS -->
-      </div>
-    </section>
+      <section id="tab-learn" class="tab-pane" role="main" aria-label="Learn">
+        <div id="learn-content">
+          <!-- Rendered by JS -->
+        </div>
+      </section>
 
-    <!-- ================================================
+      <!-- ================================================
          STATS TAB
          ================================================ -->
-    <section id="tab-stats" class="tab-pane" role="main" aria-label="Stats">
-      <div id="stats-content">
-        <!-- Rendered by JS -->
-      </div>
-    </section>
+      <section id="tab-stats" class="tab-pane" role="main" aria-label="Stats">
+        <div id="stats-content">
+          <!-- Rendered by JS -->
+        </div>
+      </section>
 
-    <!-- ================================================
+      <!-- ================================================
          SETTINGS TAB
          ================================================ -->
-    <section id="tab-settings" class="tab-pane" role="main" aria-label="Settings">
-      <div id="settings-content">
-        <!-- Rendered by JS -->
-      </div>
-    </section>
+      <section id="tab-settings" class="tab-pane" role="main" aria-label="Settings">
+        <div id="settings-content">
+          <!-- Rendered by JS -->
+        </div>
+      </section>
+    </div>
+    <!-- /app-container -->
 
-  </div><!-- /app-container -->
-
-  <!-- ================================================
+    <!-- ================================================
        BOTTOM NAVIGATION
        ================================================ -->
-  <nav class="bottom-nav" role="navigation" aria-label="Main navigation">
-    <button id="nav-home" class="tab-btn active" data-tab="home" aria-label="Home" title="Home">
-      <span class="tab-icon">🏠</span>
-      <span class="tab-label">Home</span>
-    </button>
-    <button id="nav-learn" class="tab-btn" data-tab="learn" aria-label="Learn" title="Learn">
-      <span class="tab-icon">📖</span>
-      <span class="tab-label">Learn</span>
-    </button>
-    <button id="nav-stats" class="tab-btn" data-tab="stats" aria-label="Stats" title="Stats">
-      <span class="tab-icon">📊</span>
-      <span class="tab-label">Stats</span>
-    </button>
-    <button id="nav-settings" class="tab-btn" data-tab="settings" aria-label="Settings" title="Settings">
-      <span class="tab-icon">⚙️</span>
-      <span class="tab-label">Settings</span>
-    </button>
-  </nav>
+    <nav class="bottom-nav" role="navigation" aria-label="Main navigation">
+      <button id="nav-home" class="tab-btn active" data-tab="home" aria-label="Home" title="Home">
+        <span class="tab-icon">🏠</span>
+        <span class="tab-label">Home</span>
+      </button>
+      <button id="nav-learn" class="tab-btn" data-tab="learn" aria-label="Learn" title="Learn">
+        <span class="tab-icon">📖</span>
+        <span class="tab-label">Learn</span>
+      </button>
+      <button id="nav-stats" class="tab-btn" data-tab="stats" aria-label="Stats" title="Stats">
+        <span class="tab-icon">📊</span>
+        <span class="tab-label">Stats</span>
+      </button>
+      <button id="nav-settings" class="tab-btn" data-tab="settings" aria-label="Settings" title="Settings">
+        <span class="tab-icon">⚙️</span>
+        <span class="tab-label">Settings</span>
+      </button>
+    </nav>
 
-  <!-- JS tách theo feature (core → store → shared → features → bootstrap). Không dùng
+    <!-- JS tách theo feature (core → store → shared → features → bootstrap). Không dùng
        module — mọi file đều gắn hàm/biến vào global scope, nên THỨ TỰ nạp bên dưới
        BẮT BUỘC giữ nguyên: file sau luôn có thể phụ thuộc file trước, không được ngược lại. -->
-  <script src="js/core/fsrs.js"></script>
-  <script src="js/core/state.js"></script>
-  <script src="js/store/flashcard-db.js"></script>
-  <script src="js/core/navigation.js"></script>
-  <script src="js/core/theme.js"></script>
-  <script src="js/shared/toast.js"></script>
-  <script src="js/features/home/home.js"></script>
-  <script src="js/features/stats/stats.js"></script>
-  <script src="js/features/learn/learn.js"></script>
-  <script src="js/features/study/study.js"></script>
-  <script src="js/features/settings/settings.js"></script>
-  <script src="js/bootstrap.js"></script>
-</body>
+    <script src="js/core/fsrs.js"></script>
+    <script src="js/core/state.js"></script>
+    <script src="js/store.js"></script>
+    <script src="js/core/navigation.js"></script>
+    <script src="js/core/theme.js"></script>
+    <script src="js/shared.js"></script>
+    <script src="js/features/home.js"></script>
+    <script src="js/features/stats.js"></script>
+    <script src="js/features/learn.js"></script>
+    <script src="js/features/study.js"></script>
+    <script src="js/features/settings.js"></script>
+    <script src="js/bootstrap.js"></script>
+  </body>
 </html>

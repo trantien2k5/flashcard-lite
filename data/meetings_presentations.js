@@ -1,7 +1,7 @@
 // ============================================================
 // TOPIC: Họp & Thuyết trình (100 từ)
 // ============================================================
-(function() {
+(function () {
   const topic = {
     id: "topic_meetings_presentations",
     name: "Họp & Thuyết trình",
@@ -108,11 +108,11 @@
       { id: "meet_97", word: "digression", phonetic: "/daɪˈɡreʃn/", pos: "noun", meaning: "Sự lạc đề", example: "The speaker apologized for the brief digression.", tier: "advanced" },
       { id: "meet_98", word: "dry run", phonetic: "/draɪ rʌn/", pos: "noun", meaning: "Buổi diễn tập thử", example: "They did a dry run of the presentation the night before.", tier: "advanced" },
       { id: "meet_99", word: "dais", phonetic: "/ˈdeɪɪs/", pos: "noun", meaning: "Bục cao dành cho diễn giả", example: "The speakers sat on the dais at the front.", tier: "advanced" },
-      { id: "meet_100", word: "podium", phonetic: "/ˈpoʊdiəm/", pos: "noun", meaning: "Bục phát biểu", example: "She stepped up to the podium to begin her speech.", tier: "advanced" }
-    ]
+      { id: "meet_100", word: "podium", phonetic: "/ˈpoʊdiəm/", pos: "noun", meaning: "Bục phát biểu", example: "She stepped up to the podium to begin her speech.", tier: "advanced" },
+    ],
   };
   if (!window.TOPICS) window.TOPICS = [];
-  if (!window.TOPICS.some(t => t.id === topic.id)) {
+  if (!window.TOPICS.some((t) => t.id === topic.id)) {
     window.TOPICS.push(topic);
   }
 })();

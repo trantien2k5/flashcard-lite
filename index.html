@@ -19,24 +19,26 @@
 
     <!-- CSS tách theo kiến trúc Base → Layout → Components → Pages (xem css/README nếu cần,
        hoặc chú thích đầu mỗi file). Thứ tự nạp phản ánh đúng thứ tự phụ thuộc. -->
-    <link rel="stylesheet" href="css/base.css" />
-    <link rel="stylesheet" href="css/layout.css" />
-    <link rel="stylesheet" href="css/components.css" />
-    <link rel="stylesheet" href="css/pages/home.css" />
-    <link rel="stylesheet" href="css/pages/learn.css" />
-    <link rel="stylesheet" href="css/pages/stats.css" />
-    <link rel="stylesheet" href="css/pages/study.css" />
-    <link rel="stylesheet" href="css/pages/settings.css" />
+    <link rel="stylesheet" href="css/core/base.css" />
+    <link rel="stylesheet" href="css/core/layout.css" />
+    <link rel="stylesheet" href="css/core/components.css" />
+    <link rel="stylesheet" href="css/core/utilities.css" />
+    <link rel="stylesheet" href="css/features/review.css" />
+    <link rel="stylesheet" href="css/features/topics.css" />
+    <link rel="stylesheet" href="css/features/stats.css" />
+    <link rel="stylesheet" href="css/features/study.css" />
+    <link rel="stylesheet" href="css/features/settings.css" />
+    <link rel="stylesheet" href="css/features/practice.css" />
   </head>
   <body>
     <div class="app-container">
       <!-- ================================================
-         HOME TAB
+         REVIEW TAB
          ================================================ -->
-      <section id="tab-home" class="tab-pane active" role="main" aria-label="Home">
-        <div id="home-content">
+      <section id="tab-review" class="tab-pane active" role="main" aria-label="Ôn tập">
+        <div id="review-content" class="review-dashboard">
           <!-- Skeleton tĩnh hiển thị ngay khi HTML parse xong, không chờ JS/dữ liệu chủ đề tải
-             (~700KB/30 file) — renderHome() sẽ ghi đè bằng nội dung thật khi sẵn sàng. -->
+             (~700KB/30 file) — renderReview() sẽ ghi đè bằng nội dung thật khi sẵn sàng. -->
           <div class="skeleton-loading" aria-hidden="true">
             <div class="skeleton-block skeleton-title"></div>
             <div class="skeleton-block" style="height: 120px"></div>
@@ -47,10 +49,10 @@
       </section>
 
       <!-- ================================================
-         LEARN TAB
+         TOPICS TAB
          ================================================ -->
-      <section id="tab-learn" class="tab-pane" role="main" aria-label="Learn">
-        <div id="learn-content">
+      <section id="tab-topics" class="tab-pane" role="main" aria-label="Chủ đề">
+        <div id="topics-content">
           <!-- Rendered by JS -->
         </div>
       </section>
@@ -58,7 +60,7 @@
       <!-- ================================================
          STATS TAB
          ================================================ -->
-      <section id="tab-stats" class="tab-pane" role="main" aria-label="Stats">
+      <section id="tab-stats" class="tab-pane" role="main" aria-label="Thống kê">
         <div id="stats-content">
           <!-- Rendered by JS -->
         </div>
@@ -67,7 +69,7 @@
       <!-- ================================================
          SETTINGS TAB
          ================================================ -->
-      <section id="tab-settings" class="tab-pane" role="main" aria-label="Settings">
+      <section id="tab-settings" class="tab-pane" role="main" aria-label="Cài đặt">
         <div id="settings-content">
           <!-- Rendered by JS -->
         </div>
@@ -83,21 +85,21 @@
         <span class="brand-emoji">⚡</span>
         <span class="brand-text">FlashCard Lite</span>
       </div>
-      <button id="nav-home" class="tab-btn active" data-tab="home" aria-label="Home" title="Home">
-        <span class="tab-icon">🏠</span>
-        <span class="tab-label">Home</span>
+      <button id="nav-topics" class="tab-btn" data-tab="topics" aria-label="Chủ đề" title="Chủ đề">
+        <span class="tab-icon">🗂️</span>
+        <span class="tab-label">Chủ đề</span>
       </button>
-      <button id="nav-learn" class="tab-btn" data-tab="learn" aria-label="Learn" title="Learn">
-        <span class="tab-icon">📖</span>
-        <span class="tab-label">Learn</span>
+      <button id="nav-review" class="tab-btn active" data-tab="review" aria-label="Ôn tập" title="Ôn tập">
+        <span class="tab-icon">🔄</span>
+        <span class="tab-label">Ôn tập</span>
       </button>
-      <button id="nav-stats" class="tab-btn" data-tab="stats" aria-label="Stats" title="Stats">
+      <button id="nav-stats" class="tab-btn" data-tab="stats" aria-label="Thống kê" title="Thống kê">
         <span class="tab-icon">📊</span>
-        <span class="tab-label">Stats</span>
+        <span class="tab-label">Thống kê</span>
       </button>
-      <button id="nav-settings" class="tab-btn" data-tab="settings" aria-label="Settings" title="Settings">
+      <button id="nav-settings" class="tab-btn" data-tab="settings" aria-label="Cài đặt" title="Cài đặt">
         <span class="tab-icon">⚙️</span>
-        <span class="tab-label">Settings</span>
+        <span class="tab-label">Cài đặt</span>
       </button>
     </nav>
 
@@ -111,10 +113,11 @@
     <script src="js/stats-queries.js"></script>
     <script src="js/demo-data.js"></script>
     <script src="js/app.js"></script>
-    <script src="js/pages/home.js"></script>
+    <script src="js/pages/review.js"></script>
     <script src="js/pages/stats.js"></script>
-    <script src="js/pages/learn.js"></script>
+    <script src="js/pages/topics.js"></script>
     <script src="js/pages/study.js"></script>
     <script src="js/pages/settings.js"></script>
+    <script src="js/pages/practice.js"></script>
   </body>
 </html>

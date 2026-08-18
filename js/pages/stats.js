@@ -14,7 +14,7 @@ window.TEMPLATES.stats = function (stats, totalLearned, monthlyData, weakData, a
   const financePct = Math.round(((financeProg.known + financeProg.learning) / financeProg.total) * 100);
 
   return `
-    <div class="home-header">
+    <div class="greeting-header">
       <h1 class="greeting-text">📊 Thống kê</h1>
       <p class="greeting-sub">Theo dõi tiến trình và hiệu quả học tập của bạn</p>
     </div>
@@ -84,7 +84,7 @@ window.TEMPLATES.stats = function (stats, totalLearned, monthlyData, weakData, a
                   (w) => `
           <div class="weak-word-item">
             <span class="weak-word-text">${w.word}</span>
-            <span class="weak-word-lapses">Lapses: ${w.lapses}</span>
+            <span class="weak-word-lapses">Quên: ${w.lapses} lần</span>
           </div>
         `,
                 )

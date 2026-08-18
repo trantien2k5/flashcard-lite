@@ -1,6 +1,6 @@
 /* ================================================================
-   PAGES/HOME.CSS
-   CSS riêng cho tab Trang chủ: khối "Hôm nay cần làm gì", thanh tiến
+   FEATURES/REVIEW.CSS
+   CSS riêng cho tab Ôn tập: khối "Hôm nay cần làm gì", thanh tiến
    độ tổng, danh sách tổng quan chủ đề. Không chứa style dùng chung
    (xem components.css cho .section-card/.home-header/...).
    ================================================================ */
@@ -331,49 +331,46 @@ body.light-theme .goal-ring-track {
 }
 
 /* ============================================================
-   RESPONSIVE DESKTOP GRID FOR HOME
+   RESPONSIVE DESKTOP GRID FOR REVIEW
    ============================================================ */
 @media (min-width: 1024px) {
-  #home-content {
+  #review-content.review-dashboard {
     display: grid;
-    grid-template-columns: 1.2fr 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 24px;
-    align-items: start;
+    align-items: stretch;
     max-width: 1100px;
     margin: 0 auto;
   }
 
-  .home-header {
+  .greeting-header {
     grid-column: 1 / -1;
     padding: 12px 0 8px;
   }
 
   .today-block {
     grid-column: 1;
-    grid-row: 2;
     margin-bottom: 0;
-  }
-
-  #home-content > .section-card:nth-of-type(1) {
-    grid-column: 1;
-    grid-row: 3;
-    margin-bottom: 0;
-  }
-
-  #home-content > .section-card:nth-of-type(2) {
-    grid-column: 2;
-    grid-row: 2 / 4;
-    margin-bottom: 0;
-    align-self: stretch;
     display: flex;
     flex-direction: column;
   }
 
-  #home-content > .section-card:nth-of-type(2) .topic-overview-list {
+  .today-block .btn-start-study {
+    margin-top: auto;
+  }
+
+  #review-content > .section-card {
+    grid-column: 2;
+    margin-bottom: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #review-content > .section-card .practice-modes-list {
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    gap: 18px; /* Slightly more spaced out on desktop sidebar layout */
+    justify-content: space-between;
+    gap: 12px;
   }
 }

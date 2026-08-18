@@ -5,7 +5,7 @@
 // chứa thuật toán (xem fsrs.js) hay lưu trữ dữ liệu (xem storage.js).
 // ================================================================
 
-let currentTab = "home";
+let currentTab = "review";
 let studySession = null; // Active study session
 // ================================================================
 // CORE/NAVIGATION.JS — Chuyển tab (switchTab), gọi hàm render tương
@@ -20,8 +20,8 @@ function switchTab(tabName) {
   document.querySelectorAll(".tab-pane").forEach((pane) => {
     pane.classList.toggle("active", pane.id === `tab-${tabName}`);
   });
-  if (tabName === "home") renderHome();
-  if (tabName === "learn") renderLearnList();
+  if (tabName === "review") renderReview();
+  if (tabName === "topics") renderTopics();
   if (tabName === "stats") renderStats();
   if (tabName === "settings") renderSettings();
 }
@@ -136,5 +136,5 @@ document.addEventListener("DOMContentLoaded", async () => {
   await loadTopicsDynamic();
 
   // Initial render
-  renderHome();
+  renderReview();
 });

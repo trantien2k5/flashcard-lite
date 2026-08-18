@@ -1,15 +1,15 @@
 /* ================================================================
-   PAGES/LEARN.CSS
-   CSS riêng cho tab Học: tiêu đề, lưới thẻ chủ đề (topic-card) và
+   FEATURES/TOPICS.CSS
+   CSS riêng cho tab Chủ đề: tiêu đề, lưới thẻ chủ đề (topic-card) và
    badge "cần ôn"/"đã xong".
    ================================================================ */
 
 /* ---- Tab Header ---- */
-.learn-header {
+.topics-header {
   padding: 12px 0 24px;
 }
 
-.learn-title {
+.topics-title {
   font-size: 26px;
   font-weight: 800;
   background: linear-gradient(135deg, #f8fafc 30%, #93c5fd 100%);
@@ -19,7 +19,7 @@
   letter-spacing: -0.5px;
 }
 
-.learn-subtitle {
+.topics-subtitle {
   font-size: 14px;
   color: var(--text-secondary);
   margin-top: 4px;
@@ -175,9 +175,9 @@ body.light-theme .topic-icon-area {
 }
 
 /* ============================================================
-   LIGHT THEME OVERRIDES FOR LEARN TAB
+   LIGHT THEME OVERRIDES FOR TOPICS TAB
    ============================================================ */
-body.light-theme .learn-title {
+body.light-theme .topics-title {
   background: linear-gradient(135deg, #0f172a 30%, #2563eb 100%);
   -webkit-background-clip: text;
   background-clip: text;
@@ -197,15 +197,15 @@ body.light-theme .topic-progress-bar {
 }
 
 /* ============================================================
-   RESPONSIVE DESKTOP GRID FOR LEARN
+   RESPONSIVE DESKTOP GRID FOR TOPICS
    ============================================================ */
 @media (min-width: 1024px) {
-  #learn-content {
+  #topics-content {
     max-width: 1100px;
     margin: 0 auto;
   }
 
-  .learn-header {
+  .topics-header {
     padding: 12px 0 28px;
   }
 

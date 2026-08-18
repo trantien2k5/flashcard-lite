@@ -1,0 +1,70 @@
+/* ================================================================
+   UTILITIES.CSS
+   Các class tiện ích dùng chung toàn bộ ứng dụng (Helper Classes).
+   Giúp giảm thiểu việc lặp lại mã CSS cho các bố cục phổ biến.
+   ================================================================ */
+
+/* ---- Bố cục Flexbox ---- */
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-col-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+/* ---- Định dạng kích thước ---- */
+.w-full {
+  width: 100%;
+}
+
+.h-full {
+  height: 100%;
+}
+
+/* ---- Căn chỉnh chữ ---- */
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+/* ---- Cắt chữ quá dài thành dấu 3 chấm ---- */
+.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---- Ẩn phần tử phục vụ SEO và Trợ năng (Accessibility) ---- */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---- Ẩn phần tử ---- */
+.d-none {
+  display: none !important;
+}

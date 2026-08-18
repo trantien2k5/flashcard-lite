@@ -167,7 +167,7 @@ window.TEMPLATES.finishScreen = function (reviewed, mins, streakDays, history = 
           : ""
       }
 
-      <button class="btn-primary" onclick="renderLearnList()" style="margin-top: 24px;">Quay lại danh sách</button>
+        <button class="btn-primary" onclick="exitStudy()" style="margin-top: 24px;">Quay lại danh sách</button>
     </div>
   `;
 };
@@ -192,7 +192,7 @@ window.TEMPLATES.noCardsScreen = function (topic, prog) {
           <div class="finish-stat-lbl">Từ mới</div>
         </div>
       </div>
-      <button class="btn-primary" onclick="renderLearnList()">Quay lại danh sách</button>
+      <button class="btn-primary" onclick="exitStudy()">Quay lại danh sách</button>
     </div>
   `;
 };
@@ -223,7 +223,8 @@ function renderStudySession() {
   const progress = Math.round((current / totalDue) * 100);
   const settings = db.settings;
 
-  document.getElementById("learn-content").innerHTML = TEMPLATES.studySession(studySession, settings, progress, card);
+  const containerId = studySession.topicId === "global" ? "review-content" : "topics-content";
+  document.getElementById(containerId).innerHTML = TEMPLATES.studySession(studySession, settings, progress, card);
 }
 function flipCard() {
   if (studySession.flipped) return;
@@ -318,10 +319,13 @@ function speakWord(event, text) {
 }
 function endStudyEarly() {
   setStudyFocusMode(false);
+  const containerId = (studySession && studySession.topicId === "global") ? "review-content" : "topics-content";
 
   if (!studySession || studySession.reviewed === 0) {
+    const isGlobal = studySession && studySession.topicId === "global";
     studySession = null;
-    renderLearnList();
+    if (isGlobal) renderReview();
+    else renderTopics();
     return;
   }
 
@@ -329,22 +333,73 @@ function endStudyEarly() {
   const reviewed = studySession.reviewed;
   db.recordStudySession(reviewed, Math.round(mins * 10) / 10);
 
-  document.getElementById("learn-content").innerHTML = TEMPLATES.finishScreen(reviewed, mins, db.stats.streakDays, studySession.history, true);
+  document.getElementById(containerId).innerHTML = TEMPLATES.finishScreen(reviewed, mins, db.stats.streakDays, studySession.history, true);
   studySession = null;
 }
 function finishStudySession() {
   setStudyFocusMode(false);
+  const containerId = (studySession && studySession.topicId === "global") ? "review-content" : "topics-content";
 
   const mins = Math.round(((Date.now() - studySession.startTime) / 60000) * 10) / 10;
   const reviewed = studySession.reviewed;
   db.recordStudySession(reviewed, mins);
 
-  document.getElementById("learn-content").innerHTML = TEMPLATES.finishScreen(reviewed, mins, db.stats.streakDays, studySession.history, false);
+  document.getElementById(containerId).innerHTML = TEMPLATES.finishScreen(reviewed, mins, db.stats.streakDays, studySession.history, false);
   studySession = null;
 }
 function showNoCardsModal(topic) {
   const prog = db.getTopicProgress(topic.id);
-  document.getElementById("learn-content").innerHTML = TEMPLATES.noCardsScreen(topic, prog);
+  document.getElementById("topics-content").innerHTML = TEMPLATES.noCardsScreen(topic, prog);
+}
+function exitStudy() {
+  setStudyFocusMode(false);
+  const isGlobal = studySession && studySession.topicId === "global";
+  studySession = null;
+  if (isGlobal) {
+    renderReview();
+  } else {
+    renderTopics();
+  }
+}
+function openGlobalStudySession() {
+  const queue = [];
+  TOPICS.forEach((topic) => {
+    const dueCards = db.getDueCards(topic.id, topic);
+    dueCards.forEach((card) => {
+      if (!queue.some((q) => q.card.wordId === card.wordId)) {
+        queue.push({
+          card,
+          word: topic.words.find((w) => w.id === card.wordId),
+          topic,
+        });
+      }
+    });
+  });
+
+  if (queue.length === 0) {
+    showToast("Chúc mừng! Bạn đã hoàn thành tất cả thẻ cần ôn hôm nay. 🎉");
+    return;
+  }
+
+  applyStudyOrder(queue, db.settings.studyOrder);
+
+  studySession = {
+    topicId: "global",
+    topic: { name: "Tất cả chủ đề", icon: "🔄", color: "#8b5cf6" },
+    queue,
+    totalDue: queue.length,
+    current: 0,
+    reviewed: 0,
+    startTime: Date.now(),
+    flipped: false,
+    history: [],
+  };
+
+  const container = document.getElementById("review-content");
+  if (container) container.classList.remove("review-dashboard");
+
+  setStudyFocusMode(true);
+  renderStudySession();
 }
 document.addEventListener("keydown", (e) => {
   if (!studySession) return;

@@ -1,5 +1,5 @@
 // ================================================================
-// PAGES/LEARN.JS — Tab Học
+// PAGES/TOPICS.JS — Tab Chủ đề
 // Danh sách chủ đề từ vựng + khởi tạo phiên học khi bấm vào 1 chủ đề
 // (openTopicStudy điều phối sang pages/study.js qua `studySession`
 // trong core.js). Chỉ chứa logic của tab này — không chứa thuật toán
@@ -8,11 +8,11 @@
 
 if (!window.TEMPLATES) window.TEMPLATES = {};
 
-window.TEMPLATES.learnList = function () {
+window.TEMPLATES.topics = function () {
   return `
-    <div class="learn-header">
-      <h2 class="learn-title">Chủ đề từ vựng</h2>
-      <p class="learn-subtitle">Chọn một chủ đề để bắt đầu học</p>
+    <div class="topics-header">
+      <h2 class="topics-title">Chủ đề từ vựng</h2>
+      <p class="topics-subtitle">Chọn một chủ đề để bắt đầu học</p>
     </div>
     <div class="topic-grid">
       ${TOPICS.map((topic) => {
@@ -47,8 +47,8 @@ window.TEMPLATES.learnList = function () {
     </div>
   `;
 };
-function renderLearnList() {
-  document.getElementById("learn-content").innerHTML = TEMPLATES.learnList();
+function renderTopics() {
+  document.getElementById("topics-content").innerHTML = TEMPLATES.topics();
 }
 function openTopicStudy(topicId) {
   const topic = TOPICS.find((t) => t.id === topicId);

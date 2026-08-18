@@ -195,3 +195,23 @@ body.light-theme .topic-card:hover {
 body.light-theme .topic-progress-bar {
   background: rgba(15, 23, 42, 0.04);
 }
+
+/* ============================================================
+   RESPONSIVE DESKTOP GRID FOR LEARN
+   ============================================================ */
+@media (min-width: 1024px) {
+  #learn-content {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .learn-header {
+    padding: 12px 0 28px;
+  }
+
+  .topic-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+  }
+}

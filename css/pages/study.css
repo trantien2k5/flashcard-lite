@@ -734,3 +734,21 @@ body.light-theme .history-status.history-review {
   background: rgba(4, 120, 87, 0.08);
   color: #047857;
 }
+
+/* ============================================================
+   RESPONSIVE DESKTOP LAYOUT FOR STUDY SESSION
+   ============================================================ */
+@media (min-width: 1024px) {
+  .study-session,
+  .finish-screen {
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .flashcard-container {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

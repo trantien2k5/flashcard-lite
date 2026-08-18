@@ -298,3 +298,13 @@ body.light-theme .toggle-slider {
 body.light-theme .toggle-switch input:checked + .toggle-slider {
   background: var(--accent-purple);
 }
+
+/* ============================================================
+   RESPONSIVE DESKTOP LAYOUT FOR SETTINGS
+   ============================================================ */
+@media (min-width: 1024px) {
+  #settings-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+}

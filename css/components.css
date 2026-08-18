@@ -351,3 +351,52 @@ body.light-theme .greeting-text {
   letter-spacing: 0.2px;
   flex-shrink: 0;
 }
+
+/* ============================================================
+   SIDEBAR BRAND / LOGO
+   ============================================================ */
+.sidebar-brand {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px 24px 16px;
+  }
+
+  .brand-emoji {
+    font-size: 26px;
+    filter: drop-shadow(0 0 8px var(--glow-purple));
+    animation: sidebarPulse 2s infinite alternate ease-in-out;
+  }
+
+  .brand-text {
+    font-size: 18px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #ffffff 40%, var(--accent-purple) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.5px;
+  }
+
+  body.light-theme .brand-text {
+    background: linear-gradient(135deg, #0f172a 40%, var(--accent-purple) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+}
+
+@keyframes sidebarPulse {
+  0% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 4px var(--glow-purple));
+  }
+  100% {
+    transform: scale(1.1) rotate(5deg);
+    filter: drop-shadow(0 0 12px var(--glow-purple));
+  }
+}

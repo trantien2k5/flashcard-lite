@@ -79,6 +79,10 @@
        BOTTOM NAVIGATION
        ================================================ -->
     <nav class="bottom-nav" role="navigation" aria-label="Main navigation">
+      <div class="sidebar-brand">
+        <span class="brand-emoji">⚡</span>
+        <span class="brand-text">FlashCard Lite</span>
+      </div>
       <button id="nav-home" class="tab-btn active" data-tab="home" aria-label="Home" title="Home">
         <span class="tab-icon">🏠</span>
         <span class="tab-label">Home</span>
@@ -97,20 +101,20 @@
       </button>
     </nav>
 
-    <!-- JS tách theo feature (core → store → shared → features → bootstrap). Không dùng
-       module — mọi file đều gắn hàm/biến vào global scope, nên THỨ TỰ nạp bên dưới
-       BẮT BUỘC giữ nguyên: file sau luôn có thể phụ thuộc file trước, không được ngược lại. -->
-    <script src="js/core/fsrs.js"></script>
-    <script src="js/core/state.js"></script>
-    <script src="js/store.js"></script>
-    <script src="js/core/navigation.js"></script>
-    <script src="js/core/theme.js"></script>
-    <script src="js/shared.js"></script>
-    <script src="js/features/home.js"></script>
-    <script src="js/features/stats.js"></script>
-    <script src="js/features/learn.js"></script>
-    <script src="js/features/study.js"></script>
-    <script src="js/features/settings.js"></script>
-    <script src="js/bootstrap.js"></script>
+    <!-- Thứ tự nạp bắt buộc: js/fsrs.js (thuật toán thuần túy) → js/storage.js (class
+       FlashcardDB, persistence thuần) → js/stats-queries.js + js/demo-data.js (gắn thêm
+       method vào FlashcardDB.prototype) → js/app.js (state/điều hướng/theme/toast + khởi
+       động app) → js/pages/*.js (logic từng tab, dùng db + app.js). Không dùng module —
+       mọi hàm/biến gắn vào global scope. -->
+    <script src="js/fsrs.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/stats-queries.js"></script>
+    <script src="js/demo-data.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/pages/home.js"></script>
+    <script src="js/pages/stats.js"></script>
+    <script src="js/pages/learn.js"></script>
+    <script src="js/pages/study.js"></script>
+    <script src="js/pages/settings.js"></script>
   </body>
 </html>

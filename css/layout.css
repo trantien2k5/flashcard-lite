@@ -121,3 +121,101 @@ body.light-theme .bottom-nav {
   border-right: none;
   box-shadow: 0 -4px 20px rgba(15, 23, 42, 0.05);
 }
+
+/* ============================================================
+   RESPONSIVE DESKTOP LAYOUT (SIDEBAR NAVIGATION)
+   ============================================================ */
+@media (min-width: 1024px) {
+  .app-container {
+    margin-left: var(--sidebar-width);
+    padding: 40px 48px;
+    padding-bottom: 40px;
+  }
+  
+  .tab-pane {
+    padding: 0;
+  }
+
+  body.study-focus .app-container {
+    margin-left: 0;
+    padding: 40px 24px;
+  }
+
+  .bottom-nav {
+    top: 0;
+    left: 0;
+    transform: none;
+    width: var(--sidebar-width);
+    height: 100vh;
+    max-width: none;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    padding: 32px 16px;
+    gap: 8px;
+    border-top: none;
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.35);
+  }
+
+  .tab-btn {
+    flex: none;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 16px;
+    padding: 14px 20px;
+    border-radius: var(--radius-md);
+  }
+
+  .tab-btn:hover {
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  body.light-theme .tab-btn:hover {
+    background: rgba(15, 23, 42, 0.03);
+  }
+
+  .tab-btn .tab-icon {
+    font-size: 20px;
+  }
+
+  .tab-btn .tab-label {
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .tab-btn.active {
+    background: rgba(139, 92, 246, 0.08);
+    color: var(--accent-purple);
+  }
+
+  body.light-theme .tab-btn.active {
+    background: rgba(124, 58, 237, 0.08);
+  }
+
+  .tab-btn.active .tab-icon {
+    transform: scale(1.05);
+  }
+
+  .tab-btn::after {
+    left: 4px;
+    top: 50%;
+    bottom: auto;
+    width: 4px;
+    height: 16px;
+    border-radius: 2px;
+    transform: translateY(-50%) scaleY(0);
+  }
+
+  .tab-btn.active::after {
+    transform: translateY(-50%) scaleY(1);
+  }
+
+  body.light-theme .bottom-nav {
+    border-top: none;
+    border-right: 1px solid rgba(15, 23, 42, 0.08);
+    box-shadow: 4px 0 24px rgba(15, 23, 42, 0.03);
+  }
+}

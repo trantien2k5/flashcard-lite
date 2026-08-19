@@ -53,7 +53,7 @@ class FlashcardDB {
     return {
       cards: {}, // wordId → CardState
       settings: {
-        dailyNewCards: 20,
+        dailyNewCards: 50,
         dailyReviewLimit: 100,
         showPhonetic: true,
         showExample: true,

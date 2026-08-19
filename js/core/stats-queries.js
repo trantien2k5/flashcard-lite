@@ -45,6 +45,33 @@ FlashcardDB.prototype.getDueCards = function (topicId, topic) {
   return [...learningCards, ...reviewCards, ...newCards];
 };
 
+/**
+ * Tổng quan "cần làm hôm nay" cho dashboard tab Ôn tập — tách riêng thẻ thực sự
+ * đến hạn (learning/relearning/review) khỏi thẻ mới, vì gộp chung sẽ luôn hiện
+ * hàng nghìn thẻ new ngay từ lần đầu mở app, không phản ánh đúng việc cần làm.
+ * `newGoal` chỉ dùng để HIỂN THỊ mục tiêu, không giới hạn số thẻ mới thực học
+ * (getDueCards() vẫn trả về toàn bộ thẻ new — xem comment ở đó).
+ */
+FlashcardDB.prototype.getDueSummary = function () {
+  const { dailyNewCards } = this._data.settings;
+  let dueCount = 0;
+  let newAvailable = 0;
+
+  TOPICS.forEach((topic) => {
+    this.getDueCards(topic.id, topic).forEach((card) => {
+      if (card.state === "new") newAvailable++;
+      else dueCount++;
+    });
+  });
+
+  return {
+    dueCount,
+    newAvailable,
+    dailyNewCards,
+    newGoal: Math.min(newAvailable, dailyNewCards),
+  };
+};
+
 /** Thống kê tổng số từ theo trạng thái (chỉ tính các từ thuộc chủ đề hiện có) */
 FlashcardDB.prototype.getTotalWordStats = function () {
   let known = 0,

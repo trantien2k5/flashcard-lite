@@ -42,7 +42,7 @@ window.TEMPLATES.settings = function (s, isDemoActive) {
         </div>
         <div class="setting-control">
           <input type="number" class="setting-input" id="set-daily-new"
-            value="${s.dailyNewCards}" min="1" max="100"
+            value="${s.dailyNewCards}" min="1" max="50"
             onchange="saveSetting('dailyNewCards', +this.value)">
         </div>
       </div>

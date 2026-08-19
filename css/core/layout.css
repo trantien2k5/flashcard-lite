@@ -70,9 +70,17 @@ body.study-focus .app-container {
 }
 
 .tab-btn .tab-icon {
-  font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: var(--transition-bounce);
   line-height: 1;
+}
+
+.tab-btn .tab-icon svg {
+  width: 22px;
+  height: 22px;
+  stroke-width: 2;
 }
 
 .tab-btn .tab-label {
@@ -177,8 +185,9 @@ body.light-theme .bottom-nav {
     background: rgba(15, 23, 42, 0.03);
   }
 
-  .tab-btn .tab-icon {
-    font-size: 20px;
+  .tab-btn .tab-icon svg {
+    width: 20px;
+    height: 20px;
   }
 
   .tab-btn .tab-label {
